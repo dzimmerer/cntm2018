@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="{{img_url}}">
+      </ion-avatar>
+      <h2>{{username}}</h2>
+      <p>&quot;{{descr}}&quot;</p>
+      <ion-badge item-end>{{score}}</ion-badge>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-icon name='md-person' item-start style="color: #d02e44"></ion-icon>
+      <p>{{real_name}}</p>
+      <button ion-button clear small item-end (click)="chVal('real_name', 'Real Name')" >
+        <ion-icon name='md-create'></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="calendar" item-start style="color: #d02e44"></ion-icon>
+      <p>{{age}}</p>
+      <button ion-button clear small item-end (click)="chVal('age', 'Age')" >
+        <ion-icon name='md-create'></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="cut" item-start style="color: #d02e44"></ion-icon>
+      <p>{{hair}}</p>
+      <button ion-button clear small item-end (click)="chVal('hair', 'Hair Style')" >
+        <ion-icon name='md-create'></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="eye" item-start style="color: #d02e44"></ion-icon>
+      <p>{{eye}}</p>
+      <button ion-button clear small item-end (click)="chVal('eye', 'Eye color')" >
+        <ion-icon name='md-create'></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="football" item-start style="color: #d02e44"></ion-icon>
+      <p>{{hobbies}}</p>
+      <button ion-button clear small item-end (click)="chVal('hobbies', 'Hobbies')" >
+        <ion-icon name='md-create'></ion-icon>
+      </button>
+    </ion-item>
+
+
+    <ion-card-content center text-center>
+      <p>
+        <br>
+      {{descr}}
+      </p>
+
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small (click)="chVal('img_url', 'Enter a new Image URL')">
+          <div>Edit Pic</div>
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button ion-button icon-left clear small  (click)="chVal('descr', 'Description')" >
+          <div>Edit Text</div>
+        </button>
+      </ion-col>
+
+    </ion-row>
+
+  </ion-card>
+
+
+</ion-content>
