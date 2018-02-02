@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Challenges</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content>
+
+
+  <ion-list>
+
+
+    <ion-list-header>Open</ion-list-header>
+
+
+    <ion-item *ngFor="let c of openC" (click)="onChallenge(c.id)">
+      <ion-icon name="help-circle" item-start style="color: #aaffaa"></ion-icon>
+      <h2>{{c.name}}</h2>
+      <p>{{c.descr}}</p>
+    </ion-item>
+
+
+    <ion-list-header>Closed</ion-list-header>
+
+    <ion-item *ngFor="let c of closedC" (click)="onChallenge(c.id)">
+      <ion-icon name="help-circle" item-start style="color: #ff8888"></ion-icon>
+      <h2>{{c.name}}</h2>
+      <p>{{c.descr}}</p>
+    </ion-item>
+
+  </ion-list>
+
+
+</ion-content>

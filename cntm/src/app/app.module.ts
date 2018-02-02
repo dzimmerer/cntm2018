@@ -16,6 +16,10 @@ import {LoadingController} from "ionic-angular/components/loading/loading-contro
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {FileChooser} from "@ionic-native/file-chooser";
 import {RankingPage} from "../pages/ranking/ranking";
+import {UserdetailPage} from "../pages/userdetail/userdetail";
+import {ChallengesPage} from "../pages/challenges/challenges";
+import { ChallengeServiceProvider } from '../providers/challenge-service/challenge-service';
+import {ChallengedetailPage} from "../pages/challengedetail/challengedetail";
 
 
 
@@ -27,6 +31,9 @@ import {RankingPage} from "../pages/ranking/ranking";
     RankingPage,
     LoginPage,
     RegisterPage,
+    UserdetailPage,
+    ChallengesPage,
+    ChallengedetailPage,
   ],
   imports: [
     BrowserModule,
@@ -40,16 +47,21 @@ import {RankingPage} from "../pages/ranking/ranking";
     ProfilePage,
     RankingPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    UserdetailPage,
+    ChallengesPage,
+    ChallengedetailPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserServiceProvider,
+    ChallengeServiceProvider,
     LoadingController,
     ToastController,
     FileChooser,
+    ChallengeServiceProvider,
   ]
 })
 export class AppModule {}

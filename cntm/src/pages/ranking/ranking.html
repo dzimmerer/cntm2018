@@ -11,7 +11,7 @@
 <ion-content padding>
 
   <ion-list>
-    <ion-item *ngFor="let user of ranking">
+    <ion-item *ngFor="let user of ranking" (click)="detailView(user.username)">
       <ion-avatar item-start>
         <img src="{{user.img_url}}">
       </ion-avatar>

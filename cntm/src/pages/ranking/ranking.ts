@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {UserServiceProvider} from "../../providers/user-service/user-service";
+import {UserdetailPage} from "../userdetail/userdetail";
 
 /**
  * Generated class for the RankingPage page.
@@ -39,4 +40,12 @@ export class RankingPage {
     console.log('ionViewDidLoad RankingPage');
   }
 
+  detailView(username: string) {
+
+    console.log(username)
+    this.navCtrl.push(UserdetailPage, {
+      other: username
+    });
+
+  }
 }

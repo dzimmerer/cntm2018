@@ -105,10 +105,7 @@ def does_user_exist(username):
         return False
 
 
-def get_user_json(username, token):
-
-    if not verify_user(username, token):
-        return {}
+def get_user_json(username, empty=("passwd",)):
 
     u = User.objects.get(username=username)
 
@@ -118,7 +115,9 @@ def get_user_json(username, token):
     json_dict = json.loads(json_str)
 
     json_dict = json_dict["fields"]
-    json_dict["passwd"] = ""
+
+    for e in empty:
+        json_dict[e] = ""
 
     return json_dict
 

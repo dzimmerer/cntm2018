@@ -1,0 +1,41 @@
+<!--
+  Generated template for the ChallengedetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-content>
+      {{descr}}
+    </ion-card-content>
+
+
+    <ion-row>
+    <ion-col *ngIf="open == 1">
+      <button ion-button icon-left clear small (click)="doAnswer()">
+        <ion-icon name="text"></ion-icon>
+        <div>Answer</div>
+      </button>
+    </ion-col>
+    <ion-col text-end>
+      <button ion-button icon-left clear small>
+        <div>{{c_text}}</div>
+      </button>
+    </ion-col>
+  </ion-row>
+
+  </ion-card>
+
+</ion-content>

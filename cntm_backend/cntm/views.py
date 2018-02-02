@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 from django.views.decorators.csrf import csrf_exempt
 
+from cntm.helpers.challenge import get_all_challenges, get_challenge_data
 from cntm.helpers.user import create_new_user, check_user_passwd, get_user_token, get_user_json, verify_user, \
     update_user, get_user_ranking
 
@@ -23,6 +24,9 @@ def user_login(request):
 
             if valid:
                 token = get_user_token(username)
+
+                print({"username": username, "token": token, "success": 1})
+
                 return JsonResponse({"username": username, "token": token, "success": 1})
             else:
                 return JsonResponse({"success": 0})
@@ -62,7 +66,10 @@ def get_user_data(request):
             username = request.GET.get("username", "")
             token = request.GET.get("token", "")
 
-            ret_json = get_user_json(username, token)
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            ret_json = get_user_json(username)
 
             print(ret_json)
 
@@ -100,7 +107,7 @@ def update_user_data(request):
 
 def user_ranking(request):
     if request.method == "GET":
-        # try:
+        try:
 
             username = request.GET.get("username", "")
             token = request.GET.get("token", "")
@@ -114,10 +121,69 @@ def user_ranking(request):
 
             return JsonResponse(rank_json)
 
-        # except:
-        #     return JsonResponse({"msg":"Error: Invalid request"})
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
     else:
         return JsonResponse({})
+
+def user_details(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            other = request.GET.get("other", "")
+
+            print(username, token, other)
+
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            user_json = get_user_json(other, empty=("passwd", "real_name", "token"))
+
+            print("User:" , user_json)
+
+            return JsonResponse(user_json)
+
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+
+def challenge_list(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            ch_json = get_all_challenges()
+            return JsonResponse(ch_json)
+
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+
+def challenge_data(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            cid = request.GET.get("id", "")
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            ch_json = get_challenge_data(cid)
+            return JsonResponse(ch_json)
+
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
 
 
 def dnd(request):

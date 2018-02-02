@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 
@@ -88,6 +88,20 @@ export class UserServiceProvider {
       let get_params = "?username="+username+"&token="+token;
 
       this.http.get(apiUrl+'user_ranking' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  get_other_user_detail(username, token, other){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token+ "&other=" + other;
+
+      this.http.get(apiUrl+'user_detail' + get_params)
         .subscribe(res => {
           resolve(res);
         }, (err) => {

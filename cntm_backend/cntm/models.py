@@ -15,3 +15,17 @@ class User(models.Model):
     eye = models.CharField(max_length=30)
     descr = models.TextField()
     hobbies = models.TextField()
+
+
+
+class Challenge(models.Model):
+    name = models.CharField(max_length=100)
+    descr = models.TextField()
+    img_url = models.CharField(max_length=200)
+    choice = models.TextField()
+    open = models.IntegerField(default=0)
+
+class Answer(models.Models):
+    uname = models.CharField(max_length=30)
+    cid = models.IntegerField()
+    text = models.CharField(max_length=200)
