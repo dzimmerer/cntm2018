@@ -53,10 +53,10 @@ export class LoginPage {
         this.loading.dismiss();
         this.data = result;
 
-        if("success" in result && result.success == 1){
+        if("success" in result && result["success"] == 1){
           console.log("Welcome!!!");
-          window.localStorage.setItem('token', result.token);
-          window.localStorage.setItem('username', result.username);
+          window.localStorage.setItem('token', result["token"]);
+          window.localStorage.setItem('username', result["username"]);
           this.nav.setRoot(HomePage);
         }
         else{

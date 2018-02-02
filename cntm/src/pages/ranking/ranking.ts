@@ -26,7 +26,7 @@ export class RankingPage {
 
     this.usp.get_user_ranking(username, token).then((result) => {
 
-      this.ranking = result.ranking
+      this.ranking = result["ranking"]
 
     }, (err) => {
     });

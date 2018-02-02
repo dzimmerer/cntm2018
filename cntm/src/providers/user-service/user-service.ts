@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 
@@ -18,9 +18,7 @@ export class UserServiceProvider {
   login(username, passwd) {
     return new Promise((resolve, reject) => {
 
-      let headers = new Headers({
-        'Content-Type': 'application/x-www-form-urlencoded'
-      });
+      const headers = new HttpHeaders();
 
       let body = new FormData();
       body.append('username', username);
@@ -39,9 +37,7 @@ export class UserServiceProvider {
   register(username, passwd, email) {
     return new Promise((resolve, reject) => {
 
-      let headers = new Headers({
-        'Content-Type': 'application/x-www-form-urlencoded'
-      });
+      const headers = new HttpHeaders();
 
       let body = new FormData();
       body.append('email', email);

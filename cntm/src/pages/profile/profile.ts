@@ -33,21 +33,21 @@ export class ProfilePage {
 
       if("username" in result) {
 
-        console.log(result.username);
+        console.log(result["username"]);
 
-        this.img_url = result.img_url;
+        this.img_url = result["img_url"];
 
         if(!(this.img_url.startsWith("http") || this.img_url.startsWith("www"))){
           this.img_url = this.usp.get_api_url() + this.img_url;
         }
 
-        this.descr = result.descr;
-        this.real_name = result.real_name;
-        this.age = result.age;
-        this.hair = result.hair;
-        this.eye = result.eye;
-        this.hobbies = result.hobbies;
-        this.score = result.score;
+        this.descr = result["descr"];
+        this.real_name = result["real_name"];
+        this.age = result["age"];
+        this.hair = result["hair"];
+        this.eye = result["eye"];
+        this.hobbies = result["hobbies"];
+        this.score = result["score"];
       }
 
     }, (err) => {

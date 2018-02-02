@@ -15,6 +15,8 @@ def user_login(request):
             username = request.POST.get("username", "")
             passwd = request.POST.get("password", "")
 
+            print(username, passwd)
+
             valid = check_user_passwd(username, passwd)
 
             print(valid)
