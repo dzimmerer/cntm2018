@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 let apiUrl = 'https://cntm.cfapps.eu10.hana.ondemand.com/';
 
 
+
 @Injectable()
 export class UserServiceProvider {
 
@@ -60,7 +61,7 @@ export class UserServiceProvider {
 
       let get_params = "?username="+username+"&token="+token;
 
-      this.http.get(apiUrl+'user_data' + get_params)
+      this.http.get(apiUrl+'user_data/' + get_params)
         .subscribe(res => {
           resolve(res);
         }, (err) => {
@@ -69,12 +70,13 @@ export class UserServiceProvider {
     });
   }
 
+
   update_user_data(username, token, name, value){
     return new Promise((resolve, reject) => {
 
       let get_params = "?username="+username+"&token="+token + "&" + name + "=" + value;
 
-      this.http.get(apiUrl+'update_user' + get_params)
+      this.http.get(apiUrl+'update_user/' + get_params)
         .subscribe(res => {
           resolve(res);
         }, (err) => {
@@ -88,7 +90,7 @@ export class UserServiceProvider {
 
       let get_params = "?username="+username+"&token="+token;
 
-      this.http.get(apiUrl+'user_ranking' + get_params)
+      this.http.get(apiUrl+'user_ranking/' + get_params)
         .subscribe(res => {
           resolve(res);
         }, (err) => {
@@ -102,7 +104,7 @@ export class UserServiceProvider {
 
       let get_params = "?username="+username+"&token="+token+ "&other=" + other;
 
-      this.http.get(apiUrl+'user_detail' + get_params)
+      this.http.get(apiUrl+'user_detail/' + get_params)
         .subscribe(res => {
           resolve(res);
         }, (err) => {

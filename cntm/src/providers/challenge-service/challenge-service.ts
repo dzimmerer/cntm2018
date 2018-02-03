@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 
 
-let apiUrl = 'http://cntm.cfapps.eu10.hana.ondemand.com/';
+let apiUrl = 'https://cntm.cfapps.eu10.hana.ondemand.com/';
 
 
 @Injectable()
@@ -19,7 +19,7 @@ export class ChallengeServiceProvider {
 
       let get_params = "?username="+username+"&token="+token;
 
-      this.http.get(apiUrl+'challenge_list' + get_params)
+      this.http.get(apiUrl+'challenge_list/' + get_params)
         .subscribe(res => {
           resolve(res);
         }, (err) => {
@@ -34,7 +34,7 @@ export class ChallengeServiceProvider {
 
       let get_params = "?username="+username+"&token="+token+"&id="+cid;
 
-      this.http.get(apiUrl+'challenge_data' + get_params)
+      this.http.get(apiUrl+'challenge_data/' + get_params)
         .subscribe(res => {
           resolve(res);
         }, (err) => {
@@ -49,7 +49,7 @@ export class ChallengeServiceProvider {
 
       let get_params = "?username="+username+"&token="+token+"&id="+cid;
 
-      this.http.get(apiUrl+'challenge_answer' + get_params)
+      this.http.get(apiUrl+'challenge_answer/' + get_params)
         .subscribe(res => {
           resolve(res);
         }, (err) => {
@@ -64,7 +64,7 @@ export class ChallengeServiceProvider {
 
       let get_params = "?username="+username+"&token="+token+"&id="+cid + "&text="+text;
 
-      this.http.get(apiUrl+'give_answer' + get_params)
+      this.http.get(apiUrl+'give_answer/' + get_params)
         .subscribe(res => {
           resolve(res);
         }, (err) => {
