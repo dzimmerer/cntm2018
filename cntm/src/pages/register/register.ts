@@ -34,7 +34,7 @@ export class RegisterPage {
     this.authForm = formBuilder.group({
       username: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9]*'), Validators.minLength(6), Validators.maxLength(30)])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-      email: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9]*@[a-zA-Z0-9]*.[a-z]*'), Validators.minLength(6)])]
+      email: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._-]*@[a-zA-Z0-9._-]*.[a-z]*'), Validators.minLength(6)])]
     });
 
   }
