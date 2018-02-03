@@ -18,8 +18,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-// let apiUrl = 'https://cntm.cfapps.eu10.hana.ondemand.com/';
-var apiUrl = 'http://localhost:8000/';
+var apiUrl = 'https://cntm.cfapps.eu10.hana.ondemand.com/';
+// let apiUrl = 'http://localhost:8000/';
 var ChallengeServiceProvider = (function () {
     function ChallengeServiceProvider(http) {
         this.http = http;
@@ -1096,8 +1096,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-// let apiUrl = 'https://cntm.cfapps.eu10.hana.ondemand.com/';
-var apiUrl = 'http://localhost:8000/';
+var apiUrl = 'https://cntm.cfapps.eu10.hana.ondemand.com/';
+// let apiUrl = 'http://localhost:8000/';
 var UserServiceProvider = (function () {
     function UserServiceProvider(http) {
         this.http = http;
