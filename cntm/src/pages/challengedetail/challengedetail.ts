@@ -29,7 +29,9 @@ export class ChallengedetailPage {
   img_url: any;
   c_text:any;
 
-  c_anwser:any;
+  c_anwser = "";
+  ca_own = {};
+  ca_other: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private csp: ChallengeServiceProvider,
               public alertCtrl: AlertController) {
@@ -62,6 +64,20 @@ export class ChallengedetailPage {
     }, (err) => {
     });
 
+    this.csp.get_challenge_answers(this.username, this.token, this.cid).then((result) => {
+
+      if("other" in result) {
+        this.ca_other = result["other"];
+      }
+      if("own" in result) {
+        this.ca_own = result["own"];
+        this.c_anwser = this.ca_own["text"];
+      }
+
+    }, (err) => {
+    });
+
+
 
 
   }
@@ -93,7 +109,8 @@ export class ChallengedetailPage {
     else{
       alert.addInput({
         type: 'text',
-        name: 'inpt'
+        name: 'inpt',
+        value: this.c_anwser,
       })
     }
 
@@ -104,10 +121,22 @@ export class ChallengedetailPage {
         if(this.has_choice == 0) {
           data = data["inpt"]
         }
+        // Update
+        this.csp.give_challenge_answer(this.username, this.token, this.cid, data).then((result) => {
+        }, (err) => {
+        });
+
+        let aimg_url = "";
+        if("img_url" in this.ca_own){
+          aimg_url = this.ca_own["img_url"]
+        }
+        this.ca_own = {"username": this.username,
+                        "cid": this.cid,
+                        "text": data,
+                        "img_url": aimg_url};
         this.c_anwser = data;
 
-        // Update
-        console.log(this.c_anwser)
+
       }
     });
     alert.present();

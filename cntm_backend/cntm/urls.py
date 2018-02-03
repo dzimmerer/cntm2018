@@ -10,5 +10,7 @@ urlpatterns = [
     path(r'user_detail/', views.user_details, name='user_details'),
     path(r'challenge_list/', views.challenge_list, name='challenge_list'),
     path(r'challenge_data/', views.challenge_data, name='challenge_data'),
+    path(r'challenge_answer/', views.challenge_answer, name='challenge_answer'),
+    path(r'give_answer/', views.give_answer, name='give_answer'),
     path(r'', views.dnd, name='dnd'),
 ]

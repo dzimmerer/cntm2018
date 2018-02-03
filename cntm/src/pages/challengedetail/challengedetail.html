@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{name}}</ion-title>
+    <ion-title>Challenge</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -17,6 +17,9 @@
 
   <ion-card>
 
+    <ion-card-header>
+      {{name}}
+    </ion-card-header>
     <ion-card-content>
       {{descr}}
     </ion-card-content>
@@ -37,5 +40,36 @@
   </ion-row>
 
   </ion-card>
+
+  <ion-card *ngIf="c_anwser != ''">
+
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="{{ca_own.img_url}}">
+        </ion-avatar>
+        <h2>{{ca_own.username}}</h2>
+        <p>{{ca_own.text}}</p>
+        <button ion-button icon-left clear small (click)="doAnswer()" item-end *ngIf="open == 1">
+          <ion-icon name="text"></ion-icon>
+          <div>Edit</div>
+        </button>
+      </ion-item>
+
+
+  </ion-card>
+
+  <ion-card *ngFor="let ca of ca_other ">
+
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="{{ca.img_url}}">
+      </ion-avatar>
+      <h2>{{ca.username}}</h2>
+      <p>{{ca.text}}</p>
+
+    </ion-item>
+
+  </ion-card>
+
 
 </ion-content>

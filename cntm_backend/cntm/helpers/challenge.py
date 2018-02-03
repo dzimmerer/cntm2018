@@ -1,4 +1,4 @@
-from cntm.models import Challenge
+from cntm.models import Challenge, User, CAnswer
 
 
 def get_open_challenges(open=True):
@@ -35,3 +35,59 @@ def get_challenge_data(cid):
                 has_choice=has_choice,
                 img_url=c.img_url,
                 open=c.open)
+
+def add_challenge_answer(username, cid, answer):
+    u = User.objects.get(username=username)
+    c = Challenge.objects.get(id=cid)
+
+    cas = CAnswer.objects.filter(cid=cid, uname=username)
+
+    if len(cas) > 0:
+        a = cas.first()
+        a.text = answer
+        a.save()
+    else:
+        a = CAnswer(uname=username,
+                    cid=c.id,
+                    text=answer,
+                    img_url=u.img_url)
+        a.save()
+
+def get_anwsers_for_challenge(cid, username=""):
+
+    ret_dict = {}
+    ret_list = []
+
+    cas = CAnswer.objects.filter(cid=cid)
+
+    for a in cas:
+
+        a_dct = dict(cid=a.cid,
+                     username=a.uname,
+                     text=a.text,
+                     img_url=a.img_url)
+
+        if a.uname == username:
+            ret_dict["own"] = a_dct
+        else:
+            ret_list.append(a_dct)
+
+    ret_dict["other"] = ret_list
+
+    return ret_dict
+
+def get_anwsers_for_user(username):
+
+    ret_list = []
+
+    cas = CAnswer.objects.filter(uname=username)
+    for a in cas:
+
+        a_dct = dict(cid=a.cid,
+                     username=a.uname,
+                     text=a.text,
+                     img_url=a.img_url)
+
+        ret_list.append(a_dct)
+
+    return {"answers": ret_list}

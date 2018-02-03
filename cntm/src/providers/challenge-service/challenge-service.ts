@@ -44,4 +44,35 @@ export class ChallengeServiceProvider {
   }
 
 
+  get_challenge_answers(username, token, cid){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token+"&id="+cid;
+
+      this.http.get(apiUrl+'challenge_answer' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+
+  give_challenge_answer(username, token, cid, text){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token+"&id="+cid + "&text="+text;
+
+      this.http.get(apiUrl+'give_answer' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+
+
 }

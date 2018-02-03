@@ -3,7 +3,8 @@ from django.shortcuts import render
 
 from django.views.decorators.csrf import csrf_exempt
 
-from cntm.helpers.challenge import get_all_challenges, get_challenge_data
+from cntm.helpers.challenge import get_all_challenges, get_challenge_data, get_anwsers_for_challenge, \
+    add_challenge_answer
 from cntm.helpers.user import create_new_user, check_user_passwd, get_user_token, get_user_json, verify_user, \
     update_user, get_user_ranking
 
@@ -189,3 +190,43 @@ def challenge_data(request):
 def dnd(request):
     return HttpResponse("-.-")
 
+
+def challenge_answer(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            cid = request.GET.get("id", "")
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            ach_json = get_anwsers_for_challenge(cid, username)
+
+            print("Answers:" , ach_json)
+
+            return JsonResponse(ach_json)
+
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+
+def give_answer(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            cid = request.GET.get("id", "")
+            text = request.GET.get("text", "")
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            add_challenge_answer(username, cid, text)
+
+            return JsonResponse({})
+
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})

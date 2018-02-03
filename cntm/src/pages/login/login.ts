@@ -6,6 +6,7 @@ import {RegisterPage} from "../register/register";
 import {LoadingController} from "ionic-angular/components/loading/loading-controller";
 import {ToastController} from "ionic-angular/components/toast/toast-controller";
 import {UserServiceProvider} from "../../providers/user-service/user-service";
+// import {MenuController} from "ionic-angular/components/app/menu-controller";
 
 /**
  * Generated class for the LoginPage page.
@@ -41,6 +42,9 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
+
+    // this.menu.swipeEnable(false);
+
     console.log('ionViewDidLoad LoginPage');
   }
 

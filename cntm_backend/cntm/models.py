@@ -25,7 +25,8 @@ class Challenge(models.Model):
     choice = models.TextField()
     open = models.IntegerField(default=0)
 
-class Answer(models.Models):
+class CAnswer(models.Model):
     uname = models.CharField(max_length=30)
     cid = models.IntegerField()
     text = models.CharField(max_length=200)
+    img_url = models.CharField(max_length=200)
