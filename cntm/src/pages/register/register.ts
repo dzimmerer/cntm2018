@@ -5,6 +5,7 @@ import {HomePage} from "../home/home";
 import {LoadingController} from "ionic-angular/components/loading/loading-controller";
 import {ToastController} from "ionic-angular/components/toast/toast-controller";
 import {UserServiceProvider} from "../../providers/user-service/user-service";
+import {MenuController} from "ionic-angular/components/app/menu-controller";
 /**
  * Generated class for the RegisterPage page.
  *
@@ -25,7 +26,7 @@ export class RegisterPage {
 
   constructor(public nav: NavController, public navParams: NavParams, public formBuilder: FormBuilder,
               private loadingCtrl: LoadingController, private toastCtrl: ToastController,
-              private usp: UserServiceProvider) {
+              private usp: UserServiceProvider, private menu: MenuController) {
 
 
     this.nav = nav;
@@ -58,7 +59,7 @@ export class RegisterPage {
 
       }, (err) => {
         this.loading.dismiss();
-        this.presentToast(err);
+        this.presentToast("Error");
       });
 
     }
@@ -89,6 +90,9 @@ export class RegisterPage {
   }
 
   ionViewDidLoad() {
+
+    this.menu.swipeEnable(false);
+
     console.log('ionViewDidLoad RegisterPage');
   }
 

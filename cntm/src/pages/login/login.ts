@@ -6,7 +6,7 @@ import {RegisterPage} from "../register/register";
 import {LoadingController} from "ionic-angular/components/loading/loading-controller";
 import {ToastController} from "ionic-angular/components/toast/toast-controller";
 import {UserServiceProvider} from "../../providers/user-service/user-service";
-// import {MenuController} from "ionic-angular/components/app/menu-controller";
+import {MenuController} from "ionic-angular/components/app/menu-controller";
 
 /**
  * Generated class for the LoginPage page.
@@ -28,7 +28,7 @@ export class LoginPage {
 
 
   constructor(public nav: NavController, public navParams: NavParams, public formBuilder: FormBuilder,
-              private loadingCtrl: LoadingController, private toastCtrl: ToastController,
+              private loadingCtrl: LoadingController, private toastCtrl: ToastController, private menu: MenuController,
               private usp: UserServiceProvider) {
 
 
@@ -43,7 +43,7 @@ export class LoginPage {
 
   ionViewDidLoad() {
 
-    // this.menu.swipeEnable(false);
+    this.menu.swipeEnable(false);
 
     console.log('ionViewDidLoad LoginPage');
   }
@@ -72,7 +72,7 @@ export class LoginPage {
 
       }, (err) => {
         this.loading.dismiss();
-        this.presentToast(err);
+        this.presentToast("Error");
       });
 
     }

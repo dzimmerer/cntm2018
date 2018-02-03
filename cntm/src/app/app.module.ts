@@ -3,7 +3,6 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { ProfilePage } from '../pages/profile/profile';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -20,6 +19,7 @@ import {UserdetailPage} from "../pages/userdetail/userdetail";
 import {ChallengesPage} from "../pages/challenges/challenges";
 import { ChallengeServiceProvider } from '../providers/challenge-service/challenge-service';
 import {ChallengedetailPage} from "../pages/challengedetail/challengedetail";
+import {HomePage} from "../pages/home/home";
 
 
 

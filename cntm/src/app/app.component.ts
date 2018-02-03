@@ -27,7 +27,7 @@ export class MyApp {
       { title: 'Home', component: HomePage },
       { title: 'Profile', component: ProfilePage },
       { title: 'Ranking', component: RankingPage },
-      { title: 'Challenges', component: ChallengesPage }
+      { title: 'Challenges', component: ChallengesPage },
     ];
 
   }
