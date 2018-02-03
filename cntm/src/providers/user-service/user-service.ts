@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 
 
-let apiUrl = 'http://localhost:8000/';
+let apiUrl = 'https://cntm.cfapps.eu10.hana.ondemand.com/';
 
 
 @Injectable()
@@ -29,6 +29,7 @@ export class UserServiceProvider {
           resolve(res);
         }, (err) => {
           reject(err);
+          console.log(err);
         });
     });
   }

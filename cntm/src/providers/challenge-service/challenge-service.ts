@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 
 
-let apiUrl = 'http://localhost:8000/';
+let apiUrl = 'http://cntm.cfapps.eu10.hana.ondemand.com/';
 
 
 @Injectable()

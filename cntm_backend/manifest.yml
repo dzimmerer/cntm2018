@@ -1,0 +1,5 @@
+---
+applications:
+- name: cntm
+  memory: 512M
+

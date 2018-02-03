@@ -1,0 +1,6 @@
+Django==2.0.2
+django-cors-headers==2.1.0
+django-secure==1.0.1
+gunicorn==19.4.5
+passlib==1.7.1
+pytz==2017.3
