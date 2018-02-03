@@ -12,5 +12,6 @@ urlpatterns = [
     path(r'challenge_data/', views.challenge_data, name='challenge_data'),
     path(r'challenge_answer/', views.challenge_answer, name='challenge_answer'),
     path(r'give_answer/', views.give_answer, name='give_answer'),
+    path(r'get_models/', views.get_models, name='get_models'),
     path(r'', views.dnd, name='dnd'),
 ]

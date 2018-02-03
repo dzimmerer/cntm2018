@@ -8,6 +8,7 @@ import {ProfilePage} from '../pages/profile/profile';
 import {LoginPage} from "../pages/login/login";
 import {RankingPage} from "../pages/ranking/ranking";
 import {ChallengesPage} from "../pages/challenges/challenges";
+import {ModelwallPage} from "../pages/modelwall/modelwall";
 
 @Component({
   templateUrl: 'app.html'
@@ -28,6 +29,7 @@ export class MyApp {
       { title: 'Profile', component: ProfilePage },
       { title: 'Ranking', component: RankingPage },
       { title: 'Challenges', component: ChallengesPage },
+      { title: 'Model Wall', component: ModelwallPage },
     ];
 
   }

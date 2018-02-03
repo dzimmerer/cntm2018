@@ -1,4 +1,4 @@
-from cntm.models import Challenge, User, CAnswer
+from cntm.models import Challenge, User, CAnswer, GNTMModel
 
 
 def get_open_challenges(open=True):
@@ -91,3 +91,24 @@ def get_anwsers_for_user(username):
         ret_list.append(a_dct)
 
     return {"answers": ret_list}
+
+
+
+def get_gntm_models():
+
+    ret_list = []
+
+    mods = GNTMModel.objects.all().order_by("out")
+
+    for m in mods:
+
+        ret_list.append(dict(name=m.name,
+                             descr=m.descr,
+                             img_url=m.img_url,
+                             age=m.age,
+                             out=m.out,
+                             link=m.link
+                             ))
+
+
+    return {"models": ret_list}

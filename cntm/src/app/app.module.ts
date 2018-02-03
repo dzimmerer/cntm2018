@@ -20,7 +20,8 @@ import {ChallengesPage} from "../pages/challenges/challenges";
 import { ChallengeServiceProvider } from '../providers/challenge-service/challenge-service';
 import {ChallengedetailPage} from "../pages/challengedetail/challengedetail";
 import {HomePage} from "../pages/home/home";
-
+import {ModelwallPage} from "../pages/modelwall/modelwall";
+import { IonicImageViewerModule } from 'ionic-img-viewer';
 
 
 @NgModule({
@@ -34,10 +35,12 @@ import {HomePage} from "../pages/home/home";
     UserdetailPage,
     ChallengesPage,
     ChallengedetailPage,
+    ModelwallPage,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    IonicImageViewerModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
@@ -51,6 +54,7 @@ import {HomePage} from "../pages/home/home";
     UserdetailPage,
     ChallengesPage,
     ChallengedetailPage,
+    ModelwallPage,
   ],
   providers: [
     StatusBar,

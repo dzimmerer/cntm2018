@@ -1,0 +1,27 @@
+
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Model Wall</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+    <ion-item *ngFor="let m of models">
+      <ion-thumbnail item-start>
+        <img src="{{m.img_url}}" *ngIf="m.out == 0" imageViewer>
+        <img src="{{m.img_url}}" ngClass="gray_img" *ngIf="m.out == 1" imageViewer>
+      </ion-thumbnail>
+      <h2>{{m.name}}, {{m.age}}</h2>
+      <p>{{m.descr}}</p>
+      <button ion-button clear item-end (click)="openLink(m.link)">More</button>
+    </ion-item>
+  </ion-list>
+
+
+</ion-content>

@@ -30,3 +30,11 @@ class CAnswer(models.Model):
     cid = models.IntegerField()
     text = models.CharField(max_length=200)
     img_url = models.CharField(max_length=200)
+
+class GNTMModel(models.Model):
+    name = models.CharField(max_length=100)
+    descr = models.TextField()
+    age = models.CharField(max_length=100)
+    img_url = models.CharField(max_length=200)
+    out = models.IntegerField(default=0)
+    link =  models.CharField(max_length=200)

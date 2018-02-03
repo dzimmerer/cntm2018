@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from cntm.helpers.challenge import get_all_challenges, get_challenge_data, get_anwsers_for_challenge, \
-    add_challenge_answer
+    add_challenge_answer, get_gntm_models
 from cntm.helpers.user import create_new_user, check_user_passwd, get_user_token, get_user_json, verify_user, \
     update_user, get_user_ranking
 
@@ -225,6 +225,24 @@ def give_answer(request):
             add_challenge_answer(username, cid, text)
 
             return JsonResponse({})
+
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+
+def get_models(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            model_json = get_gntm_models()
+
+            return JsonResponse(model_json)
 
         except:
             return JsonResponse({"msg":"Error: Invalid request"})
