@@ -101,7 +101,7 @@ def get_gntm_models():
 
     ret_list = []
 
-    mods = GNTMModel.objects.all().order_by("out")
+    mods = GNTMModel.objects.all().order_by("out", "name")
 
     for m in mods:
 
