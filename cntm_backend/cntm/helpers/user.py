@@ -149,14 +149,10 @@ def update_user(username, key, val):
 
 
 def get_user_ranking():
-    users = User.objects.all()
+    users = User.objects.all().order_by("-score")
     user_toplist = []
 
     for u in users:
-        user_toplist.append((u.score, dict(username=u.username, score=u.score, img_url=u.img_url, descr=u.descr)))
+        user_toplist.append(dict(username=u.username, score=u.score, img_url=u.img_url, descr=u.descr))
 
-    ret_list = []
-    for _, u in sorted(user_toplist, reverse=True, key=lambda x: x[0]):
-        ret_list.append(u)
-
-    return {"ranking": ret_list}
+    return {"ranking": user_toplist}
