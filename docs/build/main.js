@@ -121,6 +121,7 @@ var ChallengedetailPage = (function () {
         this.alertCtrl = alertCtrl;
         this.c_anwser = "";
         this.ca_own = {};
+        this.isShownArray = [];
         this.cid = navParams.get('cid');
         this.username = window.localStorage.getItem('username');
         this.token = window.localStorage.getItem('token');
@@ -211,14 +212,30 @@ var ChallengedetailPage = (function () {
         alert.present();
         console.log("Answer....");
     };
+    ChallengedetailPage.prototype.isVisible = function (n) {
+        return this.isShownArray.includes(n);
+    };
+    ChallengedetailPage.prototype.toggleVisible = function (n) {
+        console.log("Set Visible");
+        if (this.isShownArray.includes(n)) {
+            var ind = this.isShownArray.indexOf(n);
+            if (ind > -1) {
+                this.isShownArray.splice(ind, 1);
+            }
+        }
+        else {
+            this.isShownArray.push(n);
+        }
+        console.log(this.isShownArray);
+    };
     ChallengedetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-challengedetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/'<!--\n  Generated template for the ChallengedetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Challenge</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <ion-card-header>\n      {{name}}\n    </ion-card-header>\n    <ion-card-content>\n      {{descr}}\n    </ion-card-content>\n\n\n    <ion-row>\n    <ion-col *ngIf="open == 1">\n      <button ion-button icon-left clear small (click)="doAnswer()">\n        <ion-icon name="text"></ion-icon>\n        <div>Answer</div>\n      </button>\n    </ion-col>\n    <ion-col text-end>\n      <button ion-button icon-left clear small>\n        <div>{{c_text}}</div>\n      </button>\n    </ion-col>\n  </ion-row>\n\n  </ion-card>\n\n  <ion-card *ngIf="c_anwser != \'\'">\n\n      <ion-item>\n        <ion-avatar item-start>\n          <img src="{{ca_own.img_url}}">\n        </ion-avatar>\n        <h2>{{ca_own.username}}</h2>\n        <p>{{ca_own.text}}</p>\n        <button ion-button icon-left clear small (click)="doAnswer()" item-end *ngIf="open == 1">\n          <ion-icon name="text"></ion-icon>\n          <div>Edit</div>\n        </button>\n      </ion-item>\n    <ion-card-content>\n      <p>{{ca_own.text}}</p>\n    </ion-card-content>\n\n  </ion-card>\n\n  <ion-card *ngFor="let ca of ca_other ">\n\n    <ion-item>\n      <ion-avatar item-start>\n        <img src="{{ca.img_url}}">\n      </ion-avatar>\n      <h2>{{ca.username}}</h2>\n      <p>{{ca.text}}</p>\n\n    </ion-item>\n\n  </ion-card>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/,
+            selector: 'page-challengedetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/'<!--\n  Generated template for the ChallengedetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Challenge</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <ion-card-header>\n      {{name}}\n    </ion-card-header>\n    <ion-card-content>\n      {{descr}}\n    </ion-card-content>\n\n\n    <ion-row>\n    <ion-col *ngIf="open == 1">\n      <button ion-button icon-left clear small (click)="doAnswer()">\n        <ion-icon name="text"></ion-icon>\n        <div>Answer</div>\n      </button>\n    </ion-col>\n    <ion-col text-end>\n      <button ion-button icon-left clear small>\n        <div>{{c_text}}</div>\n      </button>\n    </ion-col>\n  </ion-row>\n\n  </ion-card>\n\n  <ion-card *ngIf="c_anwser != \'\'" (click)="toggleVisible(-1)">\n\n      <ion-item>\n        <ion-avatar item-start>\n          <img src="{{ca_own.img_url}}">\n        </ion-avatar>\n        <h2>{{ca_own.username}}</h2>\n        <p>{{ca_own.text}}</p>\n        <button ion-button icon-left clear small (click)="doAnswer()" item-end *ngIf="open == 1">\n          <ion-icon name="text"></ion-icon>\n          <div>Edit</div>\n        </button>\n      </ion-item>\n    <ion-card-content *ngIf="isVisible(-1)">\n      <p>{{ca_own.text}}</p>\n    </ion-card-content>\n\n  </ion-card>\n\n  <ion-card *ngFor="let ca of ca_other; let i = index">\n\n    <ion-item (click)="toggleVisible(i)">\n      <ion-avatar item-start>\n        <img src="{{ca.img_url}}">\n      </ion-avatar>\n      <h2>{{ca.username}}</h2>\n      <p>{{ca.text}}</p>\n    </ion-item>\n    <ion-card-content *ngIf="isVisible(i)">\n      <p>{{ca.text}}</p>\n    </ion-card-content>\n\n  </ion-card>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]) === "function" && _d || Object])
     ], ChallengedetailPage);
     return ChallengedetailPage;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=challengedetail.js.map
@@ -278,7 +295,7 @@ var ChallengesPage = (function () {
     };
     ChallengesPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-challenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n\n  <h3 text-center>Open</h3>\n  <ion-list>\n    <!--<ion-list-header>Open</ion-list-header>-->\n\n    <ion-item *ngFor="let c of openC" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <p>{{c.descr}}</p>\n      <ion-icon name="help-circle" item-end style="color: #144932"></ion-icon>\n    </ion-item>\n  </ion-list>\n\n  <br>\n  <h3 text-center>Closed</h3>\n  <ion-list>\n\n    <!--<ion-list-header>Closed</ion-list-header>-->\n\n    <ion-item *ngFor="let c of closedC" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <p>{{c.descr}}</p>\n      <ion-icon name="close-circle" item-end style="color: #400011"></ion-icon>\n    </ion-item>\n\n  </ion-list>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/,
+            selector: 'page-challenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n\n  <h3 text-center>Open</h3>\n  <ion-list>\n    <!--<ion-list-header>Open</ion-list-header>-->\n\n    <ion-item *ngFor="let c of openC" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <!--<p>{{c.descr}}</p>-->\n      <ion-icon name="help-circle" item-end style="color: #c3af80"></ion-icon>\n    </ion-item>\n  </ion-list>\n\n  <br>\n  <h3 text-center>Closed</h3>\n  <ion-list>\n\n    <!--<ion-list-header>Closed</ion-list-header>-->\n\n    <ion-item *ngFor="let c of closedC" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <!--<p>{{c.descr}}</p>-->\n      <ion-icon name="close-circle" item-end style="color: #c3af80"></ion-icon>\n    </ion-item>\n\n  </ion-list>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */]])
     ], ChallengesPage);
@@ -627,7 +644,7 @@ var RankingPage = (function () {
     };
     RankingPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-ranking',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/ranking/ranking.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Ranking</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-list>\n    <ion-item *ngFor="let user of ranking" (click)="detailView(user.username)">\n      <!--<ion-thumbnail item-start>-->\n        <!--<img src="{{user.img_url}}">-->\n      <!--</ion-thumbnail>-->\n      <ion-avatar item-start>\n        <img src="{{user.img_url}}">\n      </ion-avatar>\n      <h2>{{user.username}}</h2>\n      <p>&quot;{{user.descr}}&quot;</p>\n      <ion-badge item-end>{{user.score}}</ion-badge>\n    </ion-item>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/ranking/ranking.html"*/,
+            selector: 'page-ranking',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/ranking/ranking.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Ranking</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-list>\n    <ion-item *ngFor="let user of ranking" (click)="detailView(user.username)">\n      <!--<ion-thumbnail item-start>-->\n        <!--<img src="{{user.img_url}}">-->\n      <!--</ion-thumbnail>-->\n      <ion-avatar item-start>\n        <img src="{{user.img_url}}">\n      </ion-avatar>\n      <h2>{{user.username}}</h2>\n      <!--<p>&quot;{{user.descr}}&quot;</p>-->\n      <ion-badge item-end>{{user.score}}</ion-badge>\n    </ion-item>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/ranking/ranking.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserServiceProvider */]])
     ], RankingPage);
@@ -749,11 +766,11 @@ var map = {
 		2
 	],
 	"../pages/register/register.module": [
-		425,
+		426,
 		1
 	],
 	"../pages/userdetail/userdetail.module": [
-		426,
+		425,
 		0
 	]
 };
@@ -955,8 +972,8 @@ var AppModule = (function () {
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/modelwall/modelwall.module#ModelwallPageModule', name: 'ModelwallPage', segment: 'modelwall', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ranking/ranking.module#RankingPageModule', name: 'RankingPage', segment: 'ranking', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/register/register.module#RegisterPageModule', name: 'RegisterPage', segment: 'register', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/userdetail/userdetail.module#UserdetailPageModule', name: 'UserdetailPage', segment: 'userdetail', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/userdetail/userdetail.module#UserdetailPageModule', name: 'UserdetailPage', segment: 'userdetail', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/register/register.module#RegisterPageModule', name: 'RegisterPage', segment: 'register', priority: 'low', defaultHistory: [] }
                     ]
                 }),
             ],

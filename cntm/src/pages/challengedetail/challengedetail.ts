@@ -17,6 +17,8 @@ import {AlertController} from "ionic-angular/components/alert/alert-controller";
 })
 export class ChallengedetailPage {
 
+  isShownArray: number[];
+
   username: any;
   token: any;
 
@@ -36,10 +38,11 @@ export class ChallengedetailPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private csp: ChallengeServiceProvider,
               public alertCtrl: AlertController) {
 
+    this.isShownArray = [];
+
     this.cid = navParams.get('cid');
     this.username = window.localStorage.getItem('username');
     this.token = window.localStorage.getItem('token');
-
 
     this.csp.get_challenge_data(this.username, this.token, this.cid).then((result) => {
 
@@ -156,4 +159,27 @@ export class ChallengedetailPage {
 
     console.log("Answer....")
   }
+
+
+  isVisible(n: number){
+    return this.isShownArray.includes(n);
+  }
+
+  toggleVisible(n: number){
+
+    console.log("Set Visible");
+
+    if(this.isShownArray.includes(n)) {
+      const ind = this.isShownArray.indexOf(n);
+      if (ind > -1) {
+        this.isShownArray.splice(ind, 1);
+      }
+    }
+    else{
+      this.isShownArray.push(n)
+    }
+    console.log(this.isShownArray);
+  }
+
+
 }

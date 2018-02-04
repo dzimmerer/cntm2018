@@ -41,7 +41,7 @@
 
   </ion-card>
 
-  <ion-card *ngIf="c_anwser != ''">
+  <ion-card *ngIf="c_anwser != ''" (click)="toggleVisible(-1)">
 
       <ion-item>
         <ion-avatar item-start>
@@ -54,22 +54,24 @@
           <div>Edit</div>
         </button>
       </ion-item>
-    <ion-card-content>
+    <ion-card-content *ngIf="isVisible(-1)">
       <p>{{ca_own.text}}</p>
     </ion-card-content>
 
   </ion-card>
 
-  <ion-card *ngFor="let ca of ca_other ">
+  <ion-card *ngFor="let ca of ca_other; let i = index">
 
-    <ion-item>
+    <ion-item (click)="toggleVisible(i)">
       <ion-avatar item-start>
         <img src="{{ca.img_url}}">
       </ion-avatar>
       <h2>{{ca.username}}</h2>
       <p>{{ca.text}}</p>
-
     </ion-item>
+    <ion-card-content *ngIf="isVisible(i)">
+      <p>{{ca.text}}</p>
+    </ion-card-content>
 
   </ion-card>
 
