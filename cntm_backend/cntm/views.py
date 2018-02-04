@@ -7,6 +7,8 @@ from cntm.helpers.challenge import get_all_challenges, get_challenge_data, get_a
     add_challenge_answer, get_gntm_models
 from cntm.helpers.user import create_new_user, check_user_passwd, get_user_token, get_user_json, verify_user, \
     update_user, get_user_ranking
+from cntm.models import GNTMModel
+
 
 
 @csrf_exempt

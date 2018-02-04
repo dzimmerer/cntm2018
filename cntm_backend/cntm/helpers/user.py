@@ -5,28 +5,53 @@ from django.core import serializers
 from cntm.helpers.passwd import md5_hash, hash_password, verify_passwd
 from cntm.models import User
 
-
 hair_list = ["Rot", "Blond", "Schwarz", "Braun"]
 eye_list = ["Grün", "Blau", "Blau-Grau", "Braun", "Blau-Grün"]
-desc_list=["Meinen Freund kennt man als Juicy Gay!",
-           "Ich färbe meine Haare gerne in bunten Farben.",
-           "Meine Lippen sind gemacht!",
-           "Ich wurde fast vom LKW überfahren!",
-           "Ich trage immer eine Perücke",
-           "Wenn ich den Raum betrete, falle ich auf!",
-           "Nach Miss Universe jetzt Topmodel?"]
-hobbi_list = ["Singen", "Modeln", "Fernsehen", "GNTM", "Tanzen", "Laufen", "Shoppen"]
-img_list = ["https://images-na.ssl-images-amazon.com/images/M/MV5BMTEyNTg3Njc1OTdeQTJeQWpwZ15BbWU3MDI5Mjg3MzM@._V1_UY317_CR20,0,214,317_AL_.jpg",
-            "http://www1.pictures.zimbio.com/gi/21st+Annual+Elton+John+AIDS+Foundation+Academy+ysTBYk7WzUJx.jpg",
-            "https://intouch.wunderweib.de/assets/styles/696/public/field/image/heidi-klum-mode-lidl.jpg?itok=3TJWngMz",
-            "http://www.speakerscorner.me/wp-content/uploads/2015/10/heidi1.jpg",
-            "https://image.afcdn.com/story/20140116/heidi-klum-steht-zu-ihren-falten-161877_w767h767c1cx761cy1100.jpg",
-            "https://imagesvc.timeincapp.com/v3/mm/image?url=http%3A%2F%2Fcdn-img.instyle.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2F684xflex%2Fpublic%2F1477665999%2F102816-heidi-klum-lead.jpg",
-            "http://cdn.jolie.de/194800-2839016-1/image768w/heidi-klum-kinder.jpg"]
+desc_list = ["Mein Freund ist für mich nach New York gezogen!", "Ich esse immer Schnitzel mit Spaghetti!",
+             "Meinen Freund kennt man als Juicy Gay!", "Mein Mann war beim Schweizer Bachelor!",
+             "Ich habe nicht die klassischen Modelmaße.", "Ich bin überhaupt nicht oberflächlich!",
+             "Ich habe mich für meine Hautfarbe geschämt!", "Wenn ich den Raum betrete, falle ich auf!",
+             "Ich wurde als Junge geboren.", "Ich führe ein gutes Leben in Starnberg!", "Gott ist für mich alles!",
+             "Ich bin High Fashion und das weiß ich!", "Es hat noch keine gewonnen, die so aussieht wie ich!",
+             "Mein Papa ist der Geschäftsführer von Chanel!", "Ich habe meinen Freund im Club kennengelernt!",
+             "Ich fühle mich nicht sehr wohl.", "Ich habe die Schule abgebrochen!", "Ich trage immer eine Perücke",
+             "Ich färbe meine Haare gerne in bunten Farben.", "Mein Freund ist von Kopf bis Fuß tätowiert!",
+             "Nach Miss Universe jetzt Topmodel?", "Meinen Freund habe ich mit 13 kennengelernt.",
+             "Ich habe mir meine Brüste machen lassen.", "Ich wurde fast vom LKW überfahren!",
+             "Mit dem Richtigen ist das Alter egal.", "Victoria's Secret ist ein Traum von mir!",
+             "Ich verstehe nicht, wie man sich übers Umstyling aufregen kann!",
+             "Ich habe mich nicht wohl in meinem Körper gefühlt.", "Singen ist meine Leidenschaft!",
+             "Man weiß ja, dass man relativ hübsch ist.", "Mein Freundeskreis ist älter als ich.",
+             "Ich lasse meine Augenbrauen sprießen!", "Meine Lippen sind gemacht!",
+             "Ich habe noch keine Erfahrungen im Modeln!"]
+hobbi_list = ["Singen", "Modeln", "Fernsehen", "GNTM", "Tanzen", "Laufen", "Shoppen", "Essen"]
+img_list = [
+    "https://images-na.ssl-images-amazon.com/images/M/MV5BMTEyNTg3Njc1OTdeQTJeQWpwZ15BbWU3MDI5Mjg3MzM@._V1_UY317_CR20,0,214,317_AL_.jpg",
+    "http://www1.pictures.zimbio.com/gi/21st+Annual+Elton+John+AIDS+Foundation+Academy+ysTBYk7WzUJx.jpg",
+    "https://intouch.wunderweib.de/assets/styles/696/public/field/image/heidi-klum-mode-lidl.jpg?itok=3TJWngMz",
+    "http://www.speakerscorner.me/wp-content/uploads/2015/10/heidi1.jpg",
+    "https://image.afcdn.com/story/20140116/heidi-klum-steht-zu-ihren-falten-161877_w767h767c1cx761cy1100.jpg",
+    "https://imagesvc.timeincapp.com/v3/mm/image?url=http%3A%2F%2Fcdn-img.instyle.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2F684xflex%2Fpublic%2F1477665999%2F102816-heidi-klum-lead.jpg",
+    "http://cdn.jolie.de/194800-2839016-1/image768w/heidi-klum-kinder.jpg",
+    "https://image.gala.de/20514732/large1x1-460-460/9ab73961ac248825d910b025723f227f/GS/heidi-klum--6271749-.jpg",
+    "https://image.gala.de/v1/cms/jr/heidi-klum_4839621-ORIGINAL-original.jpg",
+    "https://image.gala.de/20557304/large1x1-460-460/abe13021ec72d77b76fbdac2364a95be/ay/thomashayo--9485564-.jpg",
+    "http://cdn.jolie.de/11834-137283-1/image768w/thomas-hayo-2039724.jpg",
+    "https://cdn.okmag.de/s/article_main/public/media/gallery/49a9843046f4ec27ee522e84384a4261.jpg",
+    "https://www.stylebook.de/data/uploads/2017/06/14220692_f03c6c1017.jpg",
+    "https://cdn.okmag.de/s/foto_des_tages/public/themen/bilder/thomas-hayo.jpg",
+    "https://intouch.wunderweib.de/assets/styles/600x600/public/intouch/media/redaktionell/wunderweib/intouch_2/stars/starnews/2014_21/Thomas_Hayo_GNTM_h.jpg",
+    "https://cdn.okmag.de/s/foto_des_tages/public/themen/bilder/thomas-hayo.jpg",
+    "https://image.gala.de/20907544/large1x1-460-460/5a0f75efc3e525773b35913127b2d6f9/Rs/michael-michalsky-ge--11091091-.jpg",
+    "https://content1.promiflash.de/article-images/square600/michael-michalsky-mit-ohrringen.jpg",
+    "https://intouch.wunderweib.de/assets/styles/600x600/public/field/image/gntm-juror-michael-michalsky-gewinnerin.jpg",
+    "http://media.klatsch-tratsch.de/615x/2017/11/michael-michalsky.jpg",
+    "http://www.textilwirtschaft.de/news/media/6/Michael-Michalsky-58618-detail.jpeg",
+    "https://i0.gmx.at/image/636/31761636,pd=2/michael-michalsky.jpg",
+    "http://www.confashion.com/ss2010/michalsky7-2009b.jpg"]
 
 
 def create_new_user(email, username, passwd):
-
     if not does_user_exist(username):
         u_token = md5_hash(email)
         pass_hash = hash_password(passwd)
@@ -38,7 +63,7 @@ def create_new_user(email, username, passwd):
                         score=0,
                         real_name="Echter Name",
                         img_url=random.choice(img_list),
-                        age=random.randint(16,33),
+                        age=random.randint(16, 33),
                         hair=random.choice(hair_list),
                         eye=random.choice(eye_list),
                         descr=random.choice(desc_list),
@@ -53,9 +78,7 @@ def create_new_user(email, username, passwd):
     return u_token
 
 
-
 def check_user_passwd(username, passwd):
-
     if not does_user_exist(username):
         return False
 
@@ -70,7 +93,6 @@ def check_user_passwd(username, passwd):
 
 
 def get_user_token(username):
-
     try:
         u = User.objects.get(username=username)
         u_token = u.token
@@ -82,7 +104,6 @@ def get_user_token(username):
 
 
 def verify_user(username, token):
-
     if not does_user_exist(username):
         return False
 
@@ -106,7 +127,6 @@ def does_user_exist(username):
 
 
 def get_user_json(username, empty=("passwd",)):
-
     u = User.objects.get(username=username)
 
     json_str = serializers.serialize('json', [u], ensure_ascii=False)
@@ -123,13 +143,12 @@ def get_user_json(username, empty=("passwd",)):
 
 
 def update_user(username, key, val):
-
     u = User.objects.get(username=username)
     setattr(u, key, val)
     u.save()
 
-def get_user_ranking():
 
+def get_user_ranking():
     users = User.objects.all()
     user_toplist = []
 
@@ -137,7 +156,7 @@ def get_user_ranking():
         user_toplist.append((u.score, dict(username=u.username, score=u.score, img_url=u.img_url, descr=u.descr)))
 
     ret_list = []
-    for _, u in sorted(user_toplist, reverse=True, key=lambda x:x[0]):
+    for _, u in sorted(user_toplist, reverse=True, key=lambda x: x[0]):
         ret_list.append(u)
 
     return {"ranking": ret_list}

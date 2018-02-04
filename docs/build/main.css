@@ -25753,3 +25753,27 @@ page-modelwall .gray_img {
   /* Safari 6.0 - 9.0 */
   filter: grayscale(1);
 }
+
+page-modelwall .card-background-page ion-card {
+  position: relative;
+  text-align: left;
+}
+
+page-modelwall .card-background-page .card-title {
+  position: absolute;
+  top: 50%;
+  font-size: 1.5em;
+  width: 100%;
+  left: 2%;
+  font-weight: bold;
+  color: #fff;
+}
+
+page-modelwall .card-background-page .card-subtitle {
+  font-size: 1.0em;
+  position: absolute;
+  top: 60%;
+  left: 2%;
+  width: 100%;
+  color: #fff;
+}

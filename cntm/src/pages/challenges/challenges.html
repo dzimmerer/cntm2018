@@ -12,25 +12,27 @@
 <ion-content>
 
 
+  <h3 text-center>Open</h3>
   <ion-list>
-
-
-    <ion-list-header>Open</ion-list-header>
-
+    <!--<ion-list-header>Open</ion-list-header>-->
 
     <ion-item *ngFor="let c of openC" (click)="onChallenge(c.id)">
-      <ion-icon name="help-circle" item-start style="color: #aaffaa"></ion-icon>
       <h2>{{c.name}}</h2>
       <p>{{c.descr}}</p>
+      <ion-icon name="help-circle" item-end style="color: #128800"></ion-icon>
     </ion-item>
+  </ion-list>
 
+  <br>
+  <h3 text-center>Closed</h3>
+  <ion-list>
 
-    <ion-list-header>Closed</ion-list-header>
+    <!--<ion-list-header>Closed</ion-list-header>-->
 
     <ion-item *ngFor="let c of closedC" (click)="onChallenge(c.id)">
-      <ion-icon name="help-circle" item-start style="color: #ff8888"></ion-icon>
       <h2>{{c.name}}</h2>
       <p>{{c.descr}}</p>
+      <ion-icon name="close-circle" item-end style="color: #a61000"></ion-icon>
     </ion-item>
 
   </ion-list>

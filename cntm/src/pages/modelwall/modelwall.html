@@ -9,19 +9,29 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content  class="card-background-page">
 
-  <ion-list>
-    <ion-item *ngFor="let m of models">
-      <ion-thumbnail item-start>
-        <img src="{{m.img_url}}" *ngIf="m.out == 0" imageViewer>
-        <img src="{{m.img_url}}" ngClass="gray_img" *ngIf="m.out == 1" imageViewer>
-      </ion-thumbnail>
-      <h2>{{m.name}}, {{m.age}}</h2>
-      <p>{{m.descr}}</p>
-      <button ion-button clear item-end (click)="openLink(m.link)">More</button>
-    </ion-item>
-  </ion-list>
+
+  <ion-content>
+
+    <ion-card *ngFor="let m of models">
+      <img src="{{m.img_url}}" *ngIf="m.out == 0" imageViewer>
+      <img src="{{m.img_url}}" ngClass="gray_img" *ngIf="m.out == 1" imageViewer>
+    <div class="card-title">{{m.name}}, {{m.age}}</div>
+    <div class="card-subtitle">&quot;{{m.descr}}&quot;</div>
+    <button ion-button clear item-end (click)="openLink(m.link)">More</button>
+  </ion-card>
+<!--<ion-list>-->
+    <!--<ion-item>-->
+      <!--<ion-thumbnail item-start>-->
+        <!--<img src="{{m.img_url}}" *ngIf="m.out == 0" imageViewer>-->
+        <!--<img src="{{m.img_url}}" ngClass="gray_img" *ngIf="m.out == 1" imageViewer>-->
+      <!--</ion-thumbnail>-->
+      <!--<h2>{{m.name}}, {{m.age}}</h2>-->
+      <!--<p>{{m.descr}}</p>-->
+      <!--<button ion-button clear item-end (click)="openLink(m.link)">More</button>-->
+    <!--</ion-item>-->
+  <!--</ion-list>-->
 
 
 </ion-content>

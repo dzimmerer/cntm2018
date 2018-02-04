@@ -104,6 +104,19 @@ export class ChallengedetailPage {
 
       });
 
+    }
+    else if(this.has_choice == 2) {
+
+      this.choice.forEach(function(element) {
+
+        alert.addInput({
+          type: 'checkbox',
+          label: element,
+          value: element,
+          checked: false,
+        });
+
+      });
 
     }
     else{

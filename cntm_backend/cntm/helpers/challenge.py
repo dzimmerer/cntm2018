@@ -27,6 +27,9 @@ def get_challenge_data(cid):
     if ";" in c.choice:
         choices = c.choice.split(";")
         has_choice = 1
+    elif "|" in c.choice:
+        choices = c.choice.split("|")
+        has_choice = 2
 
     return dict(id = c.id,
                 name=c.name,
