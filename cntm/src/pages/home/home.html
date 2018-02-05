@@ -7,7 +7,19 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Welcome to CNTM</h3>
+<ion-content>
+  <ion-slides pager>
+
+    <ion-slide *ngFor="let n of news">
+      <ion-card-header>
+        {{n.name}}
+      </ion-card-header>
+      <ion-card-content text-left="">
+        {{n.descr}}
+      </ion-card-content>
+    </ion-slide>
+
+
+  </ion-slides>
 
 </ion-content>

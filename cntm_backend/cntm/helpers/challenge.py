@@ -1,4 +1,4 @@
-from cntm.models import Challenge, User, CAnswer, GNTMModel
+from cntm.models import Challenge, User, CAnswer, GNTMModel, News
 
 
 def get_open_challenges(open=True):
@@ -38,6 +38,29 @@ def get_challenge_data(cid):
                 has_choice=has_choice,
                 img_url=c.img_url,
                 open=c.open)
+
+def update_challenge(cid, key, val):
+    c = Challenge.objects.get(id=cid)
+    setattr(c, key, val)
+    c.save()
+
+def add_challenge(name, desc="", img_url="", choice="", open=0):
+    c = Challenge(name=name,
+                 desc=desc,
+                 img_url=img_url,
+                 choice=choice,
+                 open=open )
+    c.save()
+
+def delete_challenge(cid):
+    try:
+        Challenge.objects.get(id=cid).delete()
+        cas = CAnswer.objects.filter(cid=cid)
+        for c in cas:
+            c.delete()
+        return True
+    except:
+        return False
 
 def add_challenge_answer(username, cid, answer):
     u = User.objects.get(username=username)
@@ -105,7 +128,8 @@ def get_gntm_models():
 
     for m in mods:
 
-        ret_list.append(dict(name=m.name,
+        ret_list.append(dict(id=m.id,
+                             name=m.name,
                              descr=m.descr,
                              img_url=m.img_url,
                              age=m.age,
@@ -115,3 +139,44 @@ def get_gntm_models():
 
 
     return {"models": ret_list}
+
+def update_gntm_models(mid, key, val):
+    gm = GNTMModel.objects.get(id=mid)
+    setattr(gm, key, val)
+    gm.save()
+
+
+
+def add_news(name, desc="", date=""):
+    n = News(name=name,
+             desc=desc,
+             date=date)
+    n.save()
+
+
+def get_m_news():
+    ret_list = []
+    mods = News.objects.all().order_by("-id")
+
+    for m in mods:
+
+        ret_list.append(dict(name=m.name,
+                             descr=m.descr,
+                             id=m.id,
+                             date=m.date,
+                             ))
+
+    return {"news": ret_list}
+
+def update_m_news(nid, key, val):
+    n = News.objects.get(id=nid)
+    setattr(n, key, val)
+    n.save()
+
+def delete_m_news(nid):
+    try:
+        News.objects.get(id=nid).delete()
+        return True
+    except:
+        return False
+

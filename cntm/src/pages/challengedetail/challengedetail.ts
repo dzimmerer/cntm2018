@@ -167,8 +167,6 @@ export class ChallengedetailPage {
 
   toggleVisible(n: number){
 
-    console.log("Set Visible");
-
     if(this.isShownArray.includes(n)) {
       const ind = this.isShownArray.indexOf(n);
       if (ind > -1) {
@@ -178,7 +176,6 @@ export class ChallengedetailPage {
     else{
       this.isShownArray.push(n)
     }
-    console.log(this.isShownArray);
   }
 
 

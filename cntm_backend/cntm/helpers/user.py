@@ -3,7 +3,7 @@ import random
 from django.core import serializers
 
 from cntm.helpers.passwd import md5_hash, hash_password, verify_passwd
-from cntm.models import User
+from cntm.models import User, CAnswer
 
 hair_list = ["Rot", "Blond", "Schwarz", "Braun"]
 eye_list = ["Grün", "Blau", "Blau-Grau", "Braun", "Blau-Grün"]
@@ -156,3 +156,30 @@ def get_user_ranking():
         user_toplist.append(dict(username=u.username, score=u.score, img_url=u.img_url, descr=u.descr))
 
     return {"ranking": user_toplist}
+
+
+def is_admin(username):
+    try:
+        if not does_user_exist(username):
+            return False
+
+        u = User.objects.get(username=username)
+
+        return u.admin == 1
+
+    except:
+        return False
+
+
+
+def delete_user(username):
+    try:
+        if not does_user_exist(username):
+            return False
+        User.objects.get(username=username).delete()
+        cas = CAnswer.objects.filter(username=username)
+        for c in cas:
+            c.delete()
+        return True
+    except:
+        return False

@@ -4,7 +4,7 @@ from django.db import models
 
 class User(models.Model):
     token = models.CharField(max_length=50)
-    username = models.CharField(max_length=30)
+    username = models.CharField(max_length=30, unique=True)
     email = models.CharField(max_length=50)
     passwd = models.CharField(max_length=100)
     score = models.IntegerField()
@@ -15,6 +15,7 @@ class User(models.Model):
     eye = models.CharField(max_length=30)
     descr = models.TextField()
     hobbies = models.TextField()
+    admin = models.IntegerField(default=0)
 
 
 
@@ -38,3 +39,9 @@ class GNTMModel(models.Model):
     img_url = models.CharField(max_length=200)
     out = models.IntegerField(default=0)
     link =  models.CharField(max_length=200)
+
+
+class News(models.Model):
+    name = models.CharField(max_length=100)
+    descr = models.TextField()
+    date = models.CharField(max_length=200)

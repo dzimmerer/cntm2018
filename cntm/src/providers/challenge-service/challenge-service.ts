@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 
 
 
-let apiUrl = 'https://cntm.cfapps.eu10.hana.ondemand.com/';
-// let apiUrl = 'http://localhost:8000/';
+// let apiUrl = 'https://cntm.cfapps.eu10.hana.ondemand.com/';
+let apiUrl = 'http://localhost:8000/';
 
 
 @Injectable()
@@ -74,6 +74,21 @@ export class ChallengeServiceProvider {
     });
   }
 
+
+  get_news_data(username, token){
+    console.log("get the f***** data");
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token;
+
+      this.http.get(apiUrl+'news_list/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
 
 
 }
