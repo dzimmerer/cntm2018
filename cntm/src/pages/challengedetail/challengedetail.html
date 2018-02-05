@@ -55,6 +55,11 @@
         </button>
       </ion-col>
       <ion-col>
+        <button ion-button icon-left clear small (click)="chVal('choice', 'Choice')">
+          <div>Edit Choice</div>
+        </button>
+      </ion-col>
+      <ion-col>
       <button ion-button icon-left clear small (click)="deleteChallenge()">
         <div>Delete</div>
       </button>
@@ -85,7 +90,7 @@
   <ion-card *ngFor="let ca of ca_other; let i = index">
 
     <ion-item (click)="toggleVisible(i)">
-      <ion-avatar item-start>
+      <ion-avatar item-start (click)="frwdToUser(ca.username)">
         <img src="{{ca.img_url}}">
       </ion-avatar>
       <h2>{{ca.username}}</h2>

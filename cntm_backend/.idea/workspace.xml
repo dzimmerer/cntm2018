@@ -83,8 +83,8 @@
       <file leaf-file-name="challenge.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cntm/helpers/challenge.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="144" column="25" lean-forward="true" selection-start-line="144" selection-start-column="25" selection-end-line="144" selection-end-column="25" />
+            <state relative-caret-position="345">
+              <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -140,9 +140,9 @@
         <option value="$PROJECT_DIR$/cntm/helpers/plygrnd.py" />
         <option value="$PROJECT_DIR$/cntm/models.py" />
         <option value="$PROJECT_DIR$/cntm/helpers/user.py" />
-        <option value="$PROJECT_DIR$/cntm/helpers/challenge.py" />
         <option value="$PROJECT_DIR$/cntm/views.py" />
         <option value="$PROJECT_DIR$/cntm/urls.py" />
+        <option value="$PROJECT_DIR$/cntm/helpers/challenge.py" />
       </list>
     </option>
   </component>
@@ -152,7 +152,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="1973" />
     <option name="width" value="952" />
     <option name="height" value="577" />
@@ -291,7 +291,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1973" y="0" width="1920" height="1050" extended-state="7" />
+    <frame x="1973" y="0" width="1920" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13607258" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -643,8 +643,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cntm/helpers/challenge.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="144" column="25" lean-forward="true" selection-start-line="144" selection-start-column="25" selection-end-line="144" selection-end-column="25" />
+        <state relative-caret-position="345">
+          <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -34,7 +34,8 @@ def get_challenge_data(cid):
     return dict(id = c.id,
                 name=c.name,
                 descr=c.descr,
-                choice=choices,
+                choice=c.choice,
+                choice_list=choices,
                 has_choice=has_choice,
                 img_url=c.img_url,
                 open=c.open)

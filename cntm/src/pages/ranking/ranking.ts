@@ -41,7 +41,6 @@ export class RankingPage {
   }
 
   detailView(username: string) {
-
     console.log(username)
     this.navCtrl.push(UserdetailPage, {
       other: username

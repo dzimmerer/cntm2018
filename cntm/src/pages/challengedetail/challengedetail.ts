@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {ChallengeServiceProvider} from "../../providers/challenge-service/challenge-service";
 import {AlertController} from "ionic-angular/components/alert/alert-controller";
 import {ChallengesPage} from "../challenges/challenges";
+import {UserdetailPage} from "../userdetail/userdetail";
 
 /**
  * Generated class for the ChallengedetailPage page.
@@ -28,6 +29,7 @@ export class ChallengedetailPage {
   name: any;
   descr: any;
   choice: any;
+  choice_list: any;
   has_choice: any;
   open:any;
   img_url: any;
@@ -53,6 +55,7 @@ export class ChallengedetailPage {
         this.name = result["name"];
         this.descr = result["descr"];
         this.choice = result["choice"];
+        this.choice_list = result["choice_list"];
         this.has_choice = result["has_choice"];
         this.open = result["open"];
         this.img_url = result["img_url"];
@@ -91,7 +94,7 @@ export class ChallengedetailPage {
 
     if(this.has_choice == 1) {
 
-      this.choice.forEach(function(element) {
+      this.choice_list.forEach(function(element) {
 
         alert.addInput({
           type: 'radio',
@@ -105,7 +108,7 @@ export class ChallengedetailPage {
     }
     else if(this.has_choice == 2) {
 
-      this.choice.forEach(function(element) {
+      this.choice_list.forEach(function(element) {
 
         alert.addInput({
           type: 'checkbox',
@@ -211,4 +214,11 @@ export class ChallengedetailPage {
     });
     prompt.present();
   }
+
+  frwdToUser(uname: string) {
+    this.navCtrl.push(UserdetailPage, {
+      other: uname
+    });
+  }
+
 }
