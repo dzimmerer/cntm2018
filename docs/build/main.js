@@ -203,85 +203,12 @@ var ChallengedetailPage = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ModelwallPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_challenge_service_challenge_service__ = __webpack_require__(54);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/**
- * Generated class for the ModelwallPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var ModelwallPage = (function () {
-    function ModelwallPage(navCtrl, navParams, usp, csp) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.usp = usp;
-        this.csp = csp;
-        this.username = window.localStorage.getItem('username');
-        this.token = window.localStorage.getItem('token');
-        this.admin = window.localStorage.getItem('admin');
-        this.usp.get_gntm_models(this.username, this.token).then(function (result) {
-            _this.models = result["models"];
-        }, function (err) {
-        });
-    }
-    ModelwallPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad ModelwallPage');
-    };
-    ModelwallPage.prototype.openLink = function (param) {
-        window.open(param, '_system', 'location=yes');
-    };
-    ModelwallPage.prototype.toggleActive = function (id, i) {
-        var curVal = this.models[i]["out"];
-        var newVal = 0;
-        if (curVal == 0) {
-            newVal = 1;
-        }
-        this.csp.update_topmodel_data(this.username, this.token, this.models[i]["id"], "out", newVal);
-        this.models[i]["out"] = newVal;
-        console.log(i, id);
-    };
-    ModelwallPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-modelwall',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/modelwall/modelwall.html"*/'\n<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Model Wall</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content  class="card-background-page">\n\n\n  <ion-content>\n\n    <ion-card *ngFor="let m of models; let i = index">\n      <img src="{{m.img_url}}" *ngIf="m.out == 0" imageViewer>\n      <img src="{{m.img_url}}" ngClass="gray_img" *ngIf="m.out == 1" imageViewer>\n    <div class="card-title">{{m.name}}, {{m.age}}</div>\n    <div class="card-subtitle">&quot;{{m.descr}}&quot;</div>\n      <button ion-button clear item-end (click)="openLink(m.link)">More</button>\n      <button ion-button clear item-end (click)="toggleActive(m.id, i)" *ngIf="admin == \'1\'">Toggle</button>\n  </ion-card>\n<!--<ion-list>-->\n    <!--<ion-item>-->\n      <!--<ion-thumbnail item-start>-->\n        <!--<img src="{{m.img_url}}" *ngIf="m.out == 0" imageViewer>-->\n        <!--<img src="{{m.img_url}}" ngClass="gray_img" *ngIf="m.out == 1" imageViewer>-->\n      <!--</ion-thumbnail>-->\n      <!--<h2>{{m.name}}, {{m.age}}</h2>-->\n      <!--<p>{{m.descr}}</p>-->\n      <!--<button ion-button clear item-end (click)="openLink(m.link)">More</button>-->\n    <!--</ion-item>-->\n  <!--</ion-list>-->\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/modelwall/modelwall.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */]])
-    ], ModelwallPage);
-    return ModelwallPage;
-}());
-
-//# sourceMappingURL=modelwall.js.map
-
-/***/ }),
-
-/***/ 139:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__register_register__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__register_register__ = __webpack_require__(139);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular_components_toast_toast_controller__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_user_service_user_service__ = __webpack_require__(43);
@@ -391,7 +318,7 @@ var LoginPage = (function () {
 
 /***/ }),
 
-/***/ 140:
+/***/ 139:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -503,6 +430,79 @@ var RegisterPage = (function () {
 
 /***/ }),
 
+/***/ 140:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ModelwallPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_challenge_service_challenge_service__ = __webpack_require__(54);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+/**
+ * Generated class for the ModelwallPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var ModelwallPage = (function () {
+    function ModelwallPage(navCtrl, navParams, usp, csp) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.usp = usp;
+        this.csp = csp;
+        this.username = window.localStorage.getItem('username');
+        this.token = window.localStorage.getItem('token');
+        this.admin = window.localStorage.getItem('admin');
+        this.usp.get_gntm_models(this.username, this.token).then(function (result) {
+            _this.models = result["models"];
+        }, function (err) {
+        });
+    }
+    ModelwallPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ModelwallPage');
+    };
+    ModelwallPage.prototype.openLink = function (param) {
+        window.open(param, '_system', 'location=yes');
+    };
+    ModelwallPage.prototype.toggleActive = function (id, i) {
+        var curVal = this.models[i]["out"];
+        var newVal = 0;
+        if (curVal == 0) {
+            newVal = 1;
+        }
+        this.csp.update_topmodel_data(this.username, this.token, this.models[i]["id"], "out", newVal);
+        this.models[i]["out"] = newVal;
+        console.log(i, id);
+    };
+    ModelwallPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-modelwall',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/modelwall/modelwall.html"*/'\n<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Model Wall</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content  class="card-background-page">\n\n\n  <ion-content>\n\n    <ion-card *ngFor="let m of models; let i = index">\n      <img src="{{m.img_url}}" *ngIf="m.out == 0" imageViewer>\n      <img src="{{m.img_url}}" ngClass="gray_img" *ngIf="m.out == 1" imageViewer>\n    <div class="card-title">{{m.name}}, {{m.age}}</div>\n    <div class="card-subtitle">&quot;{{m.descr}}&quot;</div>\n      <button ion-button clear item-end (click)="openLink(m.link)">More</button>\n      <button ion-button clear item-end (click)="toggleActive(m.id, i)" *ngIf="admin == \'1\'">Toggle</button>\n  </ion-card>\n<!--<ion-list>-->\n    <!--<ion-item>-->\n      <!--<ion-thumbnail item-start>-->\n        <!--<img src="{{m.img_url}}" *ngIf="m.out == 0" imageViewer>-->\n        <!--<img src="{{m.img_url}}" ngClass="gray_img" *ngIf="m.out == 1" imageViewer>-->\n      <!--</ion-thumbnail>-->\n      <!--<h2>{{m.name}}, {{m.age}}</h2>-->\n      <!--<p>{{m.descr}}</p>-->\n      <!--<button ion-button clear item-end (click)="openLink(m.link)">More</button>-->\n    <!--</ion-item>-->\n  <!--</ion-list>-->\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/modelwall/modelwall.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */]])
+    ], ModelwallPage);
+    return ModelwallPage;
+}());
+
+//# sourceMappingURL=modelwall.js.map
+
+/***/ }),
+
 /***/ 151:
 /***/ (function(module, exports) {
 
@@ -533,11 +533,11 @@ var map = {
 		5
 	],
 	"../pages/login/login.module": [
-		423,
+		422,
 		4
 	],
 	"../pages/modelwall/modelwall.module": [
-		422,
+		423,
 		3
 	],
 	"../pages/ranking/ranking.module": [
@@ -680,8 +680,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_profile_profile__ = __webpack_require__(236);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__ = __webpack_require__(233);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_splash_screen__ = __webpack_require__(235);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login__ = __webpack_require__(139);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_register_register__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_register_register__ = __webpack_require__(139);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_user_service_user_service__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ionic_angular_components_toast_toast_controller__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_ionic_angular_components_loading_loading_controller__ = __webpack_require__(51);
@@ -693,7 +693,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_challenge_service_challenge_service__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_challengedetail_challengedetail__ = __webpack_require__(137);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_home_home__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_modelwall_modelwall__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_modelwall_modelwall__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_ionic_img_viewer__ = __webpack_require__(316);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -748,8 +748,8 @@ var AppModule = (function () {
                     links: [
                         { loadChildren: '../pages/challengedetail/challengedetail.module#ChallengedetailPageModule', name: 'ChallengedetailPage', segment: 'challengedetail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/challenges/challenges.module#ChallengesPageModule', name: 'ChallengesPage', segment: 'challenges', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/modelwall/modelwall.module#ModelwallPageModule', name: 'ModelwallPage', segment: 'modelwall', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/modelwall/modelwall.module#ModelwallPageModule', name: 'ModelwallPage', segment: 'modelwall', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ranking/ranking.module#RankingPageModule', name: 'RankingPage', segment: 'ranking', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/register/register.module#RegisterPageModule', name: 'RegisterPage', segment: 'register', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/userdetail/userdetail.module#UserdetailPageModule', name: 'UserdetailPage', segment: 'userdetail', priority: 'low', defaultHistory: [] }
@@ -800,10 +800,10 @@ var AppModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(235);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_profile_profile__ = __webpack_require__(236);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(138);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_ranking_ranking__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_challenges_challenges__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_modelwall_modelwall__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_modelwall_modelwall__ = __webpack_require__(140);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -902,7 +902,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var apiUrl = 'https://d506cdf3.ngrok.io/';
+var apiUrl = 'http://ec2-34-253-80-80.eu-west-1.compute.amazonaws.com:8000/';
 // let apiUrl = 'http://localhost:8000/';
 var UserServiceProvider = (function () {
     function UserServiceProvider(http) {
@@ -1057,7 +1057,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var apiUrl = 'https://d506cdf3.ngrok.io/';
+var apiUrl = 'http://ec2-34-253-80-80.eu-west-1.compute.amazonaws.com:8000/';
 // let apiUrl = 'http://localhost:8000/';
 var ChallengeServiceProvider = (function () {
     function ChallengeServiceProvider(http) {
