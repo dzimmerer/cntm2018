@@ -14,12 +14,13 @@
 
   <ion-content>
 
-    <ion-card *ngFor="let m of models">
+    <ion-card *ngFor="let m of models; let i = index">
       <img src="{{m.img_url}}" *ngIf="m.out == 0" imageViewer>
       <img src="{{m.img_url}}" ngClass="gray_img" *ngIf="m.out == 1" imageViewer>
     <div class="card-title">{{m.name}}, {{m.age}}</div>
     <div class="card-subtitle">&quot;{{m.descr}}&quot;</div>
-    <button ion-button clear item-end (click)="openLink(m.link)">More</button>
+      <button ion-button clear item-end (click)="openLink(m.link)">More</button>
+      <button ion-button clear item-end (click)="toggleActive(m.id, i)" *ngIf="admin == '1'">Toggle</button>
   </ion-card>
 <!--<ion-list>-->
     <!--<ion-item>-->

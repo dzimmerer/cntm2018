@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 
@@ -133,4 +133,31 @@ export class UserServiceProvider {
     return apiUrl;
   }
 
+  delete_user_data(username: any, token: any, other: any) {
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token + "&other=" + other;
+
+      this.http.get(apiUrl+'delete_user/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  update_other_user_data(username, token, other, name, value){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token + "&other=" + other + "&" + name + "=" + value;
+
+      this.http.get(apiUrl+'update_other_user/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
 }

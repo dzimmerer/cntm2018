@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {ChallengeServiceProvider} from "../../providers/challenge-service/challenge-service";
 import {AlertController} from "ionic-angular/components/alert/alert-controller";
+import {ChallengesPage} from "../challenges/challenges";
 
 /**
  * Generated class for the ChallengedetailPage page.
@@ -21,6 +22,7 @@ export class ChallengedetailPage {
 
   username: any;
   token: any;
+  admin: any;
 
   cid: any;
   name: any;
@@ -29,7 +31,6 @@ export class ChallengedetailPage {
   has_choice: any;
   open:any;
   img_url: any;
-  c_text:any;
 
   c_anwser = "";
   ca_own = {};
@@ -43,6 +44,7 @@ export class ChallengedetailPage {
     this.cid = navParams.get('cid');
     this.username = window.localStorage.getItem('username');
     this.token = window.localStorage.getItem('token');
+    this.admin = window.localStorage.getItem('admin');
 
     this.csp.get_challenge_data(this.username, this.token, this.cid).then((result) => {
 
@@ -54,13 +56,6 @@ export class ChallengedetailPage {
         this.has_choice = result["has_choice"];
         this.open = result["open"];
         this.img_url = result["img_url"];
-
-        if(this.open == 1){
-          this.c_text = 'open'
-        }
-        else{
-          this.c_text = "closed."
-        }
 
       }
 
@@ -178,5 +173,42 @@ export class ChallengedetailPage {
     }
   }
 
+  chVal(name: string, title:string) {
+    let prompt = this.alertCtrl.create({
+      title: title,
+      inputs: [
+        {name: 'inpt',
+          value: this[name] },
+      ],
+      buttons: [
+        { text: 'Cancel', },
+        { text: 'Save',
+          handler: data => {
+            this[name] = data.inpt;
+            this.csp.update_challenge_data(this.username, this.token, this.cid, name, data.inpt);
+            console.log('Saved clicked');
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
 
+
+  deleteChallenge() {
+    let prompt = this.alertCtrl.create({
+      title: "Delete ?",
+      buttons: [
+        { text: 'Cancel', },
+        { text: 'OK',
+          handler: () => {
+            this.csp.delete_challenge_data(this.username, this.token, this.cid).then((result) => {
+              this.navCtrl.setRoot(ChallengesPage);
+            });
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
 }

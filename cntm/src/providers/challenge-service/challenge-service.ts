@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 
@@ -89,6 +89,106 @@ export class ChallengeServiceProvider {
         });
     });
   }
+
+  update_news_data(username, token, cid, name, value){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token + "&cid=" + cid +  "&" + name + "=" + value;
+
+      this.http.get(apiUrl+'update_news/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  add_news_data(username, token, name){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token + "&name=" + name;
+
+      this.http.get(apiUrl+'add_news/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  delete_news_data(username, token, cid){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token + "&cid=" + cid;
+
+      this.http.get(apiUrl+'delete_news/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  update_challenge_data(username, token, cid, name, value){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token + "&cid=" + cid +  "&" + name + "=" + value;
+
+      this.http.get(apiUrl+'update_challenge/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  add_challenge_data(username, token, name){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token + "&name=" + name;
+
+      this.http.get(apiUrl+'add_challenge/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  delete_challenge_data(username, token, cid){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token + "&cid=" + cid;
+
+      this.http.get(apiUrl+'delete_challenge/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  update_topmodel_data(username, token, cid, name, value){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token + "&cid=" + cid +  "&" + name + "=" + value;
+
+      this.http.get(apiUrl+'update_topmodel/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+
 
 
 }

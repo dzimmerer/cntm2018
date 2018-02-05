@@ -149,7 +149,7 @@ def update_user(username, key, val):
 
 
 def get_user_ranking():
-    users = User.objects.all().order_by("-score")
+    users = User.objects.filter(admin=0).order_by("-score")
     user_toplist = []
 
     for u in users:
@@ -177,7 +177,7 @@ def delete_user(username):
         if not does_user_exist(username):
             return False
         User.objects.get(username=username).delete()
-        cas = CAnswer.objects.filter(username=username)
+        cas = CAnswer.objects.filter(uname=username)
         for c in cas:
             c.delete()
         return True

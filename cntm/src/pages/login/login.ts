@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import {HomePage} from "../home/home";
 import {RegisterPage} from "../register/register";
 import {LoadingController} from "ionic-angular/components/loading/loading-controller";
@@ -57,10 +57,13 @@ export class LoginPage {
         this.loading.dismiss();
         this.data = result;
 
+        console.log(result);
+
         if("success" in result && result["success"] == 1){
           console.log("Welcome!!!");
           window.localStorage.setItem('token', result["token"]);
           window.localStorage.setItem('username', result["username"]);
+          window.localStorage.setItem('admin', result["admin"] + "");
           this.nav.setRoot(HomePage);
         }
         else{

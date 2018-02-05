@@ -56,6 +56,20 @@
 
 
   </ion-card>
+  <ion-card *ngIf="admin == '1'">
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small (click)="changePoints()">
+          <div>Change points</div>
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button ion-button icon-left clear small  (click)="deleteUser()" >
+          <div>Delete</div>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 
 
 </ion-content>

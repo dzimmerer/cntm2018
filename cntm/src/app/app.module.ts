@@ -12,7 +12,7 @@ import {RegisterPage} from "../pages/register/register";
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import {ToastController} from "ionic-angular/components/toast/toast-controller";
 import {LoadingController} from "ionic-angular/components/loading/loading-controller";
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import {FileChooser} from "@ionic-native/file-chooser";
 import {RankingPage} from "../pages/ranking/ranking";
 import {UserdetailPage} from "../pages/userdetail/userdetail";

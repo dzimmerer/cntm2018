@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {UserServiceProvider} from "../../providers/user-service/user-service";
+import {ChallengeServiceProvider} from "../../providers/challenge-service/challenge-service";
 
 /**
  * Generated class for the ModelwallPage page.
@@ -18,12 +19,19 @@ export class ModelwallPage {
 
   models: any[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private usp: UserServiceProvider) {
+  username: any;
+  token: any;
+  admin: any;
 
-    let username = window.localStorage.getItem('username');
-    let token = window.localStorage.getItem('token');
 
-    this.usp.get_gntm_models(username, token).then((result) => {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private usp: UserServiceProvider,
+              private csp: ChallengeServiceProvider) {
+
+    this.username = window.localStorage.getItem('username');
+    this.token = window.localStorage.getItem('token');
+    this.admin = window.localStorage.getItem('admin');
+
+    this.usp.get_gntm_models(this.username, this.token).then((result) => {
 
       this.models = result["models"]
 
@@ -37,5 +45,17 @@ export class ModelwallPage {
 
   openLink(param: string) {
     window.open(param, '_system', 'location=yes');
+  }
+
+  toggleActive(id, i) {
+    const curVal = this.models[i]["out"];
+    let newVal = 0;
+    if(curVal == 0){
+      newVal = 1;
+    }
+    this.csp.update_topmodel_data(this.username, this.token, this.models[i]["id"], "out", newVal);
+    this.models[i]["out"] = newVal;
+    console.log(i, id)
+
   }
 }

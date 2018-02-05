@@ -1,23 +1,40 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Home</ion-title>
+    <ion-buttons end *ngIf="admin == '1'">
+      <button ion-button icon-only (click)="addNews()">
+        <ion-icon name="add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <ion-slides pager>
 
-    <ion-slide *ngFor="let n of news">
+    <ion-slide *ngFor="let n of news; let i = index">
       <ion-card-header>
         {{n.name}}
       </ion-card-header>
-      <ion-card-content text-left="">
-        {{n.descr}}
+      <ion-card-content text-left>
+        <div [innerHTML]="n.descr"></div>
+      </ion-card-content>
+      <ion-card-content *ngIf="admin == '1'">
+        <button ion-button item-left clear small (click)="chVal(n.id, 'name', 'Headline', i)">
+          <div>Edit Name</div>
+        </button>
+        <button ion-button item-end clear small (click)="chVal(n.id, 'descr', 'Text', i)">
+          <div>Edit Text</div>
+        </button>
+        <button ion-button item-right clear small (click)="deleteNews(n.id)">
+          <div>Delete</div>
+        </button>
       </ion-card-content>
     </ion-slide>
+
 
 
   </ion-slides>

@@ -4,15 +4,16 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from cntm.helpers.challenge import get_all_challenges, get_challenge_data, get_anwsers_for_challenge, \
-    add_challenge_answer, get_gntm_models, get_m_news
+    add_challenge_answer, get_gntm_models, get_m_news, update_m_news, add_m_news, delete_m_news, add_challenge, \
+    update_challenge, delete_challenge, update_gntm_models
 from cntm.helpers.user import create_new_user, check_user_passwd, get_user_token, get_user_json, verify_user, \
-    update_user, get_user_ranking
+    update_user, get_user_ranking, is_admin, delete_user
 from cntm.models import GNTMModel
 
 
 
 @csrf_exempt
-def user_login(request):
+def user_login_req(request):
     if request.method == "POST":
         try:
 
@@ -27,10 +28,11 @@ def user_login(request):
 
             if valid:
                 token = get_user_token(username)
+                is_ad = int(is_admin(username))
 
-                print({"username": username, "token": token, "success": 1})
+                print({"username": username, "token": token, "success": 1, "admin": is_ad})
 
-                return JsonResponse({"username": username, "token": token, "success": 1})
+                return JsonResponse({"username": username, "token": token, "success": 1, "admin": is_ad})
             else:
                 return JsonResponse({"success": 0})
         except:
@@ -40,7 +42,7 @@ def user_login(request):
 
 
 @csrf_exempt
-def register(request):
+def register_req(request):
     if request.method == "POST":
         try:
 
@@ -62,7 +64,7 @@ def register(request):
 
 
 
-def get_user_data(request):
+def get_user_data_req(request):
     if request.method == "GET":
         try:
 
@@ -84,7 +86,7 @@ def get_user_data(request):
         return HttpResponse("-.-")
 
 
-def update_user_data(request):
+def update_user_data_req(request):
     if request.method == "GET":
         try:
 
@@ -108,7 +110,7 @@ def update_user_data(request):
         return JsonResponse({})
 
 
-def user_ranking(request):
+def user_ranking_req(request):
     if request.method == "GET":
         try:
 
@@ -129,7 +131,7 @@ def user_ranking(request):
     else:
         return JsonResponse({})
 
-def user_details(request):
+def user_details_req(request):
     if request.method == "GET":
         try:
             username = request.GET.get("username", "")
@@ -153,7 +155,7 @@ def user_details(request):
         return JsonResponse({})
 
 
-def challenge_list(request):
+def challenge_list_req(request):
     if request.method == "GET":
         try:
             username = request.GET.get("username", "")
@@ -170,7 +172,7 @@ def challenge_list(request):
         return JsonResponse({})
 
 
-def challenge_data(request):
+def challenge_data_req(request):
     if request.method == "GET":
         try:
             username = request.GET.get("username", "")
@@ -193,7 +195,7 @@ def dnd(request):
     return HttpResponse("-.-")
 
 
-def challenge_answer(request):
+def challenge_answer_req(request):
     if request.method == "GET":
         try:
             username = request.GET.get("username", "")
@@ -214,7 +216,7 @@ def challenge_answer(request):
         return JsonResponse({})
 
 
-def give_answer(request):
+def give_answer_req(request):
     if request.method == "GET":
         try:
             username = request.GET.get("username", "")
@@ -234,7 +236,7 @@ def give_answer(request):
         return JsonResponse({})
 
 
-def get_models(request):
+def get_models_req(request):
     if request.method == "GET":
         try:
             username = request.GET.get("username", "")
@@ -252,7 +254,7 @@ def get_models(request):
         return JsonResponse({})
 
 
-def get_news(request):
+def get_news_req(request):
     if request.method == "GET":
         try:
             username = request.GET.get("username", "")
@@ -263,6 +265,215 @@ def get_news(request):
             news_json = get_m_news()
             print("News")
             return JsonResponse(news_json)
+
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+def update_news_req(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            cid = request.GET.get("cid", "")
+
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            if not is_admin(username):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            for key, val in request.GET.items():
+                if key in ("username", "cid", "token"):
+                    continue
+                update_m_news(cid, key, val)
+
+            return JsonResponse({})
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+
+def add_news_req(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            name = request.GET.get("name", "")
+
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+            if not is_admin(username):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            add_m_news(name=name)
+            print("News added")
+
+            return JsonResponse({})
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+
+def delete_news_req(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            cid = request.GET.get("cid", "")
+
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+            if not is_admin(username):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            delete_m_news(nid=cid)
+            print("News deleted")
+
+            return JsonResponse({})
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+
+def delete_user_req(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            other = request.GET.get("other", "")
+
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+            if not is_admin(username):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            delete_user(username=other)
+            print("User deleted: ", other)
+
+            return JsonResponse({})
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+def update_other_user_data_req(request):
+    if request.method == "GET":
+        try:
+
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            other = request.GET.get("other", "")
+
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+            if not is_admin(username):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            for key, val in request.GET.items():
+                if key in ("username", "passwd", "token", "other"):
+                    continue
+                update_user(other, key, val)
+
+            return JsonResponse({})
+
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+def add_challenge_req(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            name = request.GET.get("name", "")
+
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+            if not is_admin(username):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            add_challenge(name=name)
+            print("Challenge added")
+
+            return JsonResponse({})
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+
+def update_challenge_data_req(request):
+    if request.method == "GET":
+        try:
+
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            cid = request.GET.get("cid", "")
+
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+            if not is_admin(username):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            for key, val in request.GET.items():
+                if key in ("username", "token", "cid"):
+                    continue
+                update_challenge(cid, key, val)
+
+            return JsonResponse({})
+
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+def delete_challenge_req(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            cid = request.GET.get("cid", "")
+
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+            if not is_admin(username):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            delete_challenge(cid=cid)
+            print("Challenge deleted: ", cid)
+
+            return JsonResponse({})
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+
+def update_gntm_model_req(request):
+    if request.method == "GET":
+        try:
+
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            cid = request.GET.get("cid", "")
+
+            if not verify_user(username, token):
+                return JsonResponse({"msg": "Error: Invalid request"})
+            if not is_admin(username):
+                return JsonResponse({"msg": "Error: Invalid request"})
+
+            for key, val in request.GET.items():
+                if key in ("username", "token", "cid"):
+                    continue
+                update_gntm_models(cid, key, val)
+
+            return JsonResponse({})
 
         except:
             return JsonResponse({"msg":"Error: Invalid request"})

@@ -71,6 +71,7 @@ export class ProfilePage {
             this[name] = data.inpt;
             this.usp.update_user_data(this.username, this.token, name, data.inpt);
             console.log('Saved clicked');
+
           }
         }
       ]

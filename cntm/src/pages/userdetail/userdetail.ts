@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {UserServiceProvider} from "../../providers/user-service/user-service";
+import {AlertController} from "ionic-angular/components/alert/alert-controller";
+import {RankingPage} from "../ranking/ranking";
 
 /**
  * Generated class for the UserdetailPage page.
@@ -19,6 +21,7 @@ export class UserdetailPage {
   other: any;
   username: any;
   token: any;
+  admin: any;
 
   img_url: any;
   descr: any;
@@ -29,7 +32,8 @@ export class UserdetailPage {
   score: any;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private usp: UserServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private usp: UserServiceProvider,
+              public alertCtrl: AlertController) {
 
     this.other = navParams.get('other');
 
@@ -38,6 +42,8 @@ export class UserdetailPage {
 
     this.username = window.localStorage.getItem('username');
     this.token = window.localStorage.getItem('token');
+    this.admin = window.localStorage.getItem('admin');
+
 
     this.usp.get_other_user_detail(this.username, this.token, this.other).then((result) => {
 
@@ -56,7 +62,7 @@ export class UserdetailPage {
         this.hair = result["hair"];
         this.eye = result["eye"];
         this.hobbies = result["hobbies"];
-        this.score = result["score"];
+        this.score = parseInt(result["score"]);
       }
 
     }, (err) => {
@@ -69,4 +75,42 @@ export class UserdetailPage {
     console.log('ionViewDidLoad UserdetailPage');
   }
 
+  changePoints() {
+    let prompt = this.alertCtrl.create({
+      title: "Add Points",
+      inputs: [
+        {name: 'inpt',
+          type: 'number'
+        },
+      ],
+      buttons: [
+        { text: 'Cancel', },
+        { text: 'Save',
+          handler: data => {
+            this.score += parseInt(data.inpt);
+            this.usp.update_other_user_data(this.username, this.token, this.other, "score", this.score);
+            console.log('Saved clicked');
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
+  deleteUser() {
+    let prompt = this.alertCtrl.create({
+      title: "Delete ?",
+      buttons: [
+        { text: 'Cancel', },
+        { text: 'OK',
+          handler: () => {
+            this.usp.delete_user_data(this.username, this.token, this.other).then((result) => {
+              this.navCtrl.setRoot(RankingPage);
+            });
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
 }

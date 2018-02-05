@@ -46,10 +46,10 @@ def update_challenge(cid, key, val):
 
 def add_challenge(name, desc="", img_url="", choice="", open=0):
     c = Challenge(name=name,
-                 desc=desc,
+                 descr=desc,
                  img_url=img_url,
                  choice=choice,
-                 open=open )
+                 open=open)
     c.save()
 
 def delete_challenge(cid):
@@ -147,9 +147,9 @@ def update_gntm_models(mid, key, val):
 
 
 
-def add_news(name, desc="", date=""):
+def add_m_news(name, desc="", date=""):
     n = News(name=name,
-             desc=desc,
+             descr=desc,
              date=date)
     n.save()
 

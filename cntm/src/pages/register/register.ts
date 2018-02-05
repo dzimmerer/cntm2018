@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, Validators} from '@angular/forms';
 import {HomePage} from "../home/home";
 import {LoadingController} from "ionic-angular/components/loading/loading-controller";
 import {ToastController} from "ionic-angular/components/toast/toast-controller";
@@ -50,6 +50,7 @@ export class RegisterPage {
           console.log("Welcome!!!");
           window.localStorage.setItem('token', result["token"]);
           window.localStorage.setItem('username', result["username"]);
+          window.localStorage.setItem('admin', 0 + "");
           this.nav.setRoot(HomePage);
         }
         else{
