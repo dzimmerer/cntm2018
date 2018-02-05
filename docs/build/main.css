@@ -25748,6 +25748,13 @@ image-viewer.ion-page img {
   margin: 0 auto;
 }
 
+page-home ion-slide.swiper-slide {
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
 page-modelwall .gray_img {
   -webkit-filter: grayscale(1);
   /* Safari 6.0 - 9.0 */

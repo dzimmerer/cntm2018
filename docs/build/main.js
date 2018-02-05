@@ -1,98 +1,16 @@
 webpackJsonp([7],{
 
-/***/ 102:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChallengeServiceProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var apiUrl = 'https://cntm.cfapps.eu10.hana.ondemand.com/';
-// let apiUrl = 'http://localhost:8000/';
-var ChallengeServiceProvider = (function () {
-    function ChallengeServiceProvider(http) {
-        this.http = http;
-        console.log('Hello ChallengeServiceProvider Provider');
-    }
-    ChallengeServiceProvider.prototype.get_challenge_list = function (username, token) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            var get_params = "?username=" + username + "&token=" + token;
-            _this.http.get(apiUrl + 'challenge_list/' + get_params)
-                .subscribe(function (res) {
-                resolve(res);
-            }, function (err) {
-                reject(err);
-            });
-        });
-    };
-    ChallengeServiceProvider.prototype.get_challenge_data = function (username, token, cid) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            var get_params = "?username=" + username + "&token=" + token + "&id=" + cid;
-            _this.http.get(apiUrl + 'challenge_data/' + get_params)
-                .subscribe(function (res) {
-                resolve(res);
-            }, function (err) {
-                reject(err);
-            });
-        });
-    };
-    ChallengeServiceProvider.prototype.get_challenge_answers = function (username, token, cid) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            var get_params = "?username=" + username + "&token=" + token + "&id=" + cid;
-            _this.http.get(apiUrl + 'challenge_answer/' + get_params)
-                .subscribe(function (res) {
-                resolve(res);
-            }, function (err) {
-                reject(err);
-            });
-        });
-    };
-    ChallengeServiceProvider.prototype.give_challenge_answer = function (username, token, cid, text) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            var get_params = "?username=" + username + "&token=" + token + "&id=" + cid + "&text=" + text;
-            _this.http.get(apiUrl + 'give_answer/' + get_params)
-                .subscribe(function (res) {
-                resolve(res);
-            }, function (err) {
-                reject(err);
-            });
-        });
-    };
-    ChallengeServiceProvider = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
-    ], ChallengeServiceProvider);
-    return ChallengeServiceProvider;
-}());
-
-//# sourceMappingURL=challenge-service.js.map
-
-/***/ }),
-
-/***/ 134:
+/***/ 137:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChallengedetailPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__challenges_challenges__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__userdetail_userdetail__ = __webpack_require__(73);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -102,6 +20,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
+
 
 
 
@@ -125,20 +45,16 @@ var ChallengedetailPage = (function () {
         this.cid = navParams.get('cid');
         this.username = window.localStorage.getItem('username');
         this.token = window.localStorage.getItem('token');
+        this.admin = window.localStorage.getItem('admin');
         this.csp.get_challenge_data(this.username, this.token, this.cid).then(function (result) {
             if ("id" in result) {
                 _this.name = result["name"];
                 _this.descr = result["descr"];
                 _this.choice = result["choice"];
+                _this.choice_list = result["choice_list"];
                 _this.has_choice = result["has_choice"];
                 _this.open = result["open"];
                 _this.img_url = result["img_url"];
-                if (_this.open == 1) {
-                    _this.c_text = 'open';
-                }
-                else {
-                    _this.c_text = "closed.";
-                }
             }
         }, function (err) {
         });
@@ -161,7 +77,7 @@ var ChallengedetailPage = (function () {
         var alert = this.alertCtrl.create();
         alert.setTitle('Answer');
         if (this.has_choice == 1) {
-            this.choice.forEach(function (element) {
+            this.choice_list.forEach(function (element) {
                 alert.addInput({
                     type: 'radio',
                     label: element,
@@ -171,7 +87,7 @@ var ChallengedetailPage = (function () {
             });
         }
         else if (this.has_choice == 2) {
-            this.choice.forEach(function (element) {
+            this.choice_list.forEach(function (element) {
                 alert.addInput({
                     type: 'checkbox',
                     label: element,
@@ -216,7 +132,6 @@ var ChallengedetailPage = (function () {
         return this.isShownArray.includes(n);
     };
     ChallengedetailPage.prototype.toggleVisible = function (n) {
-        console.log("Set Visible");
         if (this.isShownArray.includes(n)) {
             var ind = this.isShownArray.indexOf(n);
             if (ind > -1) {
@@ -226,99 +141,77 @@ var ChallengedetailPage = (function () {
         else {
             this.isShownArray.push(n);
         }
-        console.log(this.isShownArray);
+    };
+    ChallengedetailPage.prototype.chVal = function (name, title) {
+        var _this = this;
+        var prompt = this.alertCtrl.create({
+            title: title,
+            inputs: [
+                { name: 'inpt',
+                    value: this[name] },
+            ],
+            buttons: [
+                { text: 'Cancel', },
+                { text: 'Save',
+                    handler: function (data) {
+                        _this[name] = data.inpt;
+                        _this.csp.update_challenge_data(_this.username, _this.token, _this.cid, name, data.inpt);
+                        console.log('Saved clicked');
+                    }
+                }
+            ]
+        });
+        prompt.present();
+    };
+    ChallengedetailPage.prototype.deleteChallenge = function () {
+        var _this = this;
+        var prompt = this.alertCtrl.create({
+            title: "Delete ?",
+            buttons: [
+                { text: 'Cancel', },
+                { text: 'OK',
+                    handler: function () {
+                        _this.csp.delete_challenge_data(_this.username, _this.token, _this.cid).then(function (result) {
+                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__challenges_challenges__["a" /* ChallengesPage */]);
+                        });
+                    }
+                }
+            ]
+        });
+        prompt.present();
+    };
+    ChallengedetailPage.prototype.frwdToUser = function (uname) {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__userdetail_userdetail__["a" /* UserdetailPage */], {
+            other: uname
+        });
     };
     ChallengedetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-challengedetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/'<!--\n  Generated template for the ChallengedetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Challenge</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <ion-card-header>\n      {{name}}\n    </ion-card-header>\n    <ion-card-content>\n      {{descr}}\n    </ion-card-content>\n\n\n    <ion-row>\n    <ion-col *ngIf="open == 1">\n      <button ion-button icon-left clear small (click)="doAnswer()">\n        <ion-icon name="text"></ion-icon>\n        <div>Answer</div>\n      </button>\n    </ion-col>\n    <ion-col text-end>\n      <button ion-button icon-left clear small>\n        <div>{{c_text}}</div>\n      </button>\n    </ion-col>\n  </ion-row>\n\n  </ion-card>\n\n  <ion-card *ngIf="c_anwser != \'\'" (click)="toggleVisible(-1)">\n\n      <ion-item>\n        <ion-avatar item-start>\n          <img src="{{ca_own.img_url}}">\n        </ion-avatar>\n        <h2>{{ca_own.username}}</h2>\n        <p>{{ca_own.text}}</p>\n        <button ion-button icon-left clear small (click)="doAnswer()" item-end *ngIf="open == 1">\n          <ion-icon name="text"></ion-icon>\n          <div>Edit</div>\n        </button>\n      </ion-item>\n    <ion-card-content *ngIf="isVisible(-1)">\n      <p>{{ca_own.text}}</p>\n    </ion-card-content>\n\n  </ion-card>\n\n  <ion-card *ngFor="let ca of ca_other; let i = index">\n\n    <ion-item (click)="toggleVisible(i)">\n      <ion-avatar item-start>\n        <img src="{{ca.img_url}}">\n      </ion-avatar>\n      <h2>{{ca.username}}</h2>\n      <p>{{ca.text}}</p>\n    </ion-item>\n    <ion-card-content *ngIf="isVisible(i)">\n      <p>{{ca.text}}</p>\n    </ion-card-content>\n\n  </ion-card>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/,
+            selector: 'page-challengedetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n    <ion-title>Challenge</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <ion-card-header>\n      {{name}}\n    </ion-card-header>\n    <ion-card-content>\n      <div [innerHTML]="descr"></div>\n    </ion-card-content>\n\n\n    <ion-row>\n      <ion-col *ngIf="open == 1">\n        <button ion-button icon-left clear small (click)="doAnswer()" *ngIf="admin == \'0\'">\n          <ion-icon name="text"></ion-icon>\n          <div>Answer</div>\n        </button>\n      </ion-col>\n      <ion-col text-end>\n        <button ion-button icon-left clear small *ngIf="admin == \'0\'">\n          <div *ngIf="open == 1">open</div>\n          <div *ngIf="open == 0">closed.</div>\n        </button>\n        <button ion-button icon-left clear small *ngIf="admin == \'1\'" (click)="chVal(\'open\', \'Open\')">\n          <div *ngIf="open == 1">open</div>\n          <div *ngIf="open == 0">closed.</div>\n        </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n\n\n  <ion-card *ngIf="admin == \'1\'">\n\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="chVal(\'name\', \'Headline\')">\n          <div>Edit Name</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="chVal(\'descr\', \'Text\')">\n          <div>Edit Text</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="chVal(\'choice\', \'Choice\')">\n          <div>Edit Choice</div>\n        </button>\n      </ion-col>\n      <ion-col>\n      <button ion-button icon-left clear small (click)="deleteChallenge()">\n        <div>Delete</div>\n      </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n\n  <ion-card *ngIf="c_anwser != \'\'" (click)="toggleVisible(-1)">\n\n      <ion-item>\n        <ion-avatar item-start>\n          <img src="{{ca_own.img_url}}">\n        </ion-avatar>\n        <h2>{{ca_own.username}}</h2>\n        <p>{{ca_own.text}}</p>\n        <button ion-button icon-left clear small (click)="doAnswer()" item-end *ngIf="open == 1">\n          <ion-icon name="text"></ion-icon>\n          <div>Edit</div>\n        </button>\n      </ion-item>\n    <ion-card-content *ngIf="isVisible(-1)">\n      <p>{{ca_own.text}}</p>\n    </ion-card-content>\n\n  </ion-card>\n\n  <ion-card *ngFor="let ca of ca_other; let i = index">\n\n    <ion-item (click)="toggleVisible(i)">\n      <ion-avatar item-start (click)="frwdToUser(ca.username)">\n        <img src="{{ca.img_url}}">\n      </ion-avatar>\n      <h2>{{ca.username}}</h2>\n      <p>{{ca.text}}</p>\n    </ion-item>\n    <ion-card-content *ngIf="isVisible(i)">\n      <p>{{ca.text}}</p>\n    </ion-card-content>\n\n  </ion-card>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]])
     ], ChallengedetailPage);
     return ChallengedetailPage;
-    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=challengedetail.js.map
 
 /***/ }),
 
-/***/ 135:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChallengesPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__challengedetail_challengedetail__ = __webpack_require__(134);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/**
- * Generated class for the ChallengesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var ChallengesPage = (function () {
-    function ChallengesPage(navCtrl, navParams, csp) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.csp = csp;
-        var username = window.localStorage.getItem('username');
-        var token = window.localStorage.getItem('token');
-        this.csp.get_challenge_list(username, token).then(function (result) {
-            _this.openC = result["open"];
-            _this.closedC = result["closed"];
-        }, function (err) {
-        });
-    }
-    ChallengesPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad ChallengesPage');
-    };
-    ChallengesPage.prototype.onChallenge = function (cid) {
-        console.log(cid);
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__challengedetail_challengedetail__["a" /* ChallengedetailPage */], {
-            cid: cid
-        });
-    };
-    ChallengesPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-challenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n\n  <h3 text-center>Open</h3>\n  <ion-list>\n    <!--<ion-list-header>Open</ion-list-header>-->\n\n    <ion-item *ngFor="let c of openC" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <!--<p>{{c.descr}}</p>-->\n      <ion-icon name="help-circle" item-end style="color: #c3af80"></ion-icon>\n    </ion-item>\n  </ion-list>\n\n  <br>\n  <h3 text-center>Closed</h3>\n  <ion-list>\n\n    <!--<ion-list-header>Closed</ion-list-header>-->\n\n    <ion-item *ngFor="let c of closedC" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <!--<p>{{c.descr}}</p>-->\n      <ion-icon name="close-circle" item-end style="color: #c3af80"></ion-icon>\n    </ion-item>\n\n  </ion-list>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */]])
-    ], ChallengesPage);
-    return ChallengesPage;
-}());
-
-//# sourceMappingURL=challenges.js.map
-
-/***/ }),
-
-/***/ 136:
+/***/ 138:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__register_register__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular_components_toast_toast_controller__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_user_service_user_service__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__register_register__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular_components_toast_toast_controller__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_user_service_user_service__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular_components_app_menu_controller__ = __webpack_require__(29);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -370,10 +263,12 @@ var LoginPage = (function () {
             this.usp.login(value.username, value.password).then(function (result) {
                 _this.loading.dismiss();
                 _this.data = result;
+                console.log(result);
                 if ("success" in result && result["success"] == 1) {
                     console.log("Welcome!!!");
                     window.localStorage.setItem('token', result["token"]);
                     window.localStorage.setItem('username', result["username"]);
+                    window.localStorage.setItem('admin', result["admin"] + "");
                     _this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_3__home_home__["a" /* HomePage */]);
                 }
                 else {
@@ -423,18 +318,18 @@ var LoginPage = (function () {
 
 /***/ }),
 
-/***/ 137:
+/***/ 139:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_loading_loading_controller__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_toast_toast_controller__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_user_service_user_service__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_loading_loading_controller__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_toast_toast_controller__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_user_service_user_service__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ionic_angular_components_app_menu_controller__ = __webpack_require__(29);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -485,6 +380,7 @@ var RegisterPage = (function () {
                     console.log("Welcome!!!");
                     window.localStorage.setItem('token', result["token"]);
                     window.localStorage.setItem('username', result["username"]);
+                    window.localStorage.setItem('admin', 0 + "");
                     _this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_3__home_home__["a" /* HomePage */]);
                 }
                 else {
@@ -534,14 +430,15 @@ var RegisterPage = (function () {
 
 /***/ }),
 
-/***/ 138:
+/***/ 140:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ModelwallPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_challenge_service_challenge_service__ = __webpack_require__(54);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -551,6 +448,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -561,14 +459,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var ModelwallPage = (function () {
-    function ModelwallPage(navCtrl, navParams, usp) {
+    function ModelwallPage(navCtrl, navParams, usp, csp) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.usp = usp;
-        var username = window.localStorage.getItem('username');
-        var token = window.localStorage.getItem('token');
-        this.usp.get_gntm_models(username, token).then(function (result) {
+        this.csp = csp;
+        this.username = window.localStorage.getItem('username');
+        this.token = window.localStorage.getItem('token');
+        this.admin = window.localStorage.getItem('admin');
+        this.usp.get_gntm_models(this.username, this.token).then(function (result) {
             _this.models = result["models"];
         }, function (err) {
         });
@@ -579,148 +479,27 @@ var ModelwallPage = (function () {
     ModelwallPage.prototype.openLink = function (param) {
         window.open(param, '_system', 'location=yes');
     };
+    ModelwallPage.prototype.toggleActive = function (id, i) {
+        var curVal = this.models[i]["out"];
+        var newVal = 0;
+        if (curVal == 0) {
+            newVal = 1;
+        }
+        this.csp.update_topmodel_data(this.username, this.token, this.models[i]["id"], "out", newVal);
+        this.models[i]["out"] = newVal;
+        console.log(i, id);
+    };
     ModelwallPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-modelwall',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/modelwall/modelwall.html"*/'\n<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Model Wall</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content  class="card-background-page">\n\n\n  <ion-content>\n\n    <ion-card *ngFor="let m of models">\n      <img src="{{m.img_url}}" *ngIf="m.out == 0" imageViewer>\n      <img src="{{m.img_url}}" ngClass="gray_img" *ngIf="m.out == 1" imageViewer>\n    <div class="card-title">{{m.name}}, {{m.age}}</div>\n    <div class="card-subtitle">&quot;{{m.descr}}&quot;</div>\n    <button ion-button clear item-end (click)="openLink(m.link)">More</button>\n  </ion-card>\n<!--<ion-list>-->\n    <!--<ion-item>-->\n      <!--<ion-thumbnail item-start>-->\n        <!--<img src="{{m.img_url}}" *ngIf="m.out == 0" imageViewer>-->\n        <!--<img src="{{m.img_url}}" ngClass="gray_img" *ngIf="m.out == 1" imageViewer>-->\n      <!--</ion-thumbnail>-->\n      <!--<h2>{{m.name}}, {{m.age}}</h2>-->\n      <!--<p>{{m.descr}}</p>-->\n      <!--<button ion-button clear item-end (click)="openLink(m.link)">More</button>-->\n    <!--</ion-item>-->\n  <!--</ion-list>-->\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/modelwall/modelwall.html"*/,
+            selector: 'page-modelwall',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/modelwall/modelwall.html"*/'\n<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Model Wall</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content  class="card-background-page">\n\n\n  <ion-content>\n\n    <ion-card *ngFor="let m of models; let i = index">\n      <img src="{{m.img_url}}" *ngIf="m.out == 0" imageViewer>\n      <img src="{{m.img_url}}" ngClass="gray_img" *ngIf="m.out == 1" imageViewer>\n    <div class="card-title">{{m.name}}, {{m.age}}</div>\n    <div class="card-subtitle">&quot;{{m.descr}}&quot;</div>\n      <button ion-button clear item-end (click)="openLink(m.link)">More</button>\n      <button ion-button clear item-end (click)="toggleActive(m.id, i)" *ngIf="admin == \'1\'">Toggle</button>\n  </ion-card>\n<!--<ion-list>-->\n    <!--<ion-item>-->\n      <!--<ion-thumbnail item-start>-->\n        <!--<img src="{{m.img_url}}" *ngIf="m.out == 0" imageViewer>-->\n        <!--<img src="{{m.img_url}}" ngClass="gray_img" *ngIf="m.out == 1" imageViewer>-->\n      <!--</ion-thumbnail>-->\n      <!--<h2>{{m.name}}, {{m.age}}</h2>-->\n      <!--<p>{{m.descr}}</p>-->\n      <!--<button ion-button clear item-end (click)="openLink(m.link)">More</button>-->\n    <!--</ion-item>-->\n  <!--</ion-list>-->\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/modelwall/modelwall.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserServiceProvider */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */]])
     ], ModelwallPage);
     return ModelwallPage;
 }());
 
 //# sourceMappingURL=modelwall.js.map
-
-/***/ }),
-
-/***/ 139:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RankingPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__userdetail_userdetail__ = __webpack_require__(140);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/**
- * Generated class for the RankingPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var RankingPage = (function () {
-    function RankingPage(navCtrl, navParams, usp) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.usp = usp;
-        var username = window.localStorage.getItem('username');
-        var token = window.localStorage.getItem('token');
-        this.usp.get_user_ranking(username, token).then(function (result) {
-            _this.ranking = result["ranking"];
-        }, function (err) {
-        });
-    }
-    RankingPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad RankingPage');
-    };
-    RankingPage.prototype.detailView = function (username) {
-        console.log(username);
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__userdetail_userdetail__["a" /* UserdetailPage */], {
-            other: username
-        });
-    };
-    RankingPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-ranking',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/ranking/ranking.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Ranking</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-list>\n    <ion-item *ngFor="let user of ranking" (click)="detailView(user.username)">\n      <!--<ion-thumbnail item-start>-->\n        <!--<img src="{{user.img_url}}">-->\n      <!--</ion-thumbnail>-->\n      <ion-avatar item-start>\n        <img src="{{user.img_url}}">\n      </ion-avatar>\n      <h2>{{user.username}}</h2>\n      <!--<p>&quot;{{user.descr}}&quot;</p>-->\n      <ion-badge item-end>{{user.score}}</ion-badge>\n    </ion-item>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/ranking/ranking.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserServiceProvider */]])
-    ], RankingPage);
-    return RankingPage;
-}());
-
-//# sourceMappingURL=ranking.js.map
-
-/***/ }),
-
-/***/ 140:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserdetailPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__ = __webpack_require__(42);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-/**
- * Generated class for the UserdetailPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var UserdetailPage = (function () {
-    function UserdetailPage(navCtrl, navParams, usp) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.usp = usp;
-        this.other = navParams.get('other');
-        console.log(this.other);
-        this.username = window.localStorage.getItem('username');
-        this.token = window.localStorage.getItem('token');
-        this.usp.get_other_user_detail(this.username, this.token, this.other).then(function (result) {
-            if ("username" in result) {
-                console.log(result["username"]);
-                _this.img_url = result["img_url"];
-                if (!(_this.img_url.startsWith("http") || _this.img_url.startsWith("www"))) {
-                    _this.img_url = _this.usp.get_api_url() + _this.img_url;
-                }
-                _this.descr = result["descr"];
-                _this.age = result["age"];
-                _this.hair = result["hair"];
-                _this.eye = result["eye"];
-                _this.hobbies = result["hobbies"];
-                _this.score = result["score"];
-            }
-        }, function (err) {
-        });
-    }
-    UserdetailPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad UserdetailPage');
-    };
-    UserdetailPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-userdetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/userdetail/userdetail.html"*/'<!--\n  Generated template for the UserdetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>User</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <img src="{{img_url}}">\n\n    <ion-item>\n      <h2>{{other}}</h2>\n      <p>&quot;{{descr}}&quot;</p>\n      <ion-badge item-end>{{score}}</ion-badge>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="calendar" item-start style="color: #f95c71"></ion-icon>\n      <p>{{age}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="cut" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hair}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="eye" item-start style="color: #f95c71"></ion-icon>\n      <p>{{eye}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="football" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hobbies}}</p>\n    </ion-item>\n\n\n    <ion-card-content center text-center>\n      <p>\n        <br>\n        {{descr}}\n      </p>\n\n    </ion-card-content>\n\n\n  </ion-card>\n\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/userdetail/userdetail.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserServiceProvider */]])
-    ], UserdetailPage);
-    return UserdetailPage;
-}());
-
-//# sourceMappingURL=userdetail.js.map
 
 /***/ }),
 
@@ -766,11 +545,11 @@ var map = {
 		2
 	],
 	"../pages/register/register.module": [
-		426,
+		425,
 		1
 	],
 	"../pages/userdetail/userdetail.module": [
-		425,
+		426,
 		0
 	]
 };
@@ -797,8 +576,8 @@ module.exports = webpackAsyncContext;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfilePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__ = __webpack_require__(42);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -863,7 +642,7 @@ var ProfilePage = (function () {
     };
     ProfilePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-profile',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/profile/profile.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Profile</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-card>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <img src="{{img_url}}">\n      </ion-avatar>\n      <h2>{{username}}</h2>\n      <p>&quot;{{descr}}&quot;</p>\n      <ion-badge item-end>{{score}}</ion-badge>\n    </ion-item>\n\n\n    <ion-item>\n      <ion-icon name=\'md-person\' item-start style="color: #f95c71"></ion-icon>\n      <p>{{real_name}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'real_name\', \'Real Name\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="calendar" item-start style="color: #f95c71"></ion-icon>\n      <p>{{age}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'age\', \'Age\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="cut" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hair}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'hair\', \'Hair Style\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="eye" item-start style="color: #f95c71"></ion-icon>\n      <p>{{eye}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'eye\', \'Eye color\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="football" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hobbies}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'hobbies\', \'Hobbies\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n\n    <ion-card-content center text-center>\n      <p>\n        <br>\n      {{descr}}\n      </p>\n\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="chVal(\'img_url\', \'Enter a new Image URL\')">\n          <div>Edit Pic</div>\n        </button>\n      </ion-col>\n      <ion-col text-right>\n        <button ion-button icon-left clear small  (click)="chVal(\'descr\', \'Description\')" >\n          <div>Edit Text</div>\n        </button>\n      </ion-col>\n\n    </ion-row>\n\n  </ion-card>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/profile/profile.html"*/
+            selector: 'page-profile',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/profile/profile.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Profile</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-card>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <img src="{{img_url}}">\n      </ion-avatar>\n      <h2>{{username}}</h2>\n      <p>&quot;{{descr}}&quot;</p>\n      <ion-badge item-end>{{score}}</ion-badge>\n    </ion-item>\n\n\n    <ion-item>\n      <ion-icon name=\'md-person\' item-start style="color: #f95c71"></ion-icon>\n      <p>{{real_name}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'real_name\', \'Real Name\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="calendar" item-start style="color: #f95c71"></ion-icon>\n      <p>{{age}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'age\', \'Age\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="cut" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hair}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'hair\', \'Hair Style\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="eye" item-start style="color: #f95c71"></ion-icon>\n      <p>{{eye}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'eye\', \'Eye color\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="football" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hobbies}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'hobbies\', \'Hobbies\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n\n    <ion-card-content center text-center>\n      <p>\n        <br>\n      {{descr}}\n      </p>\n\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="chVal(\'img_url\', \'Enter a new Image URL\')">\n          <div>Edit Pic</div>\n        </button>\n      </ion-col>\n      <ion-col text-right>\n        <button ion-button icon-left clear small  (click)="chVal(\'descr\', \'Description\')" >\n          <div>Edit Text</div>\n        </button>\n      </ion-col>\n\n    </ion-row>\n\n  </ion-card>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/profile/profile.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserServiceProvider */],
             __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]])
@@ -901,20 +680,20 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_profile_profile__ = __webpack_require__(236);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__ = __webpack_require__(233);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_splash_screen__ = __webpack_require__(235);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_register_register__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_user_service_user_service__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ionic_angular_components_toast_toast_controller__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_ionic_angular_components_loading_loading_controller__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_common_http__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_register_register__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_user_service_user_service__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ionic_angular_components_toast_toast_controller__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_ionic_angular_components_loading_loading_controller__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_common_http__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_chooser__ = __webpack_require__(315);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_ranking_ranking__ = __webpack_require__(139);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_userdetail_userdetail__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_challenges_challenges__ = __webpack_require__(135);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_challenge_service_challenge_service__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_challengedetail_challengedetail__ = __webpack_require__(134);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_home_home__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_modelwall_modelwall__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_ranking_ranking__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_userdetail_userdetail__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_challenges_challenges__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_challenge_service_challenge_service__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_challengedetail_challengedetail__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_home_home__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_modelwall_modelwall__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_ionic_img_viewer__ = __webpack_require__(316);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -972,8 +751,8 @@ var AppModule = (function () {
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/modelwall/modelwall.module#ModelwallPageModule', name: 'ModelwallPage', segment: 'modelwall', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ranking/ranking.module#RankingPageModule', name: 'RankingPage', segment: 'ranking', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/userdetail/userdetail.module#UserdetailPageModule', name: 'UserdetailPage', segment: 'userdetail', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/register/register.module#RegisterPageModule', name: 'RegisterPage', segment: 'register', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/register/register.module#RegisterPageModule', name: 'RegisterPage', segment: 'register', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/userdetail/userdetail.module#UserdetailPageModule', name: 'UserdetailPage', segment: 'userdetail', priority: 'low', defaultHistory: [] }
                     ]
                 }),
             ],
@@ -1019,12 +798,12 @@ var AppModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(233);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(235);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_profile_profile__ = __webpack_require__(236);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_ranking_ranking__ = __webpack_require__(139);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_challenges_challenges__ = __webpack_require__(135);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_modelwall_modelwall__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_ranking_ranking__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_challenges_challenges__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_modelwall_modelwall__ = __webpack_require__(140);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1094,7 +873,7 @@ var MyApp = (function () {
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/app/app.html"*/'<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <ion-title>Menu</ion-title>\n    </ion-toolbar>\n\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n        {{p.title}}\n      </button>\n      <button menuClose ion-button clear (click)="logout()">\n        <ion-icon name="log-out"></ion-icon>\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/app/app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/app/app.html"*/'<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar color="primary">\n      <ion-title>Menu</ion-title>\n    </ion-toolbar>\n\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n        {{p.title}}\n      </button>\n      <button menuClose ion-button clear (click)="logout()">\n        <ion-icon name="log-out"></ion-icon>\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/app/app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
@@ -1105,12 +884,12 @@ var MyApp = (function () {
 
 /***/ }),
 
-/***/ 42:
+/***/ 43:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserServiceProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1123,7 +902,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var apiUrl = 'https://cntm.cfapps.eu10.hana.ondemand.com/';
+var apiUrl = 'http://ec2-34-253-80-80.eu-west-1.compute.amazonaws.com:8000/';
 // let apiUrl = 'http://localhost:8000/';
 var UserServiceProvider = (function () {
     function UserServiceProvider(http) {
@@ -1225,6 +1004,30 @@ var UserServiceProvider = (function () {
     UserServiceProvider.prototype.get_api_url = function () {
         return apiUrl;
     };
+    UserServiceProvider.prototype.delete_user_data = function (username, token, other) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&other=" + other;
+            _this.http.get(apiUrl + 'delete_user/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    UserServiceProvider.prototype.update_other_user_data = function (username, token, other, name, value) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&other=" + other + "&" + name + "=" + value;
+            _this.http.get(apiUrl + 'update_other_user/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
     UserServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
@@ -1236,13 +1039,13 @@ var UserServiceProvider = (function () {
 
 /***/ }),
 
-/***/ 63:
+/***/ 54:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChallengeServiceProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1254,20 +1057,554 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var HomePage = (function () {
-    function HomePage(navCtrl) {
-        this.navCtrl = navCtrl;
+var apiUrl = 'http://ec2-34-253-80-80.eu-west-1.compute.amazonaws.com:8000/';
+// let apiUrl = 'http://localhost:8000/';
+var ChallengeServiceProvider = (function () {
+    function ChallengeServiceProvider(http) {
+        this.http = http;
+        console.log('Hello ChallengeServiceProvider Provider');
     }
+    ChallengeServiceProvider.prototype.get_challenge_list = function (username, token) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token;
+            _this.http.get(apiUrl + 'challenge_list/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    ChallengeServiceProvider.prototype.get_challenge_data = function (username, token, cid) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&id=" + cid;
+            _this.http.get(apiUrl + 'challenge_data/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    ChallengeServiceProvider.prototype.get_challenge_answers = function (username, token, cid) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&id=" + cid;
+            _this.http.get(apiUrl + 'challenge_answer/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    ChallengeServiceProvider.prototype.give_challenge_answer = function (username, token, cid, text) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&id=" + cid + "&text=" + text;
+            _this.http.get(apiUrl + 'give_answer/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    ChallengeServiceProvider.prototype.get_news_data = function (username, token) {
+        var _this = this;
+        console.log("get the f***** data");
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token;
+            _this.http.get(apiUrl + 'news_list/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    ChallengeServiceProvider.prototype.update_news_data = function (username, token, cid, name, value) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&cid=" + cid + "&" + name + "=" + value;
+            _this.http.get(apiUrl + 'update_news/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    ChallengeServiceProvider.prototype.add_news_data = function (username, token, name) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&name=" + name;
+            _this.http.get(apiUrl + 'add_news/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    ChallengeServiceProvider.prototype.delete_news_data = function (username, token, cid) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&cid=" + cid;
+            _this.http.get(apiUrl + 'delete_news/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    ChallengeServiceProvider.prototype.update_challenge_data = function (username, token, cid, name, value) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&cid=" + cid + "&" + name + "=" + value;
+            _this.http.get(apiUrl + 'update_challenge/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    ChallengeServiceProvider.prototype.add_challenge_data = function (username, token, name) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&name=" + name;
+            _this.http.get(apiUrl + 'add_challenge/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    ChallengeServiceProvider.prototype.delete_challenge_data = function (username, token, cid) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&cid=" + cid;
+            _this.http.get(apiUrl + 'delete_challenge/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    ChallengeServiceProvider.prototype.update_topmodel_data = function (username, token, cid, name, value) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&cid=" + cid + "&" + name + "=" + value;
+            _this.http.get(apiUrl + 'update_topmodel/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    ChallengeServiceProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
+    ], ChallengeServiceProvider);
+    return ChallengeServiceProvider;
+}());
+
+//# sourceMappingURL=challenge-service.js.map
+
+/***/ }),
+
+/***/ 64:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular_navigation_nav_params__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__ = __webpack_require__(42);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var HomePage = (function () {
+    function HomePage(navCtrl, navParams, csp, alertCtrl) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.csp = csp;
+        this.alertCtrl = alertCtrl;
+        this.username = window.localStorage.getItem('username');
+        this.token = window.localStorage.getItem('token');
+        this.admin = window.localStorage.getItem('admin');
+        console.log("Admin: " + this.admin);
+        this.csp.get_news_data(this.username, this.token).then(function (result) {
+            _this.news = result["news"];
+        }, function (err) {
+        });
+    }
+    HomePage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad HomePage');
+    };
+    HomePage.prototype.addNews = function () {
+        var _this = this;
+        console.log('Add News');
+        var prompt = this.alertCtrl.create({
+            title: "Add new News",
+            inputs: [
+                { name: 'inpt',
+                    value: "" },
+            ],
+            buttons: [
+                { text: 'Cancel', },
+                { text: 'Add',
+                    handler: function (data) {
+                        _this.csp.add_news_data(_this.username, _this.token, data.inpt).then(function (result) {
+                            _this.navCtrl.setRoot(_this.navCtrl.getActive().component);
+                        });
+                        console.log('Add clicked');
+                    }
+                }
+            ]
+        });
+        prompt.present();
+    };
+    HomePage.prototype.deleteNews = function (id) {
+        var _this = this;
+        var prompt = this.alertCtrl.create({
+            title: "Delete ?",
+            buttons: [
+                { text: 'Cancel', },
+                { text: 'OK',
+                    handler: function () {
+                        _this.csp.delete_news_data(_this.username, _this.token, id).then(function (result) {
+                            _this.navCtrl.setRoot(_this.navCtrl.getActive().component);
+                        });
+                    }
+                }
+            ]
+        });
+        prompt.present();
+    };
+    HomePage.prototype.chVal = function (id, name, title, i) {
+        var _this = this;
+        console.log(this.news[i]);
+        var prompt = this.alertCtrl.create({
+            title: title,
+            inputs: [
+                { name: 'inpt',
+                    value: this.news[i][name] },
+            ],
+            buttons: [
+                { text: 'Cancel', },
+                { text: 'Save',
+                    handler: function (data) {
+                        _this.news[i][name] = data.inpt;
+                        _this.csp.update_news_data(_this.username, _this.token, id, name, data.inpt);
+                        console.log('Saved clicked');
+                    }
+                }
+            ]
+        });
+        prompt.present();
+    };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h3>Welcome to CNTM</h3>\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Home</ion-title>\n    <ion-buttons end *ngIf="admin == \'1\'">\n      <button ion-button icon-only (click)="addNews()">\n        <ion-icon name="add-circle"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-slides pager>\n\n    <ion-slide *ngFor="let n of news; let i = index">\n      <ion-card-header>\n        {{n.name}}\n      </ion-card-header>\n      <ion-card-content text-left>\n        <div [innerHTML]="n.descr"></div>\n      </ion-card-content>\n      <ion-card-content *ngIf="admin == \'1\'">\n        <button ion-button item-left clear small (click)="chVal(n.id, \'name\', \'Headline\', i)">\n          <div>Edit Name</div>\n        </button>\n        <button ion-button item-end clear small (click)="chVal(n.id, \'descr\', \'Text\', i)">\n          <div>Edit Text</div>\n        </button>\n        <button ion-button item-right clear small (click)="deleteNews(n.id)">\n          <div>Delete</div>\n        </button>\n      </ion-card-content>\n    </ion-slide>\n\n\n\n  </ion-slides>\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular_navigation_nav_params__["a" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]])
     ], HomePage);
     return HomePage;
 }());
 
 //# sourceMappingURL=home.js.map
+
+/***/ }),
+
+/***/ 72:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChallengesPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__challengedetail_challengedetail__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__ = __webpack_require__(42);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+/**
+ * Generated class for the ChallengesPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var ChallengesPage = (function () {
+    function ChallengesPage(navCtrl, navParams, csp, alertCtrl) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.csp = csp;
+        this.alertCtrl = alertCtrl;
+        this.username = window.localStorage.getItem('username');
+        this.token = window.localStorage.getItem('token');
+        this.admin = window.localStorage.getItem('admin');
+        this.csp.get_challenge_list(this.username, this.token).then(function (result) {
+            _this.openC = result["open"];
+            _this.closedC = result["closed"];
+        }, function (err) {
+        });
+    }
+    ChallengesPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ChallengesPage');
+    };
+    ChallengesPage.prototype.onChallenge = function (cid) {
+        console.log(cid);
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__challengedetail_challengedetail__["a" /* ChallengedetailPage */], {
+            cid: cid
+        });
+    };
+    ChallengesPage.prototype.addChallenge = function () {
+        var _this = this;
+        var prompt = this.alertCtrl.create({
+            title: "Add new Challenge:",
+            inputs: [
+                { name: 'inpt',
+                    value: "" },
+            ],
+            buttons: [
+                { text: 'Cancel', },
+                { text: 'Add',
+                    handler: function (data) {
+                        _this.csp.add_challenge_data(_this.username, _this.token, data.inpt).then(function (result) {
+                            _this.navCtrl.setRoot(_this.navCtrl.getActive().component);
+                        });
+                        console.log('Add clicked');
+                    }
+                }
+            ]
+        });
+        prompt.present();
+    };
+    ChallengesPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-challenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n    <ion-buttons end *ngIf="admin == \'1\'">\n      <button ion-button icon-only (click)="addChallenge()">\n        <ion-icon name="add-circle"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n\n  <h3 text-center>Open</h3>\n  <ion-list>\n    <!--<ion-list-header>Open</ion-list-header>-->\n\n    <ion-item *ngFor="let c of openC" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <!--<p>{{c.descr}}</p>-->\n      <ion-icon name="help-circle" item-end style="color: #c3af80"></ion-icon>\n    </ion-item>\n  </ion-list>\n\n  <br>\n  <h3 text-center>Closed</h3>\n  <ion-list>\n\n    <!--<ion-list-header>Closed</ion-list-header>-->\n\n    <ion-item *ngFor="let c of closedC" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <!--<p>{{c.descr}}</p>-->\n      <ion-icon name="close-circle" item-end style="color: #c3af80"></ion-icon>\n    </ion-item>\n\n  </ion-list>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]])
+    ], ChallengesPage);
+    return ChallengesPage;
+}());
+
+//# sourceMappingURL=challenges.js.map
+
+/***/ }),
+
+/***/ 73:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserdetailPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ranking_ranking__ = __webpack_require__(74);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+/**
+ * Generated class for the UserdetailPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var UserdetailPage = (function () {
+    function UserdetailPage(navCtrl, navParams, usp, alertCtrl) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.usp = usp;
+        this.alertCtrl = alertCtrl;
+        this.other = navParams.get('other');
+        console.log(this.other);
+        this.username = window.localStorage.getItem('username');
+        this.token = window.localStorage.getItem('token');
+        this.admin = window.localStorage.getItem('admin');
+        this.usp.get_other_user_detail(this.username, this.token, this.other).then(function (result) {
+            if ("username" in result) {
+                console.log(result["username"]);
+                _this.img_url = result["img_url"];
+                if (!(_this.img_url.startsWith("http") || _this.img_url.startsWith("www"))) {
+                    _this.img_url = _this.usp.get_api_url() + _this.img_url;
+                }
+                _this.descr = result["descr"];
+                _this.age = result["age"];
+                _this.hair = result["hair"];
+                _this.eye = result["eye"];
+                _this.hobbies = result["hobbies"];
+                _this.score = parseInt(result["score"]);
+            }
+        }, function (err) {
+        });
+    }
+    UserdetailPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad UserdetailPage');
+    };
+    UserdetailPage.prototype.changePoints = function () {
+        var _this = this;
+        var prompt = this.alertCtrl.create({
+            title: "Add Points",
+            inputs: [
+                { name: 'inpt',
+                    type: 'number'
+                },
+            ],
+            buttons: [
+                { text: 'Cancel', },
+                { text: 'Save',
+                    handler: function (data) {
+                        _this.score += parseInt(data.inpt);
+                        _this.usp.update_other_user_data(_this.username, _this.token, _this.other, "score", _this.score);
+                        console.log('Saved clicked');
+                    }
+                }
+            ]
+        });
+        prompt.present();
+    };
+    UserdetailPage.prototype.deleteUser = function () {
+        var _this = this;
+        var prompt = this.alertCtrl.create({
+            title: "Delete ?",
+            buttons: [
+                { text: 'Cancel', },
+                { text: 'OK',
+                    handler: function () {
+                        _this.usp.delete_user_data(_this.username, _this.token, _this.other).then(function (result) {
+                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__ranking_ranking__["a" /* RankingPage */]);
+                        });
+                    }
+                }
+            ]
+        });
+        prompt.present();
+    };
+    UserdetailPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-userdetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/userdetail/userdetail.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n    <ion-title>User</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <img src="{{img_url}}">\n\n    <ion-item>\n      <h2>{{other}}</h2>\n      <p>&quot;{{descr}}&quot;</p>\n      <ion-badge item-end>{{score}}</ion-badge>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="calendar" item-start style="color: #f95c71"></ion-icon>\n      <p>{{age}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="cut" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hair}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="eye" item-start style="color: #f95c71"></ion-icon>\n      <p>{{eye}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="football" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hobbies}}</p>\n    </ion-item>\n\n\n    <ion-card-content center text-center>\n      <p>\n        <br>\n        {{descr}}\n      </p>\n\n    </ion-card-content>\n\n\n  </ion-card>\n  <ion-card *ngIf="admin == \'1\'">\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="changePoints()">\n          <div>Change points</div>\n        </button>\n      </ion-col>\n      <ion-col text-right>\n        <button ion-button icon-left clear small  (click)="deleteUser()" >\n          <div>Delete</div>\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-card>\n\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/userdetail/userdetail.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]])
+    ], UserdetailPage);
+    return UserdetailPage;
+}());
+
+//# sourceMappingURL=userdetail.js.map
+
+/***/ }),
+
+/***/ 74:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RankingPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__userdetail_userdetail__ = __webpack_require__(73);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+/**
+ * Generated class for the RankingPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var RankingPage = (function () {
+    function RankingPage(navCtrl, navParams, usp) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.usp = usp;
+        var username = window.localStorage.getItem('username');
+        var token = window.localStorage.getItem('token');
+        this.usp.get_user_ranking(username, token).then(function (result) {
+            _this.ranking = result["ranking"];
+        }, function (err) {
+        });
+    }
+    RankingPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad RankingPage');
+    };
+    RankingPage.prototype.detailView = function (username) {
+        console.log(username);
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__userdetail_userdetail__["a" /* UserdetailPage */], {
+            other: username
+        });
+    };
+    RankingPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-ranking',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/ranking/ranking.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Ranking</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-list >\n    <ion-item *ngFor="let user of ranking" (click)="detailView(user.username)" >\n        <!--<ion-thumbnail item-start>-->\n          <!--<img src="{{user.img_url}}">-->\n        <!--</ion-thumbnail>-->\n        <ion-avatar item-start>\n          <img src="{{user.img_url}}">\n        </ion-avatar>\n        <h2>{{user.username}}</h2>\n        <!--<p>&quot;{{user.descr}}&quot;</p>-->\n        <ion-badge item-end>{{user.score}}</ion-badge>\n    </ion-item>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/ranking/ranking.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserServiceProvider */]])
+    ], RankingPage);
+    return RankingPage;
+}());
+
+//# sourceMappingURL=ranking.js.map
 
 /***/ })
 
