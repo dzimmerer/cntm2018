@@ -19,6 +19,11 @@
       <ion-badge item-end>{{score}}</ion-badge>
     </ion-item>
 
+    <ion-item *ngIf="admin == '1'">
+      <ion-icon name='md-person' item-start style="color: #f95c71"></ion-icon>
+      <p>{{real_name}}</p>
+    </ion-item>
+
     <ion-item>
       <ion-icon name="calendar" item-start style="color: #f95c71"></ion-icon>
       <p>{{age}}</p>

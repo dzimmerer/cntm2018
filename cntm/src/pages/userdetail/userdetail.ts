@@ -30,6 +30,7 @@ export class UserdetailPage {
   eye: any;
   hobbies: any;
   score: any;
+  real_name: any;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private usp: UserServiceProvider,
@@ -63,6 +64,11 @@ export class UserdetailPage {
         this.eye = result["eye"];
         this.hobbies = result["hobbies"];
         this.score = parseInt(result["score"]);
+
+        if(this.admin == '1'){
+          this.real_name = result["real_name"];
+        }
+
       }
 
     }, (err) => {

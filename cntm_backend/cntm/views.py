@@ -143,7 +143,11 @@ def user_details_req(request):
             if not verify_user(username, token):
                 return JsonResponse({"msg": "Error: Invalid request"})
 
-            user_json = get_user_json(other, empty=("passwd", "real_name", "token"))
+            if is_admin(username):
+                user_json = get_user_json(other, empty=("passwd", "token"))
+            else:
+                user_json = get_user_json(other, empty=("passwd", 'real_name', "token"))
+
 
             print("User:" , user_json)
 
