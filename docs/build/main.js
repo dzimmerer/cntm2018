@@ -902,8 +902,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-// let apiUrl = 'http://ec2-34-253-80-80.eu-west-1.compute.amazonaws.com:8000/';
-var apiUrl = 'http://localhost:8000/';
+var apiUrl = 'http://ec2-34-253-80-80.eu-west-1.compute.amazonaws.com:8000/';
+// let apiUrl = 'http://localhost:8000/';
 var UserServiceProvider = (function () {
     function UserServiceProvider(http) {
         this.http = http;
