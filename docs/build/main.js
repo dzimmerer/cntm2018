@@ -1374,13 +1374,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var ChallengesPage = (function () {
-    function ChallengesPage(navCtrl, navParams, csp, alertCtrl, platform) {
+    function ChallengesPage(navCtrl, navParams, csp, alertCtrl, platform, appCtrl) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.csp = csp;
         this.alertCtrl = alertCtrl;
         this.platform = platform;
+        this.appCtrl = appCtrl;
         this.isAndroid = false;
         this.isAndroid = platform.is('android');
         this.c_stng = this.navParams.data;
@@ -1396,9 +1397,12 @@ var ChallengesPage = (function () {
         console.log('ionViewDidLoad ChallengesPage');
     };
     ChallengesPage.prototype.onChallenge = function (cid) {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__challengedetail_challengedetail__["a" /* ChallengedetailPage */], {
+        this.appCtrl.getRootNav().push(__WEBPACK_IMPORTED_MODULE_3__challengedetail_challengedetail__["a" /* ChallengedetailPage */], {
             cid: cid
         });
+        // this.navCtrl.push(ChallengedetailPage, {
+        //   cid: cid
+        // });
     };
     ChallengesPage.prototype.addChallenge = function () {
         var _this = this;
@@ -1427,7 +1431,7 @@ var ChallengesPage = (function () {
             selector: 'page-challenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n    <ion-buttons end *ngIf="admin == \'1\'">\n      <button ion-button icon-only (click)="addChallenge()">\n        <ion-icon name="add-circle"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n  <br>\n  <ion-list>\n    <ion-item *ngFor="let c of challenges" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <p></p>\n      <!--<p>{{c.descr}}</p>-->\n      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c_stng == \'open\'"></ion-icon>\n      <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c_stng == \'closed\'"></ion-icon>\n    </ion-item>\n  </ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */]])
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]])
     ], ChallengesPage);
     return ChallengesPage;
 }());

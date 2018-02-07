@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import {ChallengeServiceProvider} from "../../providers/challenge-service/challenge-service";
 import {ChallengedetailPage} from "../challengedetail/challengedetail";
 import {AlertController} from "ionic-angular/components/alert/alert-controller";
@@ -30,7 +30,7 @@ export class ChallengesPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private csp: ChallengeServiceProvider,
-              public alertCtrl: AlertController, public platform: Platform) {
+              public alertCtrl: AlertController, public platform: Platform, public appCtrl: App) {
 
     this.isAndroid = platform.is('android');
     this.c_stng = this.navParams.data;
@@ -55,9 +55,12 @@ export class ChallengesPage {
   }
 
   onChallenge(cid: string) {
-    this.navCtrl.push(ChallengedetailPage, {
+    this.appCtrl.getRootNav().push(ChallengedetailPage, {
       cid: cid
     });
+    // this.navCtrl.push(ChallengedetailPage, {
+    //   cid: cid
+    // });
 
   }
 
