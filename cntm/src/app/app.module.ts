@@ -16,7 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {FileChooser} from "@ionic-native/file-chooser";
 import {RankingPage} from "../pages/ranking/ranking";
 import {UserdetailPage} from "../pages/userdetail/userdetail";
-import {ChallengesPage} from "../pages/challenges/challenges";
+import {ChallengesPage, ChallengesTabs} from "../pages/challenges/challenges";
 import { ChallengeServiceProvider } from '../providers/challenge-service/challenge-service';
 import {ChallengedetailPage} from "../pages/challengedetail/challengedetail";
 import {HomePage} from "../pages/home/home";
@@ -36,6 +36,7 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
     ChallengesPage,
     ChallengedetailPage,
     ModelwallPage,
+    ChallengesTabs,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +56,7 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
     ChallengesPage,
     ChallengedetailPage,
     ModelwallPage,
+    ChallengesTabs,
   ],
   providers: [
     StatusBar,

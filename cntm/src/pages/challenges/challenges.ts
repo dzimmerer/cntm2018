@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {ChallengeServiceProvider} from "../../providers/challenge-service/challenge-service";
 import {ChallengedetailPage} from "../challengedetail/challengedetail";
 import {AlertController} from "ionic-angular/components/alert/alert-controller";
+import { Platform } from 'ionic-angular';
 
 /**
  * Generated class for the ChallengesPage page.
@@ -18,8 +19,10 @@ import {AlertController} from "ionic-angular/components/alert/alert-controller";
 })
 export class ChallengesPage {
 
-  openC: any;
-  closedC: any;
+  isAndroid: boolean = false;
+
+  challenges: any;
+  c_stng: any;
 
   username: any;
   token: any;
@@ -27,7 +30,10 @@ export class ChallengesPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private csp: ChallengeServiceProvider,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController, public platform: Platform) {
+
+    this.isAndroid = platform.is('android');
+    this.c_stng = this.navParams.data;
 
     this.username = window.localStorage.getItem('username');
     this.token = window.localStorage.getItem('token');
@@ -36,8 +42,7 @@ export class ChallengesPage {
 
     this.csp.get_challenge_list(this.username, this.token).then((result) => {
 
-      this.openC = result["open"];
-      this.closedC = result["closed"];
+      this.challenges = result[this.c_stng];
 
     }, (err) => {
     });
@@ -50,8 +55,6 @@ export class ChallengesPage {
   }
 
   onChallenge(cid: string) {
-    console.log(cid);
-
     this.navCtrl.push(ChallengedetailPage, {
       cid: cid
     });
@@ -79,4 +82,15 @@ export class ChallengesPage {
     });
     prompt.present();
   }
+
+}
+
+
+@Component({
+  selector: 'page-challengesstart',
+  templateUrl: 'challengesTabs.html',})
+export class ChallengesTabs {
+  rootPage = ChallengesPage;
+  open = "open";
+  closed = "closed"
 }

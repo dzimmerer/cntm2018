@@ -6,7 +6,7 @@ webpackJsonp([7],{
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChallengedetailPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__challenges_challenges__ = __webpack_require__(72);
@@ -205,7 +205,7 @@ var ChallengedetailPage = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__register_register__ = __webpack_require__(139);
@@ -324,7 +324,7 @@ var LoginPage = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_loading_loading_controller__ = __webpack_require__(51);
@@ -436,7 +436,7 @@ var RegisterPage = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ModelwallPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_challenge_service_challenge_service__ = __webpack_require__(54);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -575,7 +575,7 @@ module.exports = webpackAsyncContext;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfilePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__ = __webpack_require__(42);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -675,7 +675,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(306);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_profile_profile__ = __webpack_require__(236);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__ = __webpack_require__(233);
@@ -739,6 +739,7 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_16__pages_challenges_challenges__["a" /* ChallengesPage */],
                 __WEBPACK_IMPORTED_MODULE_18__pages_challengedetail_challengedetail__["a" /* ChallengedetailPage */],
                 __WEBPACK_IMPORTED_MODULE_20__pages_modelwall_modelwall__["a" /* ModelwallPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_challenges_challenges__["b" /* ChallengesTabs */],
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -768,6 +769,7 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_16__pages_challenges_challenges__["a" /* ChallengesPage */],
                 __WEBPACK_IMPORTED_MODULE_18__pages_challengedetail_challengedetail__["a" /* ChallengedetailPage */],
                 __WEBPACK_IMPORTED_MODULE_20__pages_modelwall_modelwall__["a" /* ModelwallPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_challenges_challenges__["b" /* ChallengesTabs */],
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__["a" /* StatusBar */],
@@ -795,7 +797,7 @@ var AppModule = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(233);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(235);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(64);
@@ -835,7 +837,7 @@ var MyApp = (function () {
             { title: 'Home', component: __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */] },
             { title: 'Profile', component: __WEBPACK_IMPORTED_MODULE_5__pages_profile_profile__["a" /* ProfilePage */] },
             { title: 'Ranking', component: __WEBPACK_IMPORTED_MODULE_7__pages_ranking_ranking__["a" /* RankingPage */] },
-            { title: 'Challenges', component: __WEBPACK_IMPORTED_MODULE_8__pages_challenges_challenges__["a" /* ChallengesPage */] },
+            { title: 'Challenges', component: __WEBPACK_IMPORTED_MODULE_8__pages_challenges_challenges__["b" /* ChallengesTabs */] },
             { title: 'Model Wall', component: __WEBPACK_IMPORTED_MODULE_9__pages_modelwall_modelwall__["a" /* ModelwallPage */] },
         ];
     }
@@ -1226,7 +1228,7 @@ var ChallengeServiceProvider = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular_navigation_nav_params__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__ = __webpack_require__(42);
@@ -1344,8 +1346,9 @@ var HomePage = (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChallengesPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ChallengesTabs; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__challengedetail_challengedetail__ = __webpack_require__(137);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__ = __webpack_require__(42);
@@ -1363,6 +1366,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
  * Generated class for the ChallengesPage page.
  *
@@ -1370,18 +1374,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var ChallengesPage = (function () {
-    function ChallengesPage(navCtrl, navParams, csp, alertCtrl) {
+    function ChallengesPage(navCtrl, navParams, csp, alertCtrl, platform) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.csp = csp;
         this.alertCtrl = alertCtrl;
+        this.platform = platform;
+        this.isAndroid = false;
+        this.isAndroid = platform.is('android');
+        this.c_stng = this.navParams.data;
         this.username = window.localStorage.getItem('username');
         this.token = window.localStorage.getItem('token');
         this.admin = window.localStorage.getItem('admin');
         this.csp.get_challenge_list(this.username, this.token).then(function (result) {
-            _this.openC = result["open"];
-            _this.closedC = result["closed"];
+            _this.challenges = result[_this.c_stng];
         }, function (err) {
         });
     }
@@ -1389,7 +1396,6 @@ var ChallengesPage = (function () {
         console.log('ionViewDidLoad ChallengesPage');
     };
     ChallengesPage.prototype.onChallenge = function (cid) {
-        console.log(cid);
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__challengedetail_challengedetail__["a" /* ChallengedetailPage */], {
             cid: cid
         });
@@ -1418,12 +1424,26 @@ var ChallengesPage = (function () {
     };
     ChallengesPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-challenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n    <ion-buttons end *ngIf="admin == \'1\'">\n      <button ion-button icon-only (click)="addChallenge()">\n        <ion-icon name="add-circle"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n\n  <h3 text-center>Open</h3>\n  <ion-list>\n    <!--<ion-list-header>Open</ion-list-header>-->\n\n    <ion-item *ngFor="let c of openC" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <!--<p>{{c.descr}}</p>-->\n      <ion-icon name="help-circle" item-end style="color: #c3af80"></ion-icon>\n    </ion-item>\n  </ion-list>\n\n  <br>\n  <h3 text-center>Closed</h3>\n  <ion-list>\n\n    <!--<ion-list-header>Closed</ion-list-header>-->\n\n    <ion-item *ngFor="let c of closedC" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <!--<p>{{c.descr}}</p>-->\n      <ion-icon name="close-circle" item-end style="color: #c3af80"></ion-icon>\n    </ion-item>\n\n  </ion-list>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/,
+            selector: 'page-challenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n    <ion-buttons end *ngIf="admin == \'1\'">\n      <button ion-button icon-only (click)="addChallenge()">\n        <ion-icon name="add-circle"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n  <br>\n  <ion-list>\n    <ion-item *ngFor="let c of challenges" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <p></p>\n      <!--<p>{{c.descr}}</p>-->\n      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c_stng == \'open\'"></ion-icon>\n      <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c_stng == \'closed\'"></ion-icon>\n    </ion-item>\n  </ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]])
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */]])
     ], ChallengesPage);
     return ChallengesPage;
+}());
+
+var ChallengesTabs = (function () {
+    function ChallengesTabs() {
+        this.rootPage = ChallengesPage;
+        this.open = "open";
+        this.closed = "closed";
+    }
+    ChallengesTabs = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-challengesstart',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challengesTabs.html"*/'<ion-tabs class="tabs-basic">\n  <ion-tab tabTitle="OPEN" [root]="rootPage" [rootParams]="open"></ion-tab>\n  <ion-tab tabTitle="CLOSED" [root]="rootPage" [rootParams]="closed"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challengesTabs.html"*/,
+        })
+    ], ChallengesTabs);
+    return ChallengesTabs;
 }());
 
 //# sourceMappingURL=challenges.js.map
@@ -1436,7 +1456,7 @@ var ChallengesPage = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserdetailPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ranking_ranking__ = __webpack_require__(74);
@@ -1554,7 +1574,7 @@ var UserdetailPage = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RankingPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__userdetail_userdetail__ = __webpack_require__(73);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
