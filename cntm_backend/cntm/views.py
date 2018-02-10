@@ -5,9 +5,10 @@ from django.views.decorators.csrf import csrf_exempt
 
 from cntm.helpers.challenge import get_all_challenges, get_challenge_data, get_anwsers_for_challenge, \
     add_challenge_answer, get_gntm_models, get_m_news, update_m_news, add_m_news, delete_m_news, add_challenge, \
-    update_challenge, delete_challenge, update_gntm_models
+    update_challenge, delete_challenge, update_gntm_models, is_challenge_creator, \
+    update_challenge_answer_points, eval_challenge
 from cntm.helpers.user import create_new_user, check_user_passwd, get_user_token, get_user_json, verify_user, \
-    update_user, get_user_ranking, is_admin, delete_user
+    update_user, get_user_ranking, is_admin, delete_user, can_user_spend_points
 from cntm.models import GNTMModel
 
 
@@ -229,6 +230,8 @@ def give_answer_req(request):
             text = request.GET.get("text", "")
             if not verify_user(username, token):
                 return JsonResponse({"msg": "Error: Invalid request"})
+            if is_challenge_creator(cid, username):
+                return JsonResponse({"msg": "Error: Invalid request"})
 
             add_challenge_answer(username, cid, text)
 
@@ -398,14 +401,20 @@ def add_challenge_req(request):
             name = request.GET.get("name", "")
 
             if not verify_user(username, token):
-                return JsonResponse({"msg": "Error: Invalid request"})
-            if not is_admin(username):
-                return JsonResponse({"msg": "Error: Invalid request"})
+                return JsonResponse({"success": "0"})
 
-            add_challenge(name=name)
-            print("Challenge added")
+            ctype = 1
+            creator = ""
+            if is_admin(username):
+                ctype = 0
+            else:
+                creator = username
 
-            return JsonResponse({})
+            cid = add_challenge(name=name, creator=creator, ctype=ctype)
+
+            print("Challenge added: ", cid)
+
+            return JsonResponse({"success": "1", "cid" : cid})
         except:
             return JsonResponse({"msg":"Error: Invalid request"})
     else:
@@ -422,11 +431,13 @@ def update_challenge_data_req(request):
 
             if not verify_user(username, token):
                 return JsonResponse({"msg": "Error: Invalid request"})
-            if not is_admin(username):
+            if not is_admin(username) and not is_challenge_creator(cid, username):
                 return JsonResponse({"msg": "Error: Invalid request"})
 
             for key, val in request.GET.items():
                 if key in ("username", "token", "cid"):
+                    continue
+                if key in ["points"] and not is_admin(username):
                     continue
                 update_challenge(cid, key, val)
 
@@ -446,7 +457,7 @@ def delete_challenge_req(request):
 
             if not verify_user(username, token):
                 return JsonResponse({"msg": "Error: Invalid request"})
-            if not is_admin(username):
+            if not is_admin(username) and not is_challenge_creator(cid, username):
                 return JsonResponse({"msg": "Error: Invalid request"})
 
             delete_challenge(cid=cid)
@@ -479,6 +490,58 @@ def update_gntm_model_req(request):
 
             return JsonResponse({})
 
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+
+def change_answer_points_req(request):
+    if request.method == "GET":
+        try:
+
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            cid = request.GET.get("cid", "")
+            points = request.GET.get("points", "")
+            points = int(points)
+
+            if points != 1 and points != -1:
+                return JsonResponse({"success": 0})
+
+            if not verify_user(username, token):
+                return JsonResponse({"success": 0})
+
+            if points <= 0 or can_user_spend_points(username):
+                if update_challenge_answer_points(username, cid, points):
+                    return JsonResponse({"success": 1})
+
+            return JsonResponse({"success": 0})
+
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+
+def eval_challenge_req(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            cid = request.GET.get("cid", "")
+
+            if not verify_user(username, token):
+                return JsonResponse({"success": 0})
+            if not is_admin(username) and not is_challenge_creator(cid, username):
+                return JsonResponse({"success": 0})
+
+            print("Challenge evaluated: ", cid)
+
+            if eval_challenge(cid):
+                return JsonResponse({"success": 1})
+
+            return JsonResponse({"success": 0})
         except:
             return JsonResponse({"msg":"Error: Invalid request"})
     else:

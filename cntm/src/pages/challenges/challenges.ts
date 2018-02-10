@@ -76,7 +76,11 @@ export class ChallengesPage {
         { text: 'Add',
           handler: data => {
             this.csp.add_challenge_data(this.username, this.token, data.inpt).then((result) => {
-              this.navCtrl.setRoot(this.navCtrl.getActive().component);
+              if(result["success"] == 1){
+                this.appCtrl.getRootNav().push(ChallengedetailPage, {
+                  cid: result["cid"]
+                });
+              }
             });
             console.log('Add clicked');
           }
@@ -94,6 +98,7 @@ export class ChallengesPage {
   templateUrl: 'challengesTabs.html',})
 export class ChallengesTabs {
   rootPage = ChallengesPage;
-  open = "open";
+  community = "community";
+  special = "special";
   closed = "closed"
 }

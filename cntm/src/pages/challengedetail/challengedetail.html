@@ -11,29 +11,41 @@
 
   <ion-card>
 
-    <ion-card-header>
-      {{name}}
-    </ion-card-header>
+    <ion-item>
+      <h2>{{name}}</h2>
+      <p *ngIf="type == 1">by {{creator}}</p>
+
+      <ion-badge item-end>
+        {{points}}
+      </ion-badge>
+    </ion-item>
+
     <ion-card-content>
       <div [innerHTML]="descr"></div>
     </ion-card-content>
+    <ion-card-content *ngIf="cadmin == '1' || open==2">
+      <b>Solution:</b> {{answer}}
+    </ion-card-content>
+
 
 
     <ion-row>
-      <ion-col *ngIf="open == 1">
-        <button ion-button icon-left clear small (click)="doAnswer()" *ngIf="admin == '0'">
+      <ion-col *ngIf="open == 0">
+        <button ion-button icon-left clear small (click)="doAnswer()" *ngIf="cadmin == '0'">
           <ion-icon name="text"></ion-icon>
           <div>Answer</div>
         </button>
       </ion-col>
       <ion-col text-end>
-        <button ion-button icon-left clear small *ngIf="admin == '0'">
-          <div *ngIf="open == 1">open</div>
-          <div *ngIf="open == 0">closed.</div>
+        <button ion-button icon-left clear small>
+          <div *ngIf="open == 0">open</div>
+          <div *ngIf="open >= 1">closed.</div>
+        </button>
+        <button ion-button icon-left clear small *ngIf="cadmin == '1' && admin == '0' && open < 2" (click)="toggleOpen()">
+          <div>Open/Close</div>
         </button>
         <button ion-button icon-left clear small *ngIf="admin == '1'" (click)="chVal('open', 'Open')">
-          <div *ngIf="open == 1">open</div>
-          <div *ngIf="open == 0">closed.</div>
+          <div>Open/Close</div>
         </button>
       </ion-col>
     </ion-row>
@@ -41,7 +53,7 @@
   </ion-card>
 
 
-  <ion-card *ngIf="admin == '1'">
+  <ion-card *ngIf="cadmin == '1' && (admin == 1 || open < 2)">
 
     <ion-row>
       <ion-col>
@@ -59,6 +71,25 @@
           <div>Edit Choice</div>
         </button>
       </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small (click)="chVal('answer', 'Right Solution')" >
+          <div>Edit Solution</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small (click)="evalChallenge()">
+          <div>Give Points</div>
+        </button>
+      </ion-col>
+      <ion-col *ngIf="type==0 ">
+        <button ion-button icon-left clear small (click)="chVal('points', 'Points')">
+          <div>Edit Points</div>
+        </button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
       <ion-col>
       <button ion-button icon-left clear small (click)="deleteChallenge()">
         <div>Delete</div>
@@ -68,22 +99,32 @@
 
   </ion-card>
 
-  <ion-card *ngIf="c_anwser != ''" (click)="toggleVisible(-1)">
+  <ion-card *ngIf="c_anwser != ''">
 
       <ion-item>
-        <ion-avatar item-start>
+        <ion-avatar item-start (click)="toggleVisible(-1)">
           <img src="{{ca_own.img_url}}">
         </ion-avatar>
         <h2>{{ca_own.username}}</h2>
         <p>{{ca_own.text}}</p>
-        <button ion-button icon-left clear small (click)="doAnswer()" item-end *ngIf="open == 1">
-          <ion-icon name="text"></ion-icon>
-          <div>Edit</div>
-        </button>
+        <button ion-button clear small (click)="spentPoints(-1)" item-end *ngIf="open == 0 && type==1">-</button>
+        <ion-badge item-end *ngIf="type==1">{{ca_own.points}}</ion-badge>
+        <button ion-button clear small (click)="spentPoints(1)" item-end *ngIf="open == 0 && type==1">+</button>
+
       </ion-item>
     <ion-card-content *ngIf="isVisible(-1)">
       <p>{{ca_own.text}}</p>
     </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small (click)="doAnswer()" item-end *ngIf="open == 0">
+          <ion-icon name="text"></ion-icon>
+          <div>Edit</div>
+        </button>
+
+
+      </ion-col>
+    </ion-row>
 
   </ion-card>
 
@@ -95,6 +136,7 @@
       </ion-avatar>
       <h2>{{ca.username}}</h2>
       <p>{{ca.text}}</p>
+      <ion-badge item-end *ngIf="type==1">{{ca.points}}</ion-badge>
     </ion-item>
     <ion-card-content *ngIf="isVisible(i)">
       <p>{{ca.text}}</p>

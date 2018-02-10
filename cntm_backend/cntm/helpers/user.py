@@ -183,3 +183,35 @@ def delete_user(username):
         return True
     except:
         return False
+
+
+def get_spent_user_points(username):
+    try:
+        cas = CAnswer.objects.filter(uname=username)
+
+        u_sum = 0
+        for c in cas:
+            u_sum += c.points
+        return u_sum
+    except:
+        return 0
+
+def get_effectiv_user_points(username):
+    try:
+        u = User.objects.get(username=username)
+
+        points = u.score
+        spent_points = get_spent_user_points(username)
+
+        return points-spent_points
+    except:
+        return 0
+
+def can_user_spend_points(username):
+    try:
+        if get_effectiv_user_points(username) > 0:
+            return True
+        else:
+            return False
+    except:
+        return False

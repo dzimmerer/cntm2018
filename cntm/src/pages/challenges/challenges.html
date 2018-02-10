@@ -4,7 +4,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Challenges</ion-title>
-    <ion-buttons end *ngIf="admin == '1'">
+    <ion-buttons end>
       <button ion-button icon-only (click)="addChallenge()">
         <ion-icon name="add-circle"></ion-icon>
       </button>
@@ -22,7 +22,7 @@
       <h2>{{c.name}}</h2>
       <p></p>
       <!--<p>{{c.descr}}</p>-->
-      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c_stng == 'open'"></ion-icon>
+      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c_stng != 'closed'"></ion-icon>
       <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c_stng == 'closed'"></ion-icon>
     </ion-item>
   </ion-list>

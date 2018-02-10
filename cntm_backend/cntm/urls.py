@@ -23,5 +23,7 @@ urlpatterns = [
     path(r'update_challenge/', views.update_challenge_data_req, name='update_challenge'),
     path(r'delete_challenge/', views.delete_challenge_req, name='delete_challenge'),
     path(r'update_topmodel/', views.update_gntm_model_req, name='update_topmodel'),
+    path(r'change_answer_points/', views.change_answer_points_req, name='change_answer_points'),
+    path(r'eval_challenge/', views.eval_challenge_req, name='eval_challenge'),
     path(r'', views.dnd, name='dnd'),
 ]

@@ -33,12 +33,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var ChallengedetailPage = (function () {
-    function ChallengedetailPage(navCtrl, navParams, csp, alertCtrl) {
+    function ChallengedetailPage(navCtrl, navParams, csp, alertCtrl, appCtrl) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.csp = csp;
         this.alertCtrl = alertCtrl;
+        this.appCtrl = appCtrl;
         this.c_anwser = "";
         this.ca_own = {};
         this.isShownArray = [];
@@ -46,6 +47,7 @@ var ChallengedetailPage = (function () {
         this.username = window.localStorage.getItem('username');
         this.token = window.localStorage.getItem('token');
         this.admin = window.localStorage.getItem('admin');
+        this.cadmin = this.admin;
         this.csp.get_challenge_data(this.username, this.token, this.cid).then(function (result) {
             if ("id" in result) {
                 _this.name = result["name"];
@@ -55,9 +57,25 @@ var ChallengedetailPage = (function () {
                 _this.has_choice = result["has_choice"];
                 _this.open = result["open"];
                 _this.img_url = result["img_url"];
+                _this.type = result["type"];
+                _this.answer = result["answer"];
+                _this.creator = result["creator"];
+                _this.points = result["points"];
+                if (_this.creator == _this.username) {
+                    _this.cadmin = '1';
+                }
+                console.log(_this.cadmin);
+                console.log(_this.open);
             }
         }, function (err) {
         });
+        this.set_ch_answers();
+    }
+    ChallengedetailPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ChallengedetailPage');
+    };
+    ChallengedetailPage.prototype.set_ch_answers = function () {
+        var _this = this;
         this.csp.get_challenge_answers(this.username, this.token, this.cid).then(function (result) {
             if ("other" in result) {
                 _this.ca_other = result["other"];
@@ -68,9 +86,6 @@ var ChallengedetailPage = (function () {
             }
         }, function (err) {
         });
-    }
-    ChallengedetailPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad ChallengedetailPage');
     };
     ChallengedetailPage.prototype.doAnswer = function () {
         var _this = this;
@@ -112,21 +127,27 @@ var ChallengedetailPage = (function () {
                 }
                 // Update
                 _this.csp.give_challenge_answer(_this.username, _this.token, _this.cid, data).then(function (result) {
+                    _this.set_ch_answers();
                 }, function (err) {
                 });
-                var aimg_url = "";
-                if ("img_url" in _this.ca_own) {
-                    aimg_url = _this.ca_own["img_url"];
-                }
-                _this.ca_own = { "username": _this.username,
-                    "cid": _this.cid,
-                    "text": data,
-                    "img_url": aimg_url };
-                _this.c_anwser = data;
             }
         });
         alert.present();
         console.log("Answer....");
+    };
+    ChallengedetailPage.prototype.spentPoints = function (param) {
+        var _this = this;
+        if (param == -1 && this.ca_own["points"] == 0) {
+            return;
+        }
+        // Update
+        this.csp.give_challenge_answer_points(this.username, this.token, this.cid, param).then(function (result) {
+            if (result["success"] == 1) {
+                _this.ca_own["points"] += param;
+                _this.points += param;
+            }
+        }, function (err) {
+        });
     };
     ChallengedetailPage.prototype.isVisible = function (n) {
         return this.isShownArray.includes(n);
@@ -172,7 +193,7 @@ var ChallengedetailPage = (function () {
                 { text: 'OK',
                     handler: function () {
                         _this.csp.delete_challenge_data(_this.username, _this.token, _this.cid).then(function (result) {
-                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__challenges_challenges__["a" /* ChallengesPage */]);
+                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__challenges_challenges__["b" /* ChallengesTabs */]);
                         });
                     }
                 }
@@ -185,12 +206,73 @@ var ChallengedetailPage = (function () {
             other: uname
         });
     };
+    ChallengedetailPage.prototype.evalChallenge = function () {
+        var _this = this;
+        if (this.answer == "") {
+            var alert_1 = this.alertCtrl.create({
+                title: 'Please insert solution first!',
+                buttons: ['OK']
+            });
+            alert_1.present();
+        }
+        else {
+            var alert_2 = this.alertCtrl.create({
+                title: 'Are you sure?',
+                message: 'If you distribute points the challenge is over and you can not change it anymore.',
+                buttons: [
+                    { text: 'Cancel', },
+                    {
+                        text: 'Yes',
+                        handler: function () {
+                            _this.csp.eval_challenge(_this.username, _this.token, _this.cid).then(function (result) {
+                                if (result["success"] == 1) {
+                                    _this.open = 2;
+                                    _this.csp.update_challenge_data(_this.username, _this.token, _this.cid, "open", 2);
+                                    console.log("Distributed Points.....");
+                                }
+                            });
+                        }
+                    }
+                ]
+            });
+            alert_2.present();
+        }
+    };
+    ChallengedetailPage.prototype.toggleOpen = function () {
+        var _this = this;
+        if (this.open < 2) {
+            var alert_3 = this.alertCtrl.create();
+            alert_3.setTitle('Open');
+            alert_3.addInput({
+                type: 'radio',
+                label: 'Open',
+                value: '0',
+                checked: this.open == 0,
+            });
+            alert_3.addInput({
+                type: 'radio',
+                label: 'Closed',
+                value: '1',
+                checked: this.open == 1,
+            });
+            alert_3.addButton('Cancel');
+            alert_3.addButton({
+                text: 'OK',
+                handler: function (data) {
+                    // Update
+                    _this.open = data;
+                    _this.csp.update_challenge_data(_this.username, _this.token, _this.cid, "open", data);
+                }
+            });
+            alert_3.present();
+        }
+    };
     ChallengedetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-challengedetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n    <ion-title>Challenge</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <ion-card-header>\n      {{name}}\n    </ion-card-header>\n    <ion-card-content>\n      <div [innerHTML]="descr"></div>\n    </ion-card-content>\n\n\n    <ion-row>\n      <ion-col *ngIf="open == 1">\n        <button ion-button icon-left clear small (click)="doAnswer()" *ngIf="admin == \'0\'">\n          <ion-icon name="text"></ion-icon>\n          <div>Answer</div>\n        </button>\n      </ion-col>\n      <ion-col text-end>\n        <button ion-button icon-left clear small *ngIf="admin == \'0\'">\n          <div *ngIf="open == 1">open</div>\n          <div *ngIf="open == 0">closed.</div>\n        </button>\n        <button ion-button icon-left clear small *ngIf="admin == \'1\'" (click)="chVal(\'open\', \'Open\')">\n          <div *ngIf="open == 1">open</div>\n          <div *ngIf="open == 0">closed.</div>\n        </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n\n\n  <ion-card *ngIf="admin == \'1\'">\n\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="chVal(\'name\', \'Headline\')">\n          <div>Edit Name</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="chVal(\'descr\', \'Text\')">\n          <div>Edit Text</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="chVal(\'choice\', \'Choice\')">\n          <div>Edit Choice</div>\n        </button>\n      </ion-col>\n      <ion-col>\n      <button ion-button icon-left clear small (click)="deleteChallenge()">\n        <div>Delete</div>\n      </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n\n  <ion-card *ngIf="c_anwser != \'\'" (click)="toggleVisible(-1)">\n\n      <ion-item>\n        <ion-avatar item-start>\n          <img src="{{ca_own.img_url}}">\n        </ion-avatar>\n        <h2>{{ca_own.username}}</h2>\n        <p>{{ca_own.text}}</p>\n        <button ion-button icon-left clear small (click)="doAnswer()" item-end *ngIf="open == 1">\n          <ion-icon name="text"></ion-icon>\n          <div>Edit</div>\n        </button>\n      </ion-item>\n    <ion-card-content *ngIf="isVisible(-1)">\n      <p>{{ca_own.text}}</p>\n    </ion-card-content>\n\n  </ion-card>\n\n  <ion-card *ngFor="let ca of ca_other; let i = index">\n\n    <ion-item (click)="toggleVisible(i)">\n      <ion-avatar item-start (click)="frwdToUser(ca.username)">\n        <img src="{{ca.img_url}}">\n      </ion-avatar>\n      <h2>{{ca.username}}</h2>\n      <p>{{ca.text}}</p>\n    </ion-item>\n    <ion-card-content *ngIf="isVisible(i)">\n      <p>{{ca.text}}</p>\n    </ion-card-content>\n\n  </ion-card>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/,
+            selector: 'page-challengedetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n    <ion-title>Challenge</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <ion-item>\n      <h2>{{name}}</h2>\n      <p *ngIf="type == 1">by {{creator}}</p>\n\n      <ion-badge item-end>\n        {{points}}\n      </ion-badge>\n    </ion-item>\n\n    <ion-card-content>\n      <div [innerHTML]="descr"></div>\n    </ion-card-content>\n    <ion-card-content *ngIf="cadmin == \'1\' || open==2">\n      <b>Solution:</b> {{answer}}\n    </ion-card-content>\n\n\n\n    <ion-row>\n      <ion-col *ngIf="open == 0">\n        <button ion-button icon-left clear small (click)="doAnswer()" *ngIf="cadmin == \'0\'">\n          <ion-icon name="text"></ion-icon>\n          <div>Answer</div>\n        </button>\n      </ion-col>\n      <ion-col text-end>\n        <button ion-button icon-left clear small>\n          <div *ngIf="open == 0">open</div>\n          <div *ngIf="open >= 1">closed.</div>\n        </button>\n        <button ion-button icon-left clear small *ngIf="cadmin == \'1\' && admin == \'0\' && open < 2" (click)="toggleOpen()">\n          <div>Open/Close</div>\n        </button>\n        <button ion-button icon-left clear small *ngIf="admin == \'1\'" (click)="chVal(\'open\', \'Open\')">\n          <div>Open/Close</div>\n        </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n\n\n  <ion-card *ngIf="cadmin == \'1\' && (admin == 1 || open < 2)">\n\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="chVal(\'name\', \'Headline\')">\n          <div>Edit Name</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="chVal(\'descr\', \'Text\')">\n          <div>Edit Text</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="chVal(\'choice\', \'Choice\')">\n          <div>Edit Choice</div>\n        </button>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="chVal(\'answer\', \'Right Solution\')" >\n          <div>Edit Solution</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="evalChallenge()">\n          <div>Give Points</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="type==0 ">\n        <button ion-button icon-left clear small (click)="chVal(\'points\', \'Points\')">\n          <div>Edit Points</div>\n        </button>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col>\n      <button ion-button icon-left clear small (click)="deleteChallenge()">\n        <div>Delete</div>\n      </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n\n  <ion-card *ngIf="c_anwser != \'\'">\n\n      <ion-item>\n        <ion-avatar item-start (click)="toggleVisible(-1)">\n          <img src="{{ca_own.img_url}}">\n        </ion-avatar>\n        <h2>{{ca_own.username}}</h2>\n        <p>{{ca_own.text}}</p>\n        <button ion-button clear small (click)="spentPoints(-1)" item-end *ngIf="open == 0 && type==1">-</button>\n        <ion-badge item-end *ngIf="type==1">{{ca_own.points}}</ion-badge>\n        <button ion-button clear small (click)="spentPoints(1)" item-end *ngIf="open == 0 && type==1">+</button>\n\n      </ion-item>\n    <ion-card-content *ngIf="isVisible(-1)">\n      <p>{{ca_own.text}}</p>\n    </ion-card-content>\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="doAnswer()" item-end *ngIf="open == 0">\n          <ion-icon name="text"></ion-icon>\n          <div>Edit</div>\n        </button>\n\n\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n\n  <ion-card *ngFor="let ca of ca_other; let i = index">\n\n    <ion-item (click)="toggleVisible(i)">\n      <ion-avatar item-start (click)="frwdToUser(ca.username)">\n        <img src="{{ca.img_url}}">\n      </ion-avatar>\n      <h2>{{ca.username}}</h2>\n      <p>{{ca.text}}</p>\n      <ion-badge item-end *ngIf="type==1">{{ca.points}}</ion-badge>\n    </ion-item>\n    <ion-card-content *ngIf="isVisible(i)">\n      <p>{{ca.text}}</p>\n    </ion-card-content>\n\n  </ion-card>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]])
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]])
     ], ChallengedetailPage);
     return ChallengedetailPage;
 }());
@@ -1114,6 +1196,18 @@ var ChallengeServiceProvider = (function () {
             });
         });
     };
+    ChallengeServiceProvider.prototype.give_challenge_answer_points = function (username, token, cid, points) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&cid=" + cid + "&points=" + points;
+            _this.http.get(apiUrl + 'change_answer_points/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
     ChallengeServiceProvider.prototype.get_news_data = function (username, token) {
         var _this = this;
         console.log("get the f***** data");
@@ -1204,6 +1298,18 @@ var ChallengeServiceProvider = (function () {
         return new Promise(function (resolve, reject) {
             var get_params = "?username=" + username + "&token=" + token + "&cid=" + cid + "&" + name + "=" + value;
             _this.http.get(apiUrl + 'update_topmodel/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    ChallengeServiceProvider.prototype.eval_challenge = function (username, token, cid) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&cid=" + cid;
+            _this.http.get(apiUrl + 'eval_challenge/' + get_params)
                 .subscribe(function (res) {
                 resolve(res);
             }, function (err) {
@@ -1417,7 +1523,11 @@ var ChallengesPage = (function () {
                 { text: 'Add',
                     handler: function (data) {
                         _this.csp.add_challenge_data(_this.username, _this.token, data.inpt).then(function (result) {
-                            _this.navCtrl.setRoot(_this.navCtrl.getActive().component);
+                            if (result["success"] == 1) {
+                                _this.appCtrl.getRootNav().push(__WEBPACK_IMPORTED_MODULE_3__challengedetail_challengedetail__["a" /* ChallengedetailPage */], {
+                                    cid: result["cid"]
+                                });
+                            }
                         });
                         console.log('Add clicked');
                     }
@@ -1428,7 +1538,7 @@ var ChallengesPage = (function () {
     };
     ChallengesPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-challenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n    <ion-buttons end *ngIf="admin == \'1\'">\n      <button ion-button icon-only (click)="addChallenge()">\n        <ion-icon name="add-circle"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n  <br>\n  <ion-list>\n    <ion-item *ngFor="let c of challenges" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <p></p>\n      <!--<p>{{c.descr}}</p>-->\n      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c_stng == \'open\'"></ion-icon>\n      <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c_stng == \'closed\'"></ion-icon>\n    </ion-item>\n  </ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/,
+            selector: 'page-challenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="addChallenge()">\n        <ion-icon name="add-circle"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n  <br>\n  <ion-list>\n    <ion-item *ngFor="let c of challenges" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <p></p>\n      <!--<p>{{c.descr}}</p>-->\n      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c_stng != \'closed\'"></ion-icon>\n      <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c_stng == \'closed\'"></ion-icon>\n    </ion-item>\n  </ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */],
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]])
@@ -1439,12 +1549,13 @@ var ChallengesPage = (function () {
 var ChallengesTabs = (function () {
     function ChallengesTabs() {
         this.rootPage = ChallengesPage;
-        this.open = "open";
+        this.community = "community";
+        this.special = "special";
         this.closed = "closed";
     }
     ChallengesTabs = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-challengesstart',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challengesTabs.html"*/'<ion-tabs class="tabs-basic">\n  <ion-tab tabTitle="OPEN" [root]="rootPage" [rootParams]="open"></ion-tab>\n  <ion-tab tabTitle="CLOSED" [root]="rootPage" [rootParams]="closed"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challengesTabs.html"*/,
+            selector: 'page-challengesstart',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challengesTabs.html"*/'<ion-tabs class="tabs-basic">\n  <ion-tab tabTitle="Community" [root]="rootPage" [rootParams]="community"></ion-tab>\n  <ion-tab tabTitle="Specials" [root]="rootPage" [rootParams]="special"></ion-tab>\n  <ion-tab tabTitle="Closed" [root]="rootPage" [rootParams]="closed"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challengesTabs.html"*/,
         })
     ], ChallengesTabs);
     return ChallengesTabs;

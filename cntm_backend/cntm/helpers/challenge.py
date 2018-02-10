@@ -1,9 +1,13 @@
+import math
+
 from cntm.models import Challenge, User, CAnswer, GNTMModel, News
 
 
-def get_open_challenges(open=True):
+def get_open_challenges(open=0, ctype=None):
 
     challenges = Challenge.objects.filter(open=open)
+    if ctype is not None:
+        challenges = challenges.filter(type=ctype)
     c_list = []
 
     for c in challenges:
@@ -13,10 +17,16 @@ def get_open_challenges(open=True):
 
 def get_all_challenges():
 
-    open_c = get_open_challenges(open=True)
-    closed_c = get_open_challenges(open=False)
+    community_c = get_open_challenges(open=0, ctype=1)
+    special_c = get_open_challenges(open=0, ctype=0)
 
-    return {"open": open_c, "closed": closed_c}
+    closed_c1 = get_open_challenges(open=1)
+    closed_c2 = get_open_challenges(open=2)
+
+    closed_c = closed_c1 + closed_c2
+
+
+    return {"community": community_c, "special": special_c, "closed": closed_c}
 
 
 def get_challenge_data(cid):
@@ -38,20 +48,38 @@ def get_challenge_data(cid):
                 choice_list=choices,
                 has_choice=has_choice,
                 img_url=c.img_url,
-                open=c.open)
+                open=c.open,
+                type=c.type,
+                creator=c.creator,
+                answer=c.answer,
+                points=c.points)
+
+def is_challenge_creator(cid, username):
+    try:
+        c = Challenge.objects.get(id=cid)
+        if c.creator == username and c.type == 1:
+            return True
+        else:
+            return False
+    except:
+        return False
 
 def update_challenge(cid, key, val):
     c = Challenge.objects.get(id=cid)
     setattr(c, key, val)
     c.save()
 
-def add_challenge(name, desc="", img_url="", choice="", open=0):
+def add_challenge(name, desc="", img_url="", choice="", open=0, creator="", ctype=1):
     c = Challenge(name=name,
                  descr=desc,
                  img_url=img_url,
                  choice=choice,
-                 open=open)
+                 open=open,
+                 creator=creator,
+                 type=ctype)
     c.save()
+
+    return c.id
 
 def delete_challenge(cid):
     try:
@@ -63,7 +91,7 @@ def delete_challenge(cid):
     except:
         return False
 
-def add_challenge_answer(username, cid, answer):
+def add_challenge_answer(username, cid, answer=None, points=0):
     u = User.objects.get(username=username)
     c = Challenge.objects.get(id=cid)
 
@@ -72,13 +100,49 @@ def add_challenge_answer(username, cid, answer):
     if len(cas) > 0:
         a = cas.first()
         a.text = answer
+        a.points = points
         a.save()
     else:
         a = CAnswer(uname=username,
                     cid=c.id,
                     text=answer,
-                    img_url=u.img_url)
+                    img_url=u.img_url,
+                    points=points)
         a.save()
+
+
+def update_challenge_answer_points(username, cid, points=0):
+    try:
+        cas = CAnswer.objects.get(cid=cid, uname=username)
+        cas.points = cas.points + points
+        cas.save()
+
+        calc_new_challenge_points(cid)
+
+        return True
+
+    except:
+        return False
+
+
+def calc_new_challenge_points(cid):
+    try:
+
+        c = Challenge.objects.get(id=cid)
+
+        if c.type == 1:
+
+            points = 0
+
+            cas = CAnswer.objects.filter(cid=cid)
+            for ca in cas:
+               points += ca.points
+
+            c.points = points
+            c.save()
+
+    except:
+        return False
 
 def get_anwsers_for_challenge(cid, username=""):
 
@@ -92,7 +156,8 @@ def get_anwsers_for_challenge(cid, username=""):
         a_dct = dict(cid=a.cid,
                      username=a.uname,
                      text=a.text,
-                     img_url=a.img_url)
+                     img_url=a.img_url,
+                     points=a.points)
 
         if a.uname == username:
             ret_dict["own"] = a_dct
@@ -177,6 +242,56 @@ def update_m_news(nid, key, val):
 def delete_m_news(nid):
     try:
         News.objects.get(id=nid).delete()
+        return True
+    except:
+        return False
+
+
+def eval_challenge(cid):
+    try:
+
+        c = Challenge.objects.get(id=cid)
+        calc_new_challenge_points(cid)
+
+        tot_points = c.points
+        solution = c.answer
+
+        if c.type == 0:
+
+            cas = CAnswer.objects.filter(cid=cid, text=solution)
+
+            for ca in cas:
+                try:
+                    right_user = User.objects.get(username=ca.uname)
+                    right_user.score += tot_points
+                    right_user.save()
+                except:
+                    pass
+                
+        if c.type == 1:
+
+            cas_right = CAnswer.objects.filter(cid=cid, text=solution)
+            right_points = 0
+
+            for ca in cas_right:
+                right_points += ca.points
+
+            cas = CAnswer.objects.filter(cid=cid)
+            for ca in cas:
+                try:
+                    u = User.objects.get(username=ca.uname)
+                    u.score -= ca.points
+
+                    if ca.text == solution:
+                        right_percent = ca.points / right_points
+                        u.score += round( tot_points * right_percent )
+
+                    u.save()
+                except:
+                    pass
+
+
+
         return True
     except:
         return False

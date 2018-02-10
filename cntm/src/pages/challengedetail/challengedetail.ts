@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import {ChallengeServiceProvider} from "../../providers/challenge-service/challenge-service";
 import {AlertController} from "ionic-angular/components/alert/alert-controller";
-import {ChallengesPage} from "../challenges/challenges";
+import {ChallengesTabs} from "../challenges/challenges";
 import {UserdetailPage} from "../userdetail/userdetail";
 
 /**
@@ -33,13 +33,18 @@ export class ChallengedetailPage {
   has_choice: any;
   open:any;
   img_url: any;
+  type: any;
+  answer: any;
+  creator: any;
+  points: any;
+  cadmin: any;
 
   c_anwser = "";
   ca_own = {};
   ca_other: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private csp: ChallengeServiceProvider,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController, public appCtrl: App) {
 
     this.isShownArray = [];
 
@@ -47,6 +52,8 @@ export class ChallengedetailPage {
     this.username = window.localStorage.getItem('username');
     this.token = window.localStorage.getItem('token');
     this.admin = window.localStorage.getItem('admin');
+
+    this.cadmin = this.admin;
 
     this.csp.get_challenge_data(this.username, this.token, this.cid).then((result) => {
 
@@ -59,11 +66,32 @@ export class ChallengedetailPage {
         this.has_choice = result["has_choice"];
         this.open = result["open"];
         this.img_url = result["img_url"];
+        this.type = result["type"];
+        this.answer = result["answer"];
+        this.creator = result["creator"];
+        this.points = result["points"];
+
+        if(this.creator == this.username){
+          this.cadmin = '1';
+        }
+
+        console.log(this.cadmin);
+        console.log(this.open);
 
       }
 
     }, (err) => {
     });
+
+    this.set_ch_answers();
+
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad ChallengedetailPage');
+  }
+
+  set_ch_answers() {
 
     this.csp.get_challenge_answers(this.username, this.token, this.cid).then((result) => {
 
@@ -78,14 +106,8 @@ export class ChallengedetailPage {
     }, (err) => {
     });
 
-
-
-
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChallengedetailPage');
-  }
 
   doAnswer() {
 
@@ -128,6 +150,7 @@ export class ChallengedetailPage {
       })
     }
 
+
     alert.addButton('Cancel');
     alert.addButton({
       text: 'OK',
@@ -137,25 +160,35 @@ export class ChallengedetailPage {
         }
         // Update
         this.csp.give_challenge_answer(this.username, this.token, this.cid, data).then((result) => {
+          this.set_ch_answers();
         }, (err) => {
         });
-
-        let aimg_url = "";
-        if("img_url" in this.ca_own){
-          aimg_url = this.ca_own["img_url"]
-        }
-        this.ca_own = {"username": this.username,
-                        "cid": this.cid,
-                        "text": data,
-                        "img_url": aimg_url};
-        this.c_anwser = data;
-
 
       }
     });
     alert.present();
 
     console.log("Answer....")
+  }
+
+
+  spentPoints(param) {
+
+      if(param == -1 && this.ca_own["points"] == 0){
+        return;
+      }
+
+      // Update
+      this.csp.give_challenge_answer_points(this.username, this.token, this.cid, param).then((result) => {
+
+        if(result["success"] == 1){
+          this.ca_own["points"] += param;
+          this.points += param;
+        }
+
+      }, (err) => {
+      });
+
   }
 
 
@@ -206,7 +239,7 @@ export class ChallengedetailPage {
         { text: 'OK',
           handler: () => {
             this.csp.delete_challenge_data(this.username, this.token, this.cid).then((result) => {
-              this.navCtrl.setRoot(ChallengesPage);
+              this.navCtrl.setRoot(ChallengesTabs);
             });
           }
         }
@@ -221,4 +254,75 @@ export class ChallengedetailPage {
     });
   }
 
+  evalChallenge() {
+
+    if(this.answer == ""){
+        let alert = this.alertCtrl.create({
+          title: 'Please insert solution first!',
+          buttons: ['OK']
+        });
+        alert.present();
+    }
+    else{
+      let alert = this.alertCtrl.create({
+        title: 'Are you sure?',
+        message: 'If you distribute points the challenge is over and you can not change it anymore.',
+        buttons: [
+          { text: 'Cancel', },
+          {
+            text: 'Yes',
+            handler: () => {
+              this.csp.eval_challenge(this.username, this.token, this.cid).then((result) => {
+                if(result["success"] == 1) {
+                  this.open = 2;
+                  this.csp.update_challenge_data(this.username, this.token, this.cid, "open", 2);
+                  console.log("Distributed Points.....");
+                }
+              });
+            }
+          }
+        ]
+      });
+      alert.present();
+    }
+
+  }
+
+  toggleOpen() {
+
+    if(this.open < 2) {
+
+      let alert = this.alertCtrl.create();
+      alert.setTitle('Open');
+      alert.addInput({
+        type: 'radio',
+        label: 'Open',
+        value: '0',
+        checked: this.open == 0,
+      });
+
+      alert.addInput({
+        type: 'radio',
+        label: 'Closed',
+        value: '1',
+        checked: this.open == 1,
+      });
+
+
+      alert.addButton('Cancel');
+      alert.addButton({
+        text: 'OK',
+        handler: data => {
+
+          // Update
+          this.open = data;
+          this.csp.update_challenge_data(this.username, this.token, this.cid, "open", data);
+
+        }
+      });
+      alert.present();
+
+    }
+
+  }
 }

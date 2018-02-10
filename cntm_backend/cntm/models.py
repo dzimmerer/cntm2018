@@ -25,12 +25,17 @@ class Challenge(models.Model):
     img_url = models.CharField(max_length=200)
     choice = models.TextField()
     open = models.IntegerField(default=0)
+    creator = models.CharField(max_length=200, default="")
+    answer = models.TextField(default="")
+    points = models.IntegerField(default=0)
+    type = models.IntegerField(default=0)
 
 class CAnswer(models.Model):
     uname = models.CharField(max_length=30)
     cid = models.IntegerField()
     text = models.CharField(max_length=200)
     img_url = models.CharField(max_length=200)
+    points = models.IntegerField(default=0)
 
 class GNTMModel(models.Model):
     name = models.CharField(max_length=100)

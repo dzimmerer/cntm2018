@@ -74,6 +74,21 @@ export class ChallengeServiceProvider {
     });
   }
 
+  give_challenge_answer_points(username, token, cid, points){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token+"&cid="+cid + "&points="+points;
+
+      this.http.get(apiUrl+'change_answer_points/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+
 
   get_news_data(username, token){
     console.log("get the f***** data");
@@ -180,6 +195,20 @@ export class ChallengeServiceProvider {
       let get_params = "?username="+username+"&token="+token + "&cid=" + cid +  "&" + name + "=" + value;
 
       this.http.get(apiUrl+'update_topmodel/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  eval_challenge(username, token, cid){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token + "&cid=" + cid;
+
+      this.http.get(apiUrl+'eval_challenge/' + get_params)
         .subscribe(res => {
           resolve(res);
         }, (err) => {
