@@ -23,6 +23,9 @@
     <ion-card-content>
       <div [innerHTML]="descr"></div>
     </ion-card-content>
+    <ion-card-content *ngIf="open==0 && etime.time != '' && etime.date != '' ">
+      <p><i>Ends: {{etime.date}} {{etime.time}}</i></p>
+    </ion-card-content>
     <ion-card-content *ngIf="cadmin == '1' || open==2">
       <b>Solution:</b> {{answer}}
     </ion-card-content>

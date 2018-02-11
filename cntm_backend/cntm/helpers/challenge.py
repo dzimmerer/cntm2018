@@ -2,6 +2,8 @@ import math
 import datetime
 import pytz
 
+from django.db.models import Q
+
 from cntm.models import Challenge, User, CAnswer, GNTMModel, News
 
 tz = pytz.timezone("Europe/Berlin")
@@ -64,12 +66,12 @@ def get_challenge_data(cid):
 
     choices = []
     has_choice = 0
-    if ";" in c.choice:
-        choices = c.choice.split(";")
-        has_choice = 1
+    if "&" in c.choice:
+        choices = c.choice.split("&")
+        has_choice = 2
     elif "|" in c.choice:
         choices = c.choice.split("|")
-        has_choice = 2
+        has_choice = 1
 
     return dict(id = c.id,
                 name=c.name,
@@ -126,7 +128,7 @@ def delete_challenge(cid):
     except:
         return False
 
-def add_challenge_answer(username, cid, answer=None, points=0):
+def add_challenge_answer(username, cid, answer=None, points=None):
     u = User.objects.get(username=username)
     c = Challenge.objects.get(id=cid)
 
@@ -135,7 +137,8 @@ def add_challenge_answer(username, cid, answer=None, points=0):
     if len(cas) > 0:
         a = cas.first()
         a.text = answer
-        a.points = points
+        if points is not None:
+            a.points = points
         a.save()
     else:
         a = CAnswer(uname=username,
@@ -285,33 +288,53 @@ def delete_m_news(nid):
 def eval_challenge(cid):
     try:
 
-        c = Challenge.objects.get(id=cid)
         calc_new_challenge_points(cid)
+        c = Challenge.objects.get(id=cid)
 
         tot_points = c.points
         solution = c.answer
 
         if c.type == 0:
 
-            cas = CAnswer.objects.filter(cid=cid, text=solution)
+            if "&" in solution:
+                is_in = True
+                solution = solution.split("&")
+
+            cas = CAnswer.objects.filter(cid=cid)
 
             for ca in cas:
                 try:
-                    right_user = User.objects.get(username=ca.uname)
-                    right_user.score += tot_points
-                    right_user.save()
+                    u = User.objects.get(username=ca.uname)
+
+                    test_bool = (ca.text == solution)
+                    if is_in:
+                        test_bool = (ca.text in solution)
+
+                    if test_bool:
+                        u.score += tot_points
+                        u.save()
                 except:
                     pass
 
         if c.type == 1:
 
+            cas = CAnswer.objects.filter(cid=cid)
             cas_right = CAnswer.objects.filter(cid=cid, text=solution)
-            right_points = 0
 
+            right_points = 0
             for ca in cas_right:
                 right_points += ca.points
 
-            cas = CAnswer.objects.filter(cid=cid)
+            if right_points != tot_points:
+                try:
+                    cre_points = int(tot_points * 0.1)
+                    tot_points -= cre_points
+                    creator = User.objects.get(username=c.creator)
+                    creator.score += cre_points
+                    creator.save()
+                except:
+                    pass
+
             for ca in cas:
                 try:
                     u = User.objects.get(username=ca.uname)

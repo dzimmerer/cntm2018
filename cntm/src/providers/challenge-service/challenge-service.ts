@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 
 
 
-// let apiUrl = 'http://ec2-34-253-80-80.eu-west-1.compute.amazonaws.com:8000/';
-let apiUrl = 'http://localhost:8000/';
+let apiUrl = 'http://ec2-34-253-80-80.eu-west-1.compute.amazonaws.com:8000/';
+// let apiUrl = 'http://localhost:8000/';
 
 
 @Injectable()
@@ -150,7 +150,8 @@ export class ChallengeServiceProvider {
   update_challenge_data(username, token, cid, name, value){
     return new Promise((resolve, reject) => {
 
-      let get_params = "?username="+username+"&token="+token + "&cid=" + cid +  "&" + name + "=" + value;
+
+      let get_params = "?username="+username+"&token="+token + "&cid=" + cid +  "&" + name + "=" + encodeURIComponent(value);
 
       this.http.get(apiUrl+'update_challenge/' + get_params)
         .subscribe(res => {
