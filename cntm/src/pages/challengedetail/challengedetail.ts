@@ -334,7 +334,7 @@ export class ChallengedetailPage {
 
   }
 
-  setEndTime() {
+  setEndTime(param) {
 
     if(this.etime.time != "" && this.etime.date != ""){
 
@@ -343,11 +343,13 @@ export class ChallengedetailPage {
 
     }
     else{
-      let alert = this.alertCtrl.create({
-        title: 'Please give a end time and date first!',
-        buttons: ['OK']
-      });
-      alert.present();
+      if(param == 1) {
+        let alert = this.alertCtrl.create({
+          title: 'Please give a end time and date first!',
+          buttons: ['OK']
+        });
+        alert.present();
+      }
     }
 
   }

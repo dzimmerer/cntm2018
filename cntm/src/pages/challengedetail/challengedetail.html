@@ -106,15 +106,15 @@
   <ion-card *ngIf="cadmin == '1' && (admin == 1 || open == 0)">
     <ion-item>
       <ion-label>End Time</ion-label>
-      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" placeholder="hh:mm" [(ngModel)]="etime.time"></ion-datetime>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" placeholder="hh:mm" [(ngModel)]="etime.time" (ngModelChange)="setEndTime()"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label>End Date</ion-label>
-      <ion-datetime displayFormat="DD.MMMM YYYY" pickerFormat="DD MMM YYYY" placeholder="dd.mm.yyyy" [(ngModel)]="etime.date"></ion-datetime>
+      <ion-datetime displayFormat="DD.MMMM YYYY" pickerFormat="DD MMM YYYY" placeholder="dd.mm.yyyy" [(ngModel)]="etime.date" (ngModelChange)="setEndTime()"></ion-datetime>
     </ion-item>
     <ion-row>
       <ion-col>
-        <button ion-button icon-left clear small (click)="setEndTime()">
+        <button ion-button icon-left clear small (click)="setEndTime(1)">
           <div>Set Time</div>
         </button>
       </ion-col>
