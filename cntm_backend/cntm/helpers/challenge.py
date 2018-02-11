@@ -141,6 +141,8 @@ def add_challenge_answer(username, cid, answer=None, points=None):
             a.points = points
         a.save()
     else:
+        if points is None:
+            points = 0
         a = CAnswer(uname=username,
                     cid=c.id,
                     text=answer,
@@ -296,25 +298,75 @@ def eval_challenge(cid):
 
         if c.type == 0:
 
-            if "&" in solution:
-                is_in = True
-                solution = solution.split("&")
+            # Use as pot of points
+            if solution.startswith("$") and solution.endswith("$"):
+                solution = solution[1:-1]
 
-            cas = CAnswer.objects.filter(cid=cid)
+                is_in = False
+                if "&" in solution:
+                    is_in = True
+                    solution = solution.split("&")
 
-            for ca in cas:
-                try:
-                    u = User.objects.get(username=ca.uname)
+                if not is_in:
+                    cas_right = CAnswer.objects.filter(cid=cid, text=solution)
 
-                    test_bool = (ca.text == solution)
-                    if is_in:
-                        test_bool = (ca.text in solution)
+                    point_incr = 0
+                    if len(cas_right) > 0:
+                        point_incr = round(tot_points / len(cas_right))
 
-                    if test_bool:
-                        u.score += tot_points
-                        u.save()
-                except:
-                    pass
+                    for ca in cas_right:
+                        try:
+                            u = User.objects.get(username=ca.uname)
+                            u.score += point_incr
+                            u.save()
+                        except:
+                            pass
+                else:
+                    count_dict = dict()
+                    point_dict = dict()
+                    for sol in solution:
+                        count_dict[sol] = 0
+                        point_dict[sol] = tot_points
+
+                    cas = CAnswer.objects.filter(cid=cid)
+                    for ca in cas:
+                        if ca.text in count_dict:
+                            count_dict[ca.text] += 1
+
+                    for sol in solution:
+                        point_dict[sol] = round(point_dict[sol] / count_dict[sol])
+
+                    for ca in cas:
+                        if ca.text in point_dict:
+                            try:
+                                u = User.objects.get(username=ca.uname)
+                                u.score += point_dict[ca.text]
+                                u.save()
+                            except:
+                                pass
+
+            # Do not use a pot of points
+            else:
+
+                is_in = False
+                if "&" in solution:
+                    is_in = True
+                    solution = solution.split("&")
+
+                cas = CAnswer.objects.filter(cid=cid)
+                for ca in cas:
+                    try:
+                        u = User.objects.get(username=ca.uname)
+
+                        test_bool = (ca.text == solution)
+                        if is_in:
+                            test_bool = (ca.text in solution)
+
+                        if test_bool:
+                            u.score += tot_points
+                            u.save()
+                    except:
+                        pass
 
         if c.type == 1:
 
