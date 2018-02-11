@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 
 
 
-// let apiUrl = 'http://ec2-34-253-80-80.eu-west-1.compute.amazonaws.com:8000/';
-let apiUrl = 'http://localhost:8000/';
+let apiUrl = 'http://ec2-34-253-80-80.eu-west-1.compute.amazonaws.com:8000/';
+// let apiUrl = 'http://localhost:8000/';
 
 
 @Injectable()
