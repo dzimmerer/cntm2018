@@ -43,6 +43,8 @@ export class ChallengedetailPage {
     "time": "",
     "date": ""
   };
+  embet: any;
+
 
   c_anwser = "";
   ca_own = {};
@@ -75,6 +77,8 @@ export class ChallengedetailPage {
         this.answer = result["answer"];
         this.creator = result["creator"];
         this.points = result["points"];
+
+        this.embet = this.type == 2;
 
         if(this.creator == this.username){
           this.cadmin = '1';
@@ -359,5 +363,69 @@ export class ChallengedetailPage {
     this.etime.date = "";
     this.csp.update_challenge_data(this.username, this.token, this.cid, "etime", "");
 
+  }
+
+  changeEmBet() {
+    if(this.embet){
+      this.type = 2;
+      this.csp.update_challenge_data(this.username, this.token, this.cid, "type", 2);
+    }
+    else{
+      this.type = 1;
+      this.csp.update_challenge_data(this.username, this.token, this.cid, "type", 1);
+    }
+    console.log(this.type);
+  }
+
+  setSolution() {
+    if(this.type == 2){
+      let alert = this.alertCtrl.create();
+      alert.setTitle('Open');
+      alert.addInput({
+        type: 'radio',
+        label: 'Won',
+        value: '0',
+      });
+
+      alert.addInput({
+        type: 'radio',
+        label: 'Lost',
+        value: '1',
+      });
+
+
+      alert.addButton('Cancel');
+      alert.addButton({
+        text: 'OK',
+        handler: data => {
+
+          // Update
+          this.answer = data;
+          this.csp.update_challenge_data(this.username, this.token, this.cid, "answer", data);
+
+        }
+      });
+      alert.present();
+    }
+  }
+
+  doBetAgainst() {
+    if(this.type == 2) {
+      let alert = this.alertCtrl.create();
+      alert.setTitle('Make your Bet');
+      alert.setSubTitle('Are you sure you want to bet '+ this.points + ' Points ?');
+      alert.addButton('Cancel');
+      alert.addButton({
+        text: 'OK',
+        handler: () => {
+          // Update
+          this.csp.give_challenge_answer(this.username, this.token, this.cid, '1').then((result) => {
+            this.set_ch_answers();
+          }, (err) => {
+          });
+        }
+      });
+      alert.present();
+    }
   }
 }

@@ -10,7 +10,6 @@ tz = pytz.timezone("Europe/Berlin")
 
 
 def get_open_challenges(open=0, ctype=None):
-
     challenges = Challenge.objects.filter(open=open)
     if ctype is not None:
         challenges = challenges.filter(type=ctype)
@@ -21,20 +20,20 @@ def get_open_challenges(open=0, ctype=None):
         if open == 0:
             is_out = close_challenge_if_to_old(c.id)
         if not is_out:
-            c_list.append(dict(id=c.id, name=c.name, descr=c.descr, img_url=c.img_url, open=c.open, creator=c.creator))
+            c_list.append(dict(id=c.id, name=c.name, descr=c.descr, img_url=c.img_url, open=c.open, creator=c.creator,
+                               type=c.type))
 
     return c_list
 
-def get_all_challenges():
 
-    community_c = get_open_challenges(open=0, ctype=1)
+def get_all_challenges():
+    community_c = get_open_challenges(open=0, ctype=1) + get_open_challenges(open=0, ctype=2)
     special_c = get_open_challenges(open=0, ctype=0)
 
     closed_c1 = get_open_challenges(open=1)
     closed_c2 = get_open_challenges(open=2)
 
     closed_c = closed_c1 + closed_c2
-
 
     return {"community": community_c, "special": special_c, "closed": closed_c}
 
@@ -58,11 +57,11 @@ def close_challenge_if_to_old(cid):
         return False
 
 
-
 def get_challenge_data(cid):
-    c = Challenge.objects.get(id=cid)
-
     close_challenge_if_to_old(cid)
+    calc_new_challenge_points(cid)
+
+    c = Challenge.objects.get(id=cid)
 
     choices = []
     has_choice = 0
@@ -73,7 +72,7 @@ def get_challenge_data(cid):
         choices = c.choice.split("|")
         has_choice = 1
 
-    return dict(id = c.id,
+    return dict(id=c.id,
                 name=c.name,
                 descr=c.descr,
                 choice=c.choice,
@@ -87,36 +86,39 @@ def get_challenge_data(cid):
                 points=c.points,
                 etime=c.etime)
 
+
 def is_challenge_creator(cid, username):
     try:
         c = Challenge.objects.get(id=cid)
-        if c.creator == username and c.type == 1:
+        if c.creator == username and c.type >= 1:
             return True
         else:
             return False
     except:
         return False
 
+
 def update_challenge(cid, key, val):
     c = Challenge.objects.get(id=cid)
     setattr(c, key, val)
     c.save()
 
-def add_challenge(name, desc="", img_url="", choice="", open=0, creator="", ctype=1):
 
+def add_challenge(name, desc="", img_url="", choice="", open=0, creator="", ctype=1):
     if desc == "":
         desc = name
 
     c = Challenge(name=name,
-                 descr=desc,
-                 img_url=img_url,
-                 choice=choice,
-                 open=open,
-                 creator=creator,
-                 type=ctype)
+                  descr=desc,
+                  img_url=img_url,
+                  choice=choice,
+                  open=open,
+                  creator=creator,
+                  type=ctype)
     c.save()
 
     return c.id
+
 
 def delete_challenge(cid):
     try:
@@ -127,6 +129,7 @@ def delete_challenge(cid):
         return True
     except:
         return False
+
 
 def add_challenge_answer(username, cid, answer=None, points=None):
     u = User.objects.get(username=username)
@@ -176,7 +179,7 @@ def calc_new_challenge_points(cid):
 
             cas = CAnswer.objects.filter(cid=cid)
             for ca in cas:
-               points += ca.points
+                points += ca.points
 
             c.points = points
             c.save()
@@ -184,8 +187,8 @@ def calc_new_challenge_points(cid):
     except:
         return False
 
-def get_anwsers_for_challenge(cid, username=""):
 
+def get_anwsers_for_challenge(cid, username=""):
     ret_dict = {}
     ret_list = []
 
@@ -208,13 +211,12 @@ def get_anwsers_for_challenge(cid, username=""):
 
     return ret_dict
 
-def get_anwsers_for_user(username):
 
+def get_anwsers_for_user(username):
     ret_list = []
 
     cas = CAnswer.objects.filter(uname=username)
     for a in cas:
-
         a_dct = dict(cid=a.cid,
                      username=a.uname,
                      text=a.text,
@@ -225,15 +227,12 @@ def get_anwsers_for_user(username):
     return {"answers": ret_list}
 
 
-
 def get_gntm_models():
-
     ret_list = []
 
     mods = GNTMModel.objects.all().order_by("out", "name")
 
     for m in mods:
-
         ret_list.append(dict(id=m.id,
                              name=m.name,
                              descr=m.descr,
@@ -243,14 +242,13 @@ def get_gntm_models():
                              link=m.link
                              ))
 
-
     return {"models": ret_list}
+
 
 def update_gntm_models(mid, key, val):
     gm = GNTMModel.objects.get(id=mid)
     setattr(gm, key, val)
     gm.save()
-
 
 
 def add_m_news(name, desc="", date=""):
@@ -265,7 +263,6 @@ def get_m_news():
     mods = News.objects.all().order_by("-id")
 
     for m in mods:
-
         ret_list.append(dict(name=m.name,
                              descr=m.descr,
                              id=m.id,
@@ -274,10 +271,12 @@ def get_m_news():
 
     return {"news": ret_list}
 
+
 def update_m_news(nid, key, val):
     n = News.objects.get(id=nid)
     setattr(n, key, val)
     n.save()
+
 
 def delete_m_news(nid):
     try:
@@ -394,15 +393,48 @@ def eval_challenge(cid):
 
                     if ca.text == solution:
                         right_percent = ca.points / right_points
-                        u.score += round( tot_points * right_percent )
+                        u.score += round(tot_points * right_percent)
 
                     u.save()
                 except:
                     pass
 
+        if c.type == 2:
 
+            cas = CAnswer.objects.filter(cid=cid)
+
+            if len(cas) > 0:
+
+                if c.answer == '0':
+                    try:
+                        u = User.objects.get(username=c.creator)
+                        u.score += tot_points * len(cas)
+                        u.save()
+                    except:
+                        pass
+                    for ca in cas:
+                        try:
+                            u = User.objects.get(username=ca.uname)
+                            u.score -= tot_points
+                            u.save()
+                        except:
+                            pass
+                elif c.answer == '1':
+                    point_incr = max(1, round(tot_points / len(cas)))
+                    try:
+                        u = User.objects.get(username=c.creator)
+                        u.score -= tot_points
+                        u.save()
+                    except:
+                        pass
+                    for ca in cas:
+                        try:
+                            u = User.objects.get(username=ca.uname)
+                            u.score += point_incr
+                            u.save()
+                        except:
+                            pass
 
         return True
     except:
         return False
-

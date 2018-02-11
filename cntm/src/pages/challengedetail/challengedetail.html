@@ -13,7 +13,7 @@
 
     <ion-item>
       <h2>{{name}}</h2>
-      <p *ngIf="type == 1">by {{creator}}</p>
+      <p *ngIf="type >= 1">by {{creator}}</p>
 
       <ion-badge item-end>
         {{points}}
@@ -27,16 +27,24 @@
       <p><i>Ends: {{etime.date}} {{etime.time}}</i></p>
     </ion-card-content>
     <ion-card-content *ngIf="cadmin == '1' || open==2">
-      <b>Solution:</b> {{answer}}
+      <p *ngIf="type != 2 && answer != ''"><b>Solution:</b> {{answer}}</p>
+      <p *ngIf="type == 2 && answer == '0'"><b>Solution:</b> Won Bet</p>
+      <p *ngIf="type == 2 && answer == '1'"><b>Solution:</b> Lost Bet</p>
     </ion-card-content>
 
 
 
     <ion-row>
-      <ion-col *ngIf="open == 0">
+      <ion-col *ngIf="open == 0 && type != 2">
         <button ion-button icon-left clear small (click)="doAnswer()" *ngIf="cadmin == '0'">
           <ion-icon name="text"></ion-icon>
           <div>Answer</div>
+        </button>
+      </ion-col>
+      <ion-col *ngIf="open == 0 && type == 2">
+        <button ion-button icon-left clear small (click)="doBetAgainst()" *ngIf="cadmin == '0'">
+          <ion-icon name="text"></ion-icon>
+          <div>Bet against</div>
         </button>
       </ion-col>
       <ion-col text-end>
@@ -69,15 +77,20 @@
           <div>Edit Text</div>
         </button>
       </ion-col>
-      <ion-col *ngIf="open == 0">
+      <ion-col *ngIf="open == 0 && type != 2">
         <button ion-button icon-left clear small (click)="chVal('choice', 'Choice')">
           <div>Edit Choice</div>
         </button>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>
+      <ion-col *ngIf="type != 2">
         <button ion-button icon-left clear small (click)="chVal('answer', 'Right Solution')" >
+          <div>Edit Solution</div>
+        </button>
+      </ion-col>
+      <ion-col *ngIf="type == 2">
+        <button ion-button icon-left clear small (click)="setSolution()" >
           <div>Edit Solution</div>
         </button>
       </ion-col>
@@ -86,22 +99,28 @@
           <div>End & Give Points</div>
         </button>
       </ion-col>
-      <ion-col *ngIf="type==0 ">
+      <ion-col *ngIf="type==0  || (type == 2 && ca_other?.length == 0)">
         <button ion-button icon-left clear small (click)="chVal('points', 'Points')">
           <div>Edit Points</div>
         </button>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="type != 2">
       <ion-col>
       <button ion-button icon-left clear small (click)="deleteChallenge()">
         <div>Delete</div>
       </button>
       </ion-col>
     </ion-row>
-
   </ion-card>
 
+  <ion-card *ngIf="cadmin == '1' && ca_other?.length == 0 && open == 0">
+    <ion-item>
+      <ion-icon name="swap" item-start style="color: #c3af80"></ion-icon>
+      <ion-label><p>Direct Bet</p></ion-label>
+      <ion-toggle [(ngModel)]="embet" (ngModelChange)="changeEmBet()"></ion-toggle>
+    </ion-item>
+  </ion-card>
 
   <ion-card *ngIf="cadmin == '1' && (admin == 1 || open == 0)">
     <ion-item>
@@ -133,23 +152,23 @@
           <img src="{{ca_own.img_url}}">
         </ion-avatar>
         <h2>{{ca_own.username}}</h2>
-        <p>{{ca_own.text}}</p>
+        <p *ngIf="type != 2">{{ca_own.text}}</p>
+        <p *ngIf="type == 2">I dare you!</p>
         <button ion-button clear small (click)="spentPoints(-1)" item-end *ngIf="open == 0 && type==1">-</button>
         <ion-badge item-end *ngIf="type==1">{{ca_own.points}}</ion-badge>
         <button ion-button clear small (click)="spentPoints(1)" item-end *ngIf="open == 0 && type==1">+</button>
 
       </ion-item>
     <ion-card-content *ngIf="isVisible(-1)">
-      <p>{{ca_own.text}}</p>
+      <p *ngIf="type != 2">{{ca_own.text}}</p>
+      <p *ngIf="type == 2">I dare you!</p>
     </ion-card-content>
     <ion-row>
-      <ion-col>
+      <ion-col *ngIf="type != 2">
         <button ion-button icon-left clear small (click)="doAnswer()" item-end *ngIf="open == 0">
           <ion-icon name="text"></ion-icon>
           <div>Edit</div>
         </button>
-
-
       </ion-col>
     </ion-row>
 
@@ -162,11 +181,13 @@
         <img src="{{ca.img_url}}">
       </ion-avatar>
       <h2>{{ca.username}}</h2>
-      <p>{{ca.text}}</p>
+      <p *ngIf="type != 2">{{ca.text}}</p>
+      <p *ngIf="type == 2">I dare you!</p>
       <ion-badge item-end *ngIf="type==1">{{ca.points}}</ion-badge>
     </ion-item>
     <ion-card-content *ngIf="isVisible(i)">
-      <p>{{ca.text}}</p>
+      <p *ngIf="type != 2">{{ca.text}}</p>
+      <p *ngIf="type == 2">I dare you!</p>
     </ion-card-content>
 
   </ion-card>
