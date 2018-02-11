@@ -29,6 +29,7 @@ class Challenge(models.Model):
     answer = models.TextField(default="")
     points = models.IntegerField(default=0)
     type = models.IntegerField(default=0)
+    etime = models.CharField(max_length=200, default="")
 
 class CAnswer(models.Model):
     uname = models.CharField(max_length=30)

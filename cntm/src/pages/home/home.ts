@@ -100,5 +100,4 @@ export class HomePage {
     prompt.present();
   }
 
-
 }

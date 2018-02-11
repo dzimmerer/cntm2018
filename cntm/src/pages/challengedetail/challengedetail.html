@@ -56,17 +56,17 @@
   <ion-card *ngIf="cadmin == '1' && (admin == 1 || open < 2)">
 
     <ion-row>
-      <ion-col>
+      <ion-col *ngIf="open == 0">
         <button ion-button icon-left clear small (click)="chVal('name', 'Headline')">
           <div>Edit Name</div>
         </button>
       </ion-col>
-      <ion-col>
+      <ion-col *ngIf="open == 0">
         <button ion-button icon-left clear small (click)="chVal('descr', 'Text')">
           <div>Edit Text</div>
         </button>
       </ion-col>
-      <ion-col>
+      <ion-col *ngIf="open == 0">
         <button ion-button icon-left clear small (click)="chVal('choice', 'Choice')">
           <div>Edit Choice</div>
         </button>
@@ -79,8 +79,8 @@
         </button>
       </ion-col>
       <ion-col>
-        <button ion-button icon-left clear small (click)="evalChallenge()">
-          <div>Give Points</div>
+        <button ion-button icon-left clear small (click)="evalChallenge()" float-right>
+          <div>End & Give Points</div>
         </button>
       </ion-col>
       <ion-col *ngIf="type==0 ">
@@ -97,6 +97,30 @@
       </ion-col>
     </ion-row>
 
+  </ion-card>
+
+
+  <ion-card *ngIf="cadmin == '1' && (admin == 1 || open == 0)">
+    <ion-item>
+      <ion-label>End Time</ion-label>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" placeholder="hh:mm" [(ngModel)]="etime.time"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>End Date</ion-label>
+      <ion-datetime displayFormat="DD.MMMM YYYY" pickerFormat="DD MMM YYYY" placeholder="dd.mm.yyyy" [(ngModel)]="etime.date"></ion-datetime>
+    </ion-item>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small (click)="setEndTime()">
+          <div>Set Time</div>
+        </button>
+      </ion-col>
+      <ion-col>
+      <button ion-button icon-left clear small (click)="deleteEndTime()" float-right>
+        <div>Delete Time</div>
+      </button>
+    </ion-col>
+    </ion-row>
   </ion-card>
 
   <ion-card *ngIf="c_anwser != ''">

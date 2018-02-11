@@ -39,6 +39,11 @@ export class ChallengedetailPage {
   points: any;
   cadmin: any;
 
+  etime = {
+    "time": "",
+    "date": ""
+  };
+
   c_anwser = "";
   ca_own = {};
   ca_other: any;
@@ -74,9 +79,12 @@ export class ChallengedetailPage {
         if(this.creator == this.username){
           this.cadmin = '1';
         }
-
-        console.log(this.cadmin);
-        console.log(this.open);
+        if(result["etime"] != ""){
+          console.log(result["etime"]);
+          const split_time = result["etime"].split(" ");
+          this.etime.time = split_time[0];
+          this.etime.date = split_time[1];
+        }
 
       }
 
@@ -323,6 +331,31 @@ export class ChallengedetailPage {
       alert.present();
 
     }
+
+  }
+
+  setEndTime() {
+
+    if(this.etime.time != "" && this.etime.date != ""){
+
+      const time_str = this.etime.time + " " + this.etime.date;
+      this.csp.update_challenge_data(this.username, this.token, this.cid, "etime", time_str);
+
+    }
+    else{
+      let alert = this.alertCtrl.create({
+        title: 'Please give a end time and date first!',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+
+  }
+
+  deleteEndTime() {
+    this.etime.time = "";
+    this.etime.date = "";
+    this.csp.update_challenge_data(this.username, this.token, this.cid, "etime", "");
 
   }
 }

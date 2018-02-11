@@ -1,6 +1,10 @@
 import math
+import datetime
+import pytz
 
 from cntm.models import Challenge, User, CAnswer, GNTMModel, News
+
+tz = pytz.timezone("Europe/Berlin")
 
 
 def get_open_challenges(open=0, ctype=None):
@@ -11,7 +15,11 @@ def get_open_challenges(open=0, ctype=None):
     c_list = []
 
     for c in challenges:
-        c_list.append(dict(id=c.id, name=c.name, descr=c.descr, img_url=c.img_url, open=c.open, creator=c.creator))
+        is_out = False
+        if open == 0:
+            is_out = close_challenge_if_to_old(c.id)
+        if not is_out:
+            c_list.append(dict(id=c.id, name=c.name, descr=c.descr, img_url=c.img_url, open=c.open, creator=c.creator))
 
     return c_list
 
@@ -29,8 +37,30 @@ def get_all_challenges():
     return {"community": community_c, "special": special_c, "closed": closed_c}
 
 
+def close_challenge_if_to_old(cid):
+    try:
+        c = Challenge.objects.get(id=cid)
+        etime_str = c.etime
+
+        if c.open == 0 and etime_str != "":
+            right_now = datetime.datetime.now(tz=tz).replace(tzinfo=tz)
+            etime = datetime.datetime.strptime(etime_str, "%H:%M %Y-%m-%d").replace(tzinfo=tz)
+
+            if right_now > etime:
+                c.open = 1
+                c.save()
+                return True
+
+        return False
+    except:
+        return False
+
+
+
 def get_challenge_data(cid):
     c = Challenge.objects.get(id=cid)
+
+    close_challenge_if_to_old(cid)
 
     choices = []
     has_choice = 0
@@ -52,7 +82,8 @@ def get_challenge_data(cid):
                 type=c.type,
                 creator=c.creator,
                 answer=c.answer,
-                points=c.points)
+                points=c.points,
+                etime=c.etime)
 
 def is_challenge_creator(cid, username):
     try:
