@@ -75,13 +75,15 @@ export class ChallengesPage {
         { text: 'Cancel', },
         { text: 'Add',
           handler: data => {
-            this.csp.add_challenge_data(this.username, this.token, data.inpt).then((result) => {
-              if(result["success"] == 1){
-                this.appCtrl.getRootNav().push(ChallengedetailPage, {
-                  cid: result["cid"]
-                });
-              }
-            });
+            if(data.inpt != "") {
+              this.csp.add_challenge_data(this.username, this.token, data.inpt).then((result) => {
+                if (result["success"] == 1) {
+                  this.appCtrl.getRootNav().push(ChallengedetailPage, {
+                    cid: result["cid"]
+                  });
+                }
+              });
+            }
             console.log('Add clicked');
           }
         }

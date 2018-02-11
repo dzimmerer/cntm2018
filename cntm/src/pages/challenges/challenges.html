@@ -20,8 +20,8 @@
   <ion-list>
     <ion-item *ngFor="let c of challenges" (click)="onChallenge(c.id)">
       <h2>{{c.name}}</h2>
-      <p></p>
-      <!--<p>{{c.descr}}</p>-->
+      <p *ngIf="c_stng == 'special'">Special</p>
+      <p *ngIf="c_stng == 'community'">by {{c.creator}}</p>
       <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c_stng != 'closed'"></ion-icon>
       <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c_stng == 'closed'"></ion-icon>
     </ion-item>

@@ -1522,13 +1522,15 @@ var ChallengesPage = (function () {
                 { text: 'Cancel', },
                 { text: 'Add',
                     handler: function (data) {
-                        _this.csp.add_challenge_data(_this.username, _this.token, data.inpt).then(function (result) {
-                            if (result["success"] == 1) {
-                                _this.appCtrl.getRootNav().push(__WEBPACK_IMPORTED_MODULE_3__challengedetail_challengedetail__["a" /* ChallengedetailPage */], {
-                                    cid: result["cid"]
-                                });
-                            }
-                        });
+                        if (data.inpt != "") {
+                            _this.csp.add_challenge_data(_this.username, _this.token, data.inpt).then(function (result) {
+                                if (result["success"] == 1) {
+                                    _this.appCtrl.getRootNav().push(__WEBPACK_IMPORTED_MODULE_3__challengedetail_challengedetail__["a" /* ChallengedetailPage */], {
+                                        cid: result["cid"]
+                                    });
+                                }
+                            });
+                        }
                         console.log('Add clicked');
                     }
                 }
@@ -1538,7 +1540,7 @@ var ChallengesPage = (function () {
     };
     ChallengesPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-challenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="addChallenge()">\n        <ion-icon name="add-circle"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n  <br>\n  <ion-list>\n    <ion-item *ngFor="let c of challenges" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <p></p>\n      <!--<p>{{c.descr}}</p>-->\n      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c_stng != \'closed\'"></ion-icon>\n      <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c_stng == \'closed\'"></ion-icon>\n    </ion-item>\n  </ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/,
+            selector: 'page-challenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="addChallenge()">\n        <ion-icon name="add-circle"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n  <br>\n  <ion-list>\n    <ion-item *ngFor="let c of challenges" (click)="onChallenge(c.id)">\n      <h2>{{c.name}}</h2>\n      <p *ngIf="c_stng == \'special\'">Special</p>\n      <p *ngIf="c_stng == \'community\'">by {{c.creator}}</p>\n      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c_stng != \'closed\'"></ion-icon>\n      <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c_stng == \'closed\'"></ion-icon>\n    </ion-item>\n  </ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challenges/challenges.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */],
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]])

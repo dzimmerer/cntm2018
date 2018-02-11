@@ -11,7 +11,7 @@ def get_open_challenges(open=0, ctype=None):
     c_list = []
 
     for c in challenges:
-        c_list.append(dict(id=c.id, name=c.name, descr=c.descr, img_url=c.img_url, open=c.open))
+        c_list.append(dict(id=c.id, name=c.name, descr=c.descr, img_url=c.img_url, open=c.open, creator=c.creator))
 
     return c_list
 
@@ -70,6 +70,10 @@ def update_challenge(cid, key, val):
     c.save()
 
 def add_challenge(name, desc="", img_url="", choice="", open=0, creator="", ctype=1):
+
+    if desc == "":
+        desc = name
+
     c = Challenge(name=name,
                  descr=desc,
                  img_url=img_url,
@@ -267,7 +271,7 @@ def eval_challenge(cid):
                     right_user.save()
                 except:
                     pass
-                
+
         if c.type == 1:
 
             cas_right = CAnswer.objects.filter(cid=cid, text=solution)
