@@ -3,19 +3,18 @@ import parse
 
 ds = []
 
-with open("/home/david/Documents/ws/ws/cntm2018/cntm_backend/cntm/helpers/outp.txt", "r") as f_in:
+with open("/home/david/Documents/ws/ws/cntm2018/cntm_backend/cntm/helpers/inpt.txt", "r") as f_in:
     lines = f_in.readlines()
 
     for line in lines:
         line = line.strip()
 
-        m = line.split(";")
-
-        desc = m[1]
-        ds.append(desc)
+        ds.append(line.title())
 
 
 print("|".join(ds))
+
+exit()
 
 
 
@@ -25,7 +24,7 @@ img_pre = "https://topmodel2018.prosieben.de/tv/germanys-next-topmodel/models-20
 def f_in_m(strng, sta, sto):
     return strng.split(sta)[1].split(sto)[0]
 
-with open("inpt", "r") as f_in:
+with open("inpt.txt", "r") as f_in:
     names = f_in.readlines()
 
 
