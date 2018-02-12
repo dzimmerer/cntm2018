@@ -30,6 +30,7 @@ class Challenge(models.Model):
     points = models.IntegerField(default=0)
     type = models.IntegerField(default=0)
     etime = models.CharField(max_length=200, default="")
+    label = models.CharField(max_length=200, default="")
 
 class CAnswer(models.Model):
     uname = models.CharField(max_length=30)
@@ -51,3 +52,15 @@ class News(models.Model):
     name = models.CharField(max_length=100)
     descr = models.TextField()
     date = models.CharField(max_length=200)
+
+class Log(models.Model):
+    username = models.CharField(max_length=30)
+    cid = models.IntegerField()
+    aid = models.IntegerField()
+    points = models.IntegerField()
+    ctype = models.IntegerField()
+    ccreator = models.CharField(max_length=30)
+    label = models.CharField(max_length=200)
+    time = models.CharField(max_length=100)
+    canswer = models.TextField()
+    csolution = models.TextField()

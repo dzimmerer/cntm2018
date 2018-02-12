@@ -4,7 +4,7 @@ import pytz
 
 from django.db.models import Q
 
-from cntm.models import Challenge, User, CAnswer, GNTMModel, News
+from cntm.models import Challenge, User, CAnswer, GNTMModel, News, Log
 
 tz = pytz.timezone("Europe/Berlin")
 
@@ -84,7 +84,8 @@ def get_challenge_data(cid):
                 creator=c.creator,
                 answer=c.answer,
                 points=c.points,
-                etime=c.etime)
+                etime=c.etime,
+                label=c.label)
 
 
 def is_challenge_creator(cid, username):
@@ -201,7 +202,7 @@ def get_anwsers_for_challenge(cid, username=""):
     ret_list = []
 
     c = Challenge.objects.get(id=cid)
-    cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname = c.creator))
+    cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname=c.creator))
 
     for a in cas:
 
@@ -317,7 +318,7 @@ def eval_challenge(cid):
                     solution = solution.split("&")
 
                 if not is_in:
-                    cas_right = CAnswer.objects.filter(cid=cid, text=solution).filter(~Q(uname = creator_name))
+                    cas_right = CAnswer.objects.filter(cid=cid, text=solution).filter(~Q(uname=creator_name))
 
                     point_incr = 0
                     if len(cas_right) > 0:
@@ -328,6 +329,8 @@ def eval_challenge(cid):
                             u = User.objects.get(username=ca.uname)
                             u.score += point_incr
                             u.save()
+                            add_log(username=u.username, cid=cid, aid=ca.id, points=point_incr, ctype=c.type, ccreator=c.creator,
+                                    label=c.label, answer=ca.text, solution=solution)
                         except:
                             pass
                 else:
@@ -337,7 +340,7 @@ def eval_challenge(cid):
                         count_dict[sol] = 0
                         point_dict[sol] = tot_points
 
-                    cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname = creator_name))
+                    cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname=creator_name))
                     for ca in cas:
                         if ca.text in count_dict:
                             count_dict[ca.text] += 1
@@ -351,6 +354,8 @@ def eval_challenge(cid):
                                 u = User.objects.get(username=ca.uname)
                                 u.score += point_dict[ca.text]
                                 u.save()
+                                add_log(username=u.username, cid=cid, aid=ca.id, points=point_dict[ca.text], ctype=c.type, ccreator=c.creator,
+                                        label=c.label, answer=ca.text, solution=solution)
                             except:
                                 pass
 
@@ -362,7 +367,7 @@ def eval_challenge(cid):
                     is_in = True
                     solution = solution.split("&")
 
-                cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname = creator_name))
+                cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname=creator_name))
                 for ca in cas:
                     try:
                         u = User.objects.get(username=ca.uname)
@@ -374,13 +379,15 @@ def eval_challenge(cid):
                         if test_bool:
                             u.score += tot_points
                             u.save()
+                            add_log(username=u.username, cid=cid, aid=ca.id, points=tot_points, ctype=c.type, ccreator=c.creator,
+                                    label=c.label, answer=ca.text, solution=solution)
                     except:
                         pass
 
         if c.type == 1:
 
-            cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname = creator_name))
-            cas_right = CAnswer.objects.filter(cid=cid, text=solution).filter(~Q(uname = creator_name))
+            cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname=creator_name))
+            cas_right = CAnswer.objects.filter(cid=cid, text=solution).filter(~Q(uname=creator_name))
 
             right_points = 0
             for ca in cas_right:
@@ -393,59 +400,101 @@ def eval_challenge(cid):
                     creator = User.objects.get(username=c.creator)
                     creator.score += cre_points
                     creator.save()
+
+                    add_log(username=creator.username, cid=cid, aid=0, points=cre_points, ctype=c.type, ccreator=c.creator,
+                            label=c.label, answer="creator", solution=solution)
+
                 except:
                     pass
 
                 for ca in cas:
                     try:
                         u = User.objects.get(username=ca.uname)
-                        u.score -= ca.points
+                        p_diff = 0
+                        p_diff -= ca.points
 
                         if ca.text == solution:
                             if right_points != 0:
                                 right_percent = ca.points / right_points
-                                u.score += round(tot_points * right_percent)
+                                p_diff += round(tot_points * right_percent)
 
+                        u.score += p_diff
                         u.save()
+
+                        add_log(username=u.username, cid=cid, aid=ca.id, points=p_diff, ctype=c.type, ccreator=c.creator,
+                                label=c.label, answer=ca.text, solution=solution)
+
                     except:
                         pass
 
         if c.type == 2:
 
-            cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname = creator_name))
+            cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname=creator_name))
 
             if len(cas) > 0:
 
                 if c.answer == '0':
                     try:
                         u = User.objects.get(username=c.creator)
-                        u.score += tot_points * len(cas)
+                        p_diff = tot_points * len(cas)
+                        u.score += p_diff
                         u.save()
+                        add_log(username=u.username, cid=cid, aid=0, points=p_diff, ctype=c.type, ccreator=c.creator,
+                                label=c.label, answer='0', solution='0')
+
                     except:
                         pass
                     for ca in cas:
                         try:
                             u = User.objects.get(username=ca.uname)
-                            u.score -= tot_points
+                            p_diff = -tot_points
+                            u.score += p_diff
                             u.save()
+                            add_log(username=u.username, cid=cid, aid=ca.id, points=p_diff, ctype=c.type,
+                                    ccreator=c.creator,
+                                    label=c.label, answer='0', solution='1')
                         except:
                             pass
                 elif c.answer == '1':
                     point_incr = max(1, round(tot_points / len(cas)))
                     try:
                         u = User.objects.get(username=c.creator)
-                        u.score -= tot_points
+                        p_diff = -tot_points
+                        u.score += p_diff
                         u.save()
+                        add_log(username=u.username, cid=cid, aid=0, points=p_diff, ctype=c.type, ccreator=c.creator,
+                                label=c.label, answer='1', solution='0')
                     except:
                         pass
                     for ca in cas:
                         try:
                             u = User.objects.get(username=ca.uname)
-                            u.score += point_incr
+                            p_diff = point_incr
+                            u.score += p_diff
                             u.save()
+                            add_log(username=u.username, cid=cid, aid=ca.id, points=p_diff, ctype=c.type,
+                                    ccreator=c.creator, label=c.label, answer='1', solution='0')
                         except:
                             pass
 
         return True
     except:
         return False
+
+
+def add_log(username, cid, aid, points, ctype, ccreator="", label="", answer="", solution=""):
+    try:
+        time_str = datetime.datetime.strftime(datetime.datetime.now(tz=tz).replace(tzinfo=tz), "%b %d %Y %H:%M:%S")
+        l = Log(username=username,
+                cid=cid,
+                aid=aid,
+                points=points,
+                ctype=ctype,
+                ccreator=ccreator,
+                label=label,
+                canswer=answer,
+                csolution=solution,
+                time=time_str)
+        l.save()
+    except:
+        pass

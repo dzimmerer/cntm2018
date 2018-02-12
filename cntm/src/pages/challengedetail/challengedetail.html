@@ -87,6 +87,11 @@
           <div>Edit Choice</div>
         </button>
       </ion-col>
+      <ion-col *ngIf="admin == 1">
+        <button ion-button icon-left clear small (click)="chVal('label', 'Label')">
+          <div>Edit Label</div>
+        </button>
+      </ion-col>
       <ion-col *ngIf="type==0  || (type == 2 && open < 0)">
         <button ion-button icon-left clear small (click)="chPoints()">
           <div>Set Points</div>
