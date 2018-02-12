@@ -87,6 +87,11 @@
           <div>Edit Choice</div>
         </button>
       </ion-col>
+      <ion-col *ngIf="type==0  || (type == 2 && open < 0)">
+        <button ion-button icon-left clear small (click)="chPoints()">
+          <div>Set Points</div>
+        </button>
+      </ion-col>
     </ion-row>
     <ion-row>
       <ion-col *ngIf="type != 2">
@@ -104,11 +109,6 @@
           <div>End & Give Points</div>
         </button>
       </ion-col>
-      <ion-col *ngIf="type==0  || (type == 2 && ca_other?.length == 0)">
-        <button ion-button icon-left clear small (click)="chPoints()">
-          <div>Edit Points</div>
-        </button>
-      </ion-col>
     </ion-row>
     <ion-row *ngIf="type != 2">
       <ion-col>
@@ -119,7 +119,7 @@
     </ion-row>
   </ion-card>
 
-  <ion-card *ngIf="cadmin == '1' && ca_other?.length == 0 && open <= 0">
+  <ion-card *ngIf="cadmin == '1' && open < 0">
     <ion-item>
       <ion-icon name="swap" item-start style="color: #c3af80"></ion-icon>
       <ion-label><p>Direct Bet</p></ion-label>

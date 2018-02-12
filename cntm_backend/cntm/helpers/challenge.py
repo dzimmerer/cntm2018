@@ -386,7 +386,7 @@ def eval_challenge(cid):
             for ca in cas_right:
                 right_points += ca.points
 
-            if right_points != tot_points:
+            if tot_points > 10 and right_points != tot_points:
                 try:
                     cre_points = int(tot_points * 0.1)
                     tot_points -= cre_points
@@ -396,18 +396,19 @@ def eval_challenge(cid):
                 except:
                     pass
 
-            for ca in cas:
-                try:
-                    u = User.objects.get(username=ca.uname)
-                    u.score -= ca.points
+                for ca in cas:
+                    try:
+                        u = User.objects.get(username=ca.uname)
+                        u.score -= ca.points
 
-                    if ca.text == solution:
-                        right_percent = ca.points / right_points
-                        u.score += round(tot_points * right_percent)
+                        if ca.text == solution:
+                            if right_points != 0:
+                                right_percent = ca.points / right_points
+                                u.score += round(tot_points * right_percent)
 
-                    u.save()
-                except:
-                    pass
+                        u.save()
+                    except:
+                        pass
 
         if c.type == 2:
 

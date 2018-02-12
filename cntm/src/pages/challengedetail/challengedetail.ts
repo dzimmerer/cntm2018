@@ -170,11 +170,13 @@ export class ChallengedetailPage {
         if(this.has_choice == 0) {
           data = data["inpt"]
         }
-        // Update
-        this.csp.give_challenge_answer(this.username, this.token, this.cid, data).then((result) => {
-          this.set_ch_answers();
-        }, (err) => {
-        });
+        if(data) {
+          // Update
+          this.csp.give_challenge_answer(this.username, this.token, this.cid, data).then((result) => {
+            this.set_ch_answers();
+          }, (err) => {
+          });
+        }
 
       }
     });
