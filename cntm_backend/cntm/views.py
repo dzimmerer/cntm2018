@@ -437,8 +437,8 @@ def update_challenge_data_req(request):
             for key, val in request.GET.items():
                 if key in ("username", "token", "cid"):
                     continue
-                if key in ["points"] and not is_admin(username):
-                    continue
+                # if key in ["points"] and not is_admin(username):
+                #     continue
                 update_challenge(cid, key, val)
 
             return JsonResponse({})
@@ -506,15 +506,45 @@ def change_answer_points_req(request):
             points = request.GET.get("points", "")
             points = int(points)
 
-            if points != 1 and points != -1:
-                return JsonResponse({"success": 0})
+            # if points != 1 and points != -1:
+            #     return JsonResponse({"success": 0})
 
             if not verify_user(username, token):
                 return JsonResponse({"success": 0})
 
-            if points <= 0 or can_user_spend_points(username):
+            if is_admin(username):
+                return JsonResponse({"success": 1})
+
+            if points <= 0 or can_user_spend_points(username, points):
                 if update_challenge_answer_points(username, cid, points):
                     return JsonResponse({"success": 1})
+
+            return JsonResponse({"success": 0})
+
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+
+def get_avail_answer_points_req(request):
+    if request.method == "GET":
+        try:
+
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            cid = request.GET.get("cid", "")
+            points = request.GET.get("points", "")
+            points = int(points)
+
+            if not verify_user(username, token):
+                return JsonResponse({"success": 0})
+
+            if is_admin(username):
+                return JsonResponse({"success": 1})
+
+            if points <= 0 or can_user_spend_points(username, points):
+                return JsonResponse({"success": 1})
 
             return JsonResponse({"success": 0})
 

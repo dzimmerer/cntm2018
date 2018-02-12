@@ -14,16 +14,16 @@
     <ion-item>
       <h2>{{name}}</h2>
       <p *ngIf="type >= 1">by {{creator}}</p>
-
       <ion-badge item-end>
         {{points}}
       </ion-badge>
+      <ion-icon name="checkmark" style="color: #c3af80" item-end *ngIf="open == 2"></ion-icon>
     </ion-item>
 
     <ion-card-content>
       <div [innerHTML]="descr"></div>
     </ion-card-content>
-    <ion-card-content *ngIf="open==0 && etime.time != '' && etime.date != '' ">
+    <ion-card-content *ngIf="open<=0 && etime.time != '' && etime.date != '' ">
       <p><i>Ends: {{etime.date}} {{etime.time}}</i></p>
     </ion-card-content>
     <ion-card-content *ngIf="cadmin == '1' || open==2">
@@ -52,8 +52,13 @@
           <div *ngIf="open == 0">open</div>
           <div *ngIf="open >= 1">closed.</div>
         </button>
-        <button ion-button icon-left clear small *ngIf="cadmin == '1' && admin == '0' && open < 2" (click)="toggleOpen()">
+        <button ion-button icon-left clear small *ngIf="cadmin == '1' && admin == '0' && open >= 0 && open < 2" (click)="toggleOpen()">
           <div>Open/Close</div>
+        </button>
+        <button ion-button icon-left clear  *ngIf="cadmin == '1' && admin == '0' && open < 0" (click)="makePublic()">
+          <ion-icon name="arrow-round-forward"></ion-icon>
+          <div>Make Public </div>
+          <ion-icon name="arrow-round-back"></ion-icon>
         </button>
         <button ion-button icon-left clear small *ngIf="admin == '1'" (click)="chVal('open', 'Open')">
           <div>Open/Close</div>
@@ -67,17 +72,17 @@
   <ion-card *ngIf="cadmin == '1' && (admin == 1 || open < 2)">
 
     <ion-row>
-      <ion-col *ngIf="open == 0">
+      <ion-col *ngIf="open <= 0">
         <button ion-button icon-left clear small (click)="chVal('name', 'Headline')">
           <div>Edit Name</div>
         </button>
       </ion-col>
-      <ion-col *ngIf="open == 0">
+      <ion-col *ngIf="open <= 0">
         <button ion-button icon-left clear small (click)="chVal('descr', 'Text')">
           <div>Edit Text</div>
         </button>
       </ion-col>
-      <ion-col *ngIf="open == 0 && type != 2">
+      <ion-col *ngIf="open <= 0 && type != 2">
         <button ion-button icon-left clear small (click)="chVal('choice', 'Choice')">
           <div>Edit Choice</div>
         </button>
@@ -100,7 +105,7 @@
         </button>
       </ion-col>
       <ion-col *ngIf="type==0  || (type == 2 && ca_other?.length == 0)">
-        <button ion-button icon-left clear small (click)="chVal('points', 'Points')">
+        <button ion-button icon-left clear small (click)="chPoints()">
           <div>Edit Points</div>
         </button>
       </ion-col>
@@ -114,7 +119,7 @@
     </ion-row>
   </ion-card>
 
-  <ion-card *ngIf="cadmin == '1' && ca_other?.length == 0 && open == 0">
+  <ion-card *ngIf="cadmin == '1' && ca_other?.length == 0 && open <= 0">
     <ion-item>
       <ion-icon name="swap" item-start style="color: #c3af80"></ion-icon>
       <ion-label><p>Direct Bet</p></ion-label>
@@ -122,7 +127,7 @@
     </ion-item>
   </ion-card>
 
-  <ion-card *ngIf="cadmin == '1' && (admin == 1 || open == 0)">
+  <ion-card *ngIf="cadmin == '1' && (admin == 1 || open <= 0)">
     <ion-item>
       <ion-label>End Time</ion-label>
       <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" placeholder="hh:mm" [(ngModel)]="etime.time" (ngModelChange)="setEndTime()"></ion-datetime>

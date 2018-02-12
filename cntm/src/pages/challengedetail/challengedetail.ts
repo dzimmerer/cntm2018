@@ -242,6 +242,39 @@ export class ChallengedetailPage {
     prompt.present();
   }
 
+  chPoints() {
+
+    let prompt = this.alertCtrl.create({
+      title: "New Points",
+      inputs: [
+        {name: 'inpt',
+          value: this.points },
+      ],
+      buttons: [
+        { text: 'Cancel', },
+        { text: 'Save',
+          handler: data => {
+
+            this.csp.has_challenge_answer_points(this.username, this.token, this.cid, data.inpt-this.points).then((result) => {
+              if (result["success"] == 1) {
+                this.csp.update_challenge_data(this.username, this.token, this.cid, "points", data.inpt);
+                this.points = data.inpt;
+              }
+              else{
+                let alert = this.alertCtrl.create({
+                  title: 'Not enough points',
+                  buttons: ['OK']
+                });
+                alert.present();
+              }
+            });
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
 
   deleteChallenge() {
     let prompt = this.alertCtrl.create({
@@ -338,6 +371,17 @@ export class ChallengedetailPage {
 
   }
 
+
+  makePublic() {
+
+    if(this.open == -1) {
+      this.open = 0;
+      this.csp.update_challenge_data(this.username, this.token, this.cid, "open", 0);
+    }
+
+  }
+
+
   setEndTime(param) {
 
     if(this.etime.time != "" && this.etime.date != ""){
@@ -410,7 +454,7 @@ export class ChallengedetailPage {
   }
 
   doBetAgainst() {
-    if(this.type == 2) {
+    if(this.type == 2 && this.c_anwser == "") {
       let alert = this.alertCtrl.create();
       alert.setTitle('Make your Bet');
       alert.setSubTitle('Are you sure you want to bet '+ this.points + ' Points ?');
@@ -419,10 +463,23 @@ export class ChallengedetailPage {
         text: 'OK',
         handler: () => {
           // Update
-          this.csp.give_challenge_answer(this.username, this.token, this.cid, '1').then((result) => {
-            this.set_ch_answers();
-          }, (err) => {
+          this.csp.has_challenge_answer_points(this.username, this.token, this.cid, this.points).then((result) => {
+            if (result["success"] == 1) {
+              this.csp.give_challenge_answer(this.username, this.token, this.cid, '1').then((result) => {
+                this.csp.give_challenge_answer_points(this.username, this.token, this.cid, this.points);
+                this.set_ch_answers();
+              }, (err) => {
+              });
+            }
+            else{
+              let alert = this.alertCtrl.create({
+                title: 'Not enough points',
+                buttons: ['OK']
+              });
+              alert.present();
+            }
           });
+
         }
       });
       alert.present();

@@ -193,6 +193,37 @@ var ChallengedetailPage = (function () {
         });
         prompt.present();
     };
+    ChallengedetailPage.prototype.chPoints = function () {
+        var _this = this;
+        var prompt = this.alertCtrl.create({
+            title: "New Points",
+            inputs: [
+                { name: 'inpt',
+                    value: this.points },
+            ],
+            buttons: [
+                { text: 'Cancel', },
+                { text: 'Save',
+                    handler: function (data) {
+                        _this.csp.has_challenge_answer_points(_this.username, _this.token, _this.cid, data.inpt - _this.points).then(function (result) {
+                            if (result["success"] == 1) {
+                                _this.csp.update_challenge_data(_this.username, _this.token, _this.cid, "points", data.inpt);
+                                _this.points = data.inpt;
+                            }
+                            else {
+                                var alert_1 = _this.alertCtrl.create({
+                                    title: 'Not enough points',
+                                    buttons: ['OK']
+                                });
+                                alert_1.present();
+                            }
+                        });
+                    }
+                }
+            ]
+        });
+        prompt.present();
+    };
     ChallengedetailPage.prototype.deleteChallenge = function () {
         var _this = this;
         var prompt = this.alertCtrl.create({
@@ -218,14 +249,14 @@ var ChallengedetailPage = (function () {
     ChallengedetailPage.prototype.evalChallenge = function () {
         var _this = this;
         if (this.answer == "") {
-            var alert_1 = this.alertCtrl.create({
+            var alert_2 = this.alertCtrl.create({
                 title: 'Please insert solution first!',
                 buttons: ['OK']
             });
-            alert_1.present();
+            alert_2.present();
         }
         else {
-            var alert_2 = this.alertCtrl.create({
+            var alert_3 = this.alertCtrl.create({
                 title: 'Are you sure?',
                 message: 'If you distribute points the challenge is over and you can not change it anymore.',
                 buttons: [
@@ -244,28 +275,28 @@ var ChallengedetailPage = (function () {
                     }
                 ]
             });
-            alert_2.present();
+            alert_3.present();
         }
     };
     ChallengedetailPage.prototype.toggleOpen = function () {
         var _this = this;
         if (this.open < 2) {
-            var alert_3 = this.alertCtrl.create();
-            alert_3.setTitle('Open');
-            alert_3.addInput({
+            var alert_4 = this.alertCtrl.create();
+            alert_4.setTitle('Open');
+            alert_4.addInput({
                 type: 'radio',
                 label: 'Open',
                 value: '0',
                 checked: this.open == 0,
             });
-            alert_3.addInput({
+            alert_4.addInput({
                 type: 'radio',
                 label: 'Closed',
                 value: '1',
                 checked: this.open == 1,
             });
-            alert_3.addButton('Cancel');
-            alert_3.addButton({
+            alert_4.addButton('Cancel');
+            alert_4.addButton({
                 text: 'OK',
                 handler: function (data) {
                     // Update
@@ -273,7 +304,13 @@ var ChallengedetailPage = (function () {
                     _this.csp.update_challenge_data(_this.username, _this.token, _this.cid, "open", data);
                 }
             });
-            alert_3.present();
+            alert_4.present();
+        }
+    };
+    ChallengedetailPage.prototype.makePublic = function () {
+        if (this.open == -1) {
+            this.open = 0;
+            this.csp.update_challenge_data(this.username, this.token, this.cid, "open", 0);
         }
     };
     ChallengedetailPage.prototype.setEndTime = function (param) {
@@ -283,11 +320,11 @@ var ChallengedetailPage = (function () {
         }
         else {
             if (param == 1) {
-                var alert_4 = this.alertCtrl.create({
+                var alert_5 = this.alertCtrl.create({
                     title: 'Please give a end time and date first!',
                     buttons: ['OK']
                 });
-                alert_4.present();
+                alert_5.present();
             }
         }
     };
@@ -310,20 +347,20 @@ var ChallengedetailPage = (function () {
     ChallengedetailPage.prototype.setSolution = function () {
         var _this = this;
         if (this.type == 2) {
-            var alert_5 = this.alertCtrl.create();
-            alert_5.setTitle('Open');
-            alert_5.addInput({
+            var alert_6 = this.alertCtrl.create();
+            alert_6.setTitle('Open');
+            alert_6.addInput({
                 type: 'radio',
                 label: 'Won',
                 value: '0',
             });
-            alert_5.addInput({
+            alert_6.addInput({
                 type: 'radio',
                 label: 'Lost',
                 value: '1',
             });
-            alert_5.addButton('Cancel');
-            alert_5.addButton({
+            alert_6.addButton('Cancel');
+            alert_6.addButton({
                 text: 'OK',
                 handler: function (data) {
                     // Update
@@ -331,32 +368,44 @@ var ChallengedetailPage = (function () {
                     _this.csp.update_challenge_data(_this.username, _this.token, _this.cid, "answer", data);
                 }
             });
-            alert_5.present();
+            alert_6.present();
         }
     };
     ChallengedetailPage.prototype.doBetAgainst = function () {
         var _this = this;
-        if (this.type == 2) {
-            var alert_6 = this.alertCtrl.create();
-            alert_6.setTitle('Make your Bet');
-            alert_6.setSubTitle('Are you sure you want to bet ' + this.points + ' Points ?');
-            alert_6.addButton('Cancel');
-            alert_6.addButton({
+        if (this.type == 2 && this.c_anwser == "") {
+            var alert_7 = this.alertCtrl.create();
+            alert_7.setTitle('Make your Bet');
+            alert_7.setSubTitle('Are you sure you want to bet ' + this.points + ' Points ?');
+            alert_7.addButton('Cancel');
+            alert_7.addButton({
                 text: 'OK',
                 handler: function () {
                     // Update
-                    _this.csp.give_challenge_answer(_this.username, _this.token, _this.cid, '1').then(function (result) {
-                        _this.set_ch_answers();
-                    }, function (err) {
+                    _this.csp.has_challenge_answer_points(_this.username, _this.token, _this.cid, _this.points).then(function (result) {
+                        if (result["success"] == 1) {
+                            _this.csp.give_challenge_answer(_this.username, _this.token, _this.cid, '1').then(function (result) {
+                                _this.csp.give_challenge_answer_points(_this.username, _this.token, _this.cid, _this.points);
+                                _this.set_ch_answers();
+                            }, function (err) {
+                            });
+                        }
+                        else {
+                            var alert_8 = _this.alertCtrl.create({
+                                title: 'Not enough points',
+                                buttons: ['OK']
+                            });
+                            alert_8.present();
+                        }
                     });
                 }
             });
-            alert_6.present();
+            alert_7.present();
         }
     };
     ChallengedetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-challengedetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n    <ion-title>Challenge</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <ion-item>\n      <h2>{{name}}</h2>\n      <p *ngIf="type >= 1">by {{creator}}</p>\n\n      <ion-badge item-end>\n        {{points}}\n      </ion-badge>\n    </ion-item>\n\n    <ion-card-content>\n      <div [innerHTML]="descr"></div>\n    </ion-card-content>\n    <ion-card-content *ngIf="open==0 && etime.time != \'\' && etime.date != \'\' ">\n      <p><i>Ends: {{etime.date}} {{etime.time}}</i></p>\n    </ion-card-content>\n    <ion-card-content *ngIf="cadmin == \'1\' || open==2">\n      <p *ngIf="type != 2 && answer != \'\'"><b>Solution:</b> {{answer}}</p>\n      <p *ngIf="type == 2 && answer == \'0\'"><b>Solution:</b> Won Bet</p>\n      <p *ngIf="type == 2 && answer == \'1\'"><b>Solution:</b> Lost Bet</p>\n    </ion-card-content>\n\n\n\n    <ion-row>\n      <ion-col *ngIf="open == 0 && type != 2">\n        <button ion-button icon-left clear small (click)="doAnswer()" *ngIf="cadmin == \'0\'">\n          <ion-icon name="text"></ion-icon>\n          <div>Answer</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="open == 0 && type == 2">\n        <button ion-button icon-left clear small (click)="doBetAgainst()" *ngIf="cadmin == \'0\'">\n          <ion-icon name="text"></ion-icon>\n          <div>Bet against</div>\n        </button>\n      </ion-col>\n      <ion-col text-end>\n        <button ion-button icon-left clear small>\n          <div *ngIf="open == 0">open</div>\n          <div *ngIf="open >= 1">closed.</div>\n        </button>\n        <button ion-button icon-left clear small *ngIf="cadmin == \'1\' && admin == \'0\' && open < 2" (click)="toggleOpen()">\n          <div>Open/Close</div>\n        </button>\n        <button ion-button icon-left clear small *ngIf="admin == \'1\'" (click)="chVal(\'open\', \'Open\')">\n          <div>Open/Close</div>\n        </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n\n\n  <ion-card *ngIf="cadmin == \'1\' && (admin == 1 || open < 2)">\n\n    <ion-row>\n      <ion-col *ngIf="open == 0">\n        <button ion-button icon-left clear small (click)="chVal(\'name\', \'Headline\')">\n          <div>Edit Name</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="open == 0">\n        <button ion-button icon-left clear small (click)="chVal(\'descr\', \'Text\')">\n          <div>Edit Text</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="open == 0 && type != 2">\n        <button ion-button icon-left clear small (click)="chVal(\'choice\', \'Choice\')">\n          <div>Edit Choice</div>\n        </button>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col *ngIf="type != 2">\n        <button ion-button icon-left clear small (click)="chVal(\'answer\', \'Right Solution\')" >\n          <div>Edit Solution</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="type == 2">\n        <button ion-button icon-left clear small (click)="setSolution()" >\n          <div>Edit Solution</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="evalChallenge()" float-right>\n          <div>End & Give Points</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="type==0  || (type == 2 && ca_other?.length == 0)">\n        <button ion-button icon-left clear small (click)="chVal(\'points\', \'Points\')">\n          <div>Edit Points</div>\n        </button>\n      </ion-col>\n    </ion-row>\n    <ion-row *ngIf="type != 2">\n      <ion-col>\n      <button ion-button icon-left clear small (click)="deleteChallenge()">\n        <div>Delete</div>\n      </button>\n      </ion-col>\n    </ion-row>\n  </ion-card>\n\n  <ion-card *ngIf="cadmin == \'1\' && ca_other?.length == 0 && open == 0">\n    <ion-item>\n      <ion-icon name="swap" item-start style="color: #c3af80"></ion-icon>\n      <ion-label><p>Direct Bet</p></ion-label>\n      <ion-toggle [(ngModel)]="embet" (ngModelChange)="changeEmBet()"></ion-toggle>\n    </ion-item>\n  </ion-card>\n\n  <ion-card *ngIf="cadmin == \'1\' && (admin == 1 || open == 0)">\n    <ion-item>\n      <ion-label>End Time</ion-label>\n      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" placeholder="hh:mm" [(ngModel)]="etime.time" (ngModelChange)="setEndTime()"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-label>End Date</ion-label>\n      <ion-datetime displayFormat="DD.MMMM YYYY" pickerFormat="DD MMM YYYY" placeholder="dd.mm.yyyy" [(ngModel)]="etime.date" (ngModelChange)="setEndTime()"></ion-datetime>\n    </ion-item>\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="setEndTime(1)">\n          <div>Set Time</div>\n        </button>\n      </ion-col>\n      <ion-col>\n      <button ion-button icon-left clear small (click)="deleteEndTime()" float-right>\n        <div>Delete Time</div>\n      </button>\n    </ion-col>\n    </ion-row>\n  </ion-card>\n\n  <ion-card *ngIf="c_anwser != \'\'">\n\n      <ion-item>\n        <ion-avatar item-start (click)="toggleVisible(-1)">\n          <img src="{{ca_own.img_url}}">\n        </ion-avatar>\n        <h2>{{ca_own.username}}</h2>\n        <p *ngIf="type != 2">{{ca_own.text}}</p>\n        <p *ngIf="type == 2">I dare you!</p>\n        <button ion-button clear small (click)="spentPoints(-1)" item-end *ngIf="open == 0 && type==1">-</button>\n        <ion-badge item-end *ngIf="type==1">{{ca_own.points}}</ion-badge>\n        <button ion-button clear small (click)="spentPoints(1)" item-end *ngIf="open == 0 && type==1">+</button>\n\n      </ion-item>\n    <ion-card-content *ngIf="isVisible(-1)">\n      <p *ngIf="type != 2">{{ca_own.text}}</p>\n      <p *ngIf="type == 2">I dare you!</p>\n    </ion-card-content>\n    <ion-row>\n      <ion-col *ngIf="type != 2">\n        <button ion-button icon-left clear small (click)="doAnswer()" item-end *ngIf="open == 0">\n          <ion-icon name="text"></ion-icon>\n          <div>Edit</div>\n        </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n\n  <ion-card *ngFor="let ca of ca_other; let i = index">\n\n    <ion-item (click)="toggleVisible(i)">\n      <ion-avatar item-start (click)="frwdToUser(ca.username)">\n        <img src="{{ca.img_url}}">\n      </ion-avatar>\n      <h2>{{ca.username}}</h2>\n      <p *ngIf="type != 2">{{ca.text}}</p>\n      <p *ngIf="type == 2">I dare you!</p>\n      <ion-badge item-end *ngIf="type==1">{{ca.points}}</ion-badge>\n    </ion-item>\n    <ion-card-content *ngIf="isVisible(i)">\n      <p *ngIf="type != 2">{{ca.text}}</p>\n      <p *ngIf="type == 2">I dare you!</p>\n    </ion-card-content>\n\n  </ion-card>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/,
+            selector: 'page-challengedetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n    <ion-title>Challenge</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <ion-item>\n      <h2>{{name}}</h2>\n      <p *ngIf="type >= 1">by {{creator}}</p>\n      <ion-badge item-end>\n        {{points}}\n      </ion-badge>\n      <ion-icon name="checkmark" style="color: #c3af80" item-end *ngIf="open == 2"></ion-icon>\n    </ion-item>\n\n    <ion-card-content>\n      <div [innerHTML]="descr"></div>\n    </ion-card-content>\n    <ion-card-content *ngIf="open<=0 && etime.time != \'\' && etime.date != \'\' ">\n      <p><i>Ends: {{etime.date}} {{etime.time}}</i></p>\n    </ion-card-content>\n    <ion-card-content *ngIf="cadmin == \'1\' || open==2">\n      <p *ngIf="type != 2 && answer != \'\'"><b>Solution:</b> {{answer}}</p>\n      <p *ngIf="type == 2 && answer == \'0\'"><b>Solution:</b> Won Bet</p>\n      <p *ngIf="type == 2 && answer == \'1\'"><b>Solution:</b> Lost Bet</p>\n    </ion-card-content>\n\n\n\n    <ion-row>\n      <ion-col *ngIf="open == 0 && type != 2">\n        <button ion-button icon-left clear small (click)="doAnswer()" *ngIf="cadmin == \'0\'">\n          <ion-icon name="text"></ion-icon>\n          <div>Answer</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="open == 0 && type == 2">\n        <button ion-button icon-left clear small (click)="doBetAgainst()" *ngIf="cadmin == \'0\'">\n          <ion-icon name="text"></ion-icon>\n          <div>Bet against</div>\n        </button>\n      </ion-col>\n      <ion-col text-end>\n        <button ion-button icon-left clear small>\n          <div *ngIf="open == 0">open</div>\n          <div *ngIf="open >= 1">closed.</div>\n        </button>\n        <button ion-button icon-left clear small *ngIf="cadmin == \'1\' && admin == \'0\' && open >= 0 && open < 2" (click)="toggleOpen()">\n          <div>Open/Close</div>\n        </button>\n        <button ion-button icon-left clear  *ngIf="cadmin == \'1\' && admin == \'0\' && open < 0" (click)="makePublic()">\n          <ion-icon name="arrow-round-forward"></ion-icon>\n          <div>Make Public </div>\n          <ion-icon name="arrow-round-back"></ion-icon>\n        </button>\n        <button ion-button icon-left clear small *ngIf="admin == \'1\'" (click)="chVal(\'open\', \'Open\')">\n          <div>Open/Close</div>\n        </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n\n\n  <ion-card *ngIf="cadmin == \'1\' && (admin == 1 || open < 2)">\n\n    <ion-row>\n      <ion-col *ngIf="open <= 0">\n        <button ion-button icon-left clear small (click)="chVal(\'name\', \'Headline\')">\n          <div>Edit Name</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="open <= 0">\n        <button ion-button icon-left clear small (click)="chVal(\'descr\', \'Text\')">\n          <div>Edit Text</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="open <= 0 && type != 2">\n        <button ion-button icon-left clear small (click)="chVal(\'choice\', \'Choice\')">\n          <div>Edit Choice</div>\n        </button>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col *ngIf="type != 2">\n        <button ion-button icon-left clear small (click)="chVal(\'answer\', \'Right Solution\')" >\n          <div>Edit Solution</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="type == 2">\n        <button ion-button icon-left clear small (click)="setSolution()" >\n          <div>Edit Solution</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="evalChallenge()" float-right>\n          <div>End & Give Points</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="type==0  || (type == 2 && ca_other?.length == 0)">\n        <button ion-button icon-left clear small (click)="chPoints()">\n          <div>Edit Points</div>\n        </button>\n      </ion-col>\n    </ion-row>\n    <ion-row *ngIf="type != 2">\n      <ion-col>\n      <button ion-button icon-left clear small (click)="deleteChallenge()">\n        <div>Delete</div>\n      </button>\n      </ion-col>\n    </ion-row>\n  </ion-card>\n\n  <ion-card *ngIf="cadmin == \'1\' && ca_other?.length == 0 && open <= 0">\n    <ion-item>\n      <ion-icon name="swap" item-start style="color: #c3af80"></ion-icon>\n      <ion-label><p>Direct Bet</p></ion-label>\n      <ion-toggle [(ngModel)]="embet" (ngModelChange)="changeEmBet()"></ion-toggle>\n    </ion-item>\n  </ion-card>\n\n  <ion-card *ngIf="cadmin == \'1\' && (admin == 1 || open <= 0)">\n    <ion-item>\n      <ion-label>End Time</ion-label>\n      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" placeholder="hh:mm" [(ngModel)]="etime.time" (ngModelChange)="setEndTime()"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-label>End Date</ion-label>\n      <ion-datetime displayFormat="DD.MMMM YYYY" pickerFormat="DD MMM YYYY" placeholder="dd.mm.yyyy" [(ngModel)]="etime.date" (ngModelChange)="setEndTime()"></ion-datetime>\n    </ion-item>\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="setEndTime(1)">\n          <div>Set Time</div>\n        </button>\n      </ion-col>\n      <ion-col>\n      <button ion-button icon-left clear small (click)="deleteEndTime()" float-right>\n        <div>Delete Time</div>\n      </button>\n    </ion-col>\n    </ion-row>\n  </ion-card>\n\n  <ion-card *ngIf="c_anwser != \'\'">\n\n      <ion-item>\n        <ion-avatar item-start (click)="toggleVisible(-1)">\n          <img src="{{ca_own.img_url}}">\n        </ion-avatar>\n        <h2>{{ca_own.username}}</h2>\n        <p *ngIf="type != 2">{{ca_own.text}}</p>\n        <p *ngIf="type == 2">I dare you!</p>\n        <button ion-button clear small (click)="spentPoints(-1)" item-end *ngIf="open == 0 && type==1">-</button>\n        <ion-badge item-end *ngIf="type==1">{{ca_own.points}}</ion-badge>\n        <button ion-button clear small (click)="spentPoints(1)" item-end *ngIf="open == 0 && type==1">+</button>\n\n      </ion-item>\n    <ion-card-content *ngIf="isVisible(-1)">\n      <p *ngIf="type != 2">{{ca_own.text}}</p>\n      <p *ngIf="type == 2">I dare you!</p>\n    </ion-card-content>\n    <ion-row>\n      <ion-col *ngIf="type != 2">\n        <button ion-button icon-left clear small (click)="doAnswer()" item-end *ngIf="open == 0">\n          <ion-icon name="text"></ion-icon>\n          <div>Edit</div>\n        </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n\n  <ion-card *ngFor="let ca of ca_other; let i = index">\n\n    <ion-item (click)="toggleVisible(i)">\n      <ion-avatar item-start (click)="frwdToUser(ca.username)">\n        <img src="{{ca.img_url}}">\n      </ion-avatar>\n      <h2>{{ca.username}}</h2>\n      <p *ngIf="type != 2">{{ca.text}}</p>\n      <p *ngIf="type == 2">I dare you!</p>\n      <ion-badge item-end *ngIf="type==1">{{ca.points}}</ion-badge>\n    </ion-item>\n    <ion-card-content *ngIf="isVisible(i)">\n      <p *ngIf="type != 2">{{ca.text}}</p>\n      <p *ngIf="type == 2">I dare you!</p>\n    </ion-card-content>\n\n  </ion-card>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cntm/src/pages/challengedetail/challengedetail.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */],
             __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]])
@@ -1288,6 +1337,18 @@ var ChallengeServiceProvider = (function () {
         return new Promise(function (resolve, reject) {
             var get_params = "?username=" + username + "&token=" + token + "&cid=" + cid + "&points=" + points;
             _this.http.get(apiUrl + 'change_answer_points/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    ChallengeServiceProvider.prototype.has_challenge_answer_points = function (username, token, cid, points) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&cid=" + cid + "&points=" + points;
+            _this.http.get(apiUrl + 'get_avail_answer_points/' + get_params)
                 .subscribe(function (res) {
                 resolve(res);
             }, function (err) {

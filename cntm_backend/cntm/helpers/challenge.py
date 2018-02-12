@@ -104,7 +104,7 @@ def update_challenge(cid, key, val):
     c.save()
 
 
-def add_challenge(name, desc="", img_url="", choice="", open=0, creator="", ctype=1):
+def add_challenge(name, desc="", img_url="", choice="", open=-1, creator="", ctype=1):
     if desc == "":
         desc = name
 
@@ -143,6 +143,7 @@ def add_challenge_answer(username, cid, answer=None, points=None):
         if points is not None:
             a.points = points
         a.save()
+        return a
     else:
         if points is None:
             points = 0
@@ -152,13 +153,20 @@ def add_challenge_answer(username, cid, answer=None, points=None):
                     img_url=u.img_url,
                     points=points)
         a.save()
+        return a
 
 
 def update_challenge_answer_points(username, cid, points=0):
     try:
-        cas = CAnswer.objects.get(cid=cid, uname=username)
-        cas.points = cas.points + points
-        cas.save()
+
+        cas = CAnswer.objects.filter(cid=cid, uname=username)
+
+        if len(cas) == 0:
+            ca = add_challenge_answer(username, cid, answer="", points=0)
+        else:
+            ca = cas.first()
+        ca.points = ca.points + points
+        ca.save()
 
         calc_new_challenge_points(cid)
 
@@ -192,7 +200,8 @@ def get_anwsers_for_challenge(cid, username=""):
     ret_dict = {}
     ret_list = []
 
-    cas = CAnswer.objects.filter(cid=cid)
+    c = Challenge.objects.get(id=cid)
+    cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname = c.creator))
 
     for a in cas:
 
@@ -294,6 +303,7 @@ def eval_challenge(cid):
 
         tot_points = c.points
         solution = c.answer
+        creator_name = c.creator
 
         if c.type == 0:
 
@@ -307,7 +317,7 @@ def eval_challenge(cid):
                     solution = solution.split("&")
 
                 if not is_in:
-                    cas_right = CAnswer.objects.filter(cid=cid, text=solution)
+                    cas_right = CAnswer.objects.filter(cid=cid, text=solution).filter(~Q(uname = creator_name))
 
                     point_incr = 0
                     if len(cas_right) > 0:
@@ -327,7 +337,7 @@ def eval_challenge(cid):
                         count_dict[sol] = 0
                         point_dict[sol] = tot_points
 
-                    cas = CAnswer.objects.filter(cid=cid)
+                    cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname = creator_name))
                     for ca in cas:
                         if ca.text in count_dict:
                             count_dict[ca.text] += 1
@@ -352,7 +362,7 @@ def eval_challenge(cid):
                     is_in = True
                     solution = solution.split("&")
 
-                cas = CAnswer.objects.filter(cid=cid)
+                cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname = creator_name))
                 for ca in cas:
                     try:
                         u = User.objects.get(username=ca.uname)
@@ -369,8 +379,8 @@ def eval_challenge(cid):
 
         if c.type == 1:
 
-            cas = CAnswer.objects.filter(cid=cid)
-            cas_right = CAnswer.objects.filter(cid=cid, text=solution)
+            cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname = creator_name))
+            cas_right = CAnswer.objects.filter(cid=cid, text=solution).filter(~Q(uname = creator_name))
 
             right_points = 0
             for ca in cas_right:
@@ -401,7 +411,7 @@ def eval_challenge(cid):
 
         if c.type == 2:
 
-            cas = CAnswer.objects.filter(cid=cid)
+            cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname = creator_name))
 
             if len(cas) > 0:
 

@@ -25,5 +25,6 @@ urlpatterns = [
     path(r'update_topmodel/', views.update_gntm_model_req, name='update_topmodel'),
     path(r'change_answer_points/', views.change_answer_points_req, name='change_answer_points'),
     path(r'eval_challenge/', views.eval_challenge_req, name='eval_challenge'),
+    path(r'get_avail_answer_points/', views.get_avail_answer_points_req, name='get_avail_answer_points'),
     path(r'', views.dnd, name='dnd'),
 ]

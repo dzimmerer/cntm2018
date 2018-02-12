@@ -3,7 +3,7 @@ import random
 from django.core import serializers
 
 from cntm.helpers.passwd import md5_hash, hash_password, verify_passwd
-from cntm.models import User, CAnswer
+from cntm.models import User, CAnswer, Challenge
 
 hair_list = ["Rot", "Blond", "Schwarz", "Braun"]
 eye_list = ["Grün", "Blau", "Blau-Grau", "Braun", "Blau-Grün"]
@@ -187,11 +187,17 @@ def delete_user(username):
 
 def get_spent_user_points(username):
     try:
-        cas = CAnswer.objects.filter(uname=username)
 
         u_sum = 0
+
+        cas = CAnswer.objects.filter(uname=username)
         for c in cas:
             u_sum += c.points
+
+        cs = Challenge.objects.filter(creator=username, type=2, open=0)
+        for c in cs:
+            u_sum += c.points
+
         return u_sum
     except:
         return 0
@@ -207,9 +213,9 @@ def get_effectiv_user_points(username):
     except:
         return 0
 
-def can_user_spend_points(username):
+def can_user_spend_points(username, points=0):
     try:
-        if get_effectiv_user_points(username) > 0:
+        if get_effectiv_user_points(username) >= points:
             return True
         else:
             return False

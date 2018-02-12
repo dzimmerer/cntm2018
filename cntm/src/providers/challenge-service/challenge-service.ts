@@ -88,6 +88,20 @@ export class ChallengeServiceProvider {
     });
   }
 
+  has_challenge_answer_points(username, token, cid, points){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token+"&cid="+cid + "&points="+points;
+
+      this.http.get(apiUrl+'get_avail_answer_points/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
 
 
   get_news_data(username, token){
