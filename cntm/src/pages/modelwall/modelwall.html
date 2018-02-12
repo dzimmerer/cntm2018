@@ -21,6 +21,12 @@
     <div class="card-subtitle">&quot;{{m.descr}}&quot;</div>
       <button ion-button clear item-end (click)="openLink(m.link)">More</button>
       <button ion-button clear item-end (click)="toggleActive(m.id, i)" *ngIf="admin == '1'">Toggle</button>
+      <div class="honey mid" *ngIf="m.honey > 0">
+        <p>{{m.honey}}</p>
+      </div>
+      <div class="trump mid" *ngIf="m.trump > 0">
+      <p>{{m.trump}}</p>
+    </div>
   </ion-card>
 <!--<ion-list>-->
     <!--<ion-item>-->

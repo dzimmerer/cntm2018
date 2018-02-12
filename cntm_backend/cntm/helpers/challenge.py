@@ -498,3 +498,23 @@ def add_log(username, cid, aid, points, ctype, ccreator="", label="", answer="",
         l.save()
     except:
         pass
+
+
+def get_elem_count_for_label(c_label):
+    ret_dict = {}
+    try:
+
+        c = Challenge.objects.filter(label=c_label).last()
+        cas = CAnswer.objects.filter(cid=c.id)
+
+        for ca in cas:
+            answer = ca.text
+            if answer in ret_dict:
+                ret_dict[answer] += 1
+            else:
+                ret_dict[answer] = 1
+
+    except:
+        pass
+
+    return {"elem_count": ret_dict}

@@ -33,4 +33,49 @@ page-modelwall {
 
   }
 
+  ion-avatar img  {
+    width: 60% !important;
+    height : 60% !important;
+    max-width: 50px !important;  //any size
+    max-height: 50px !important; //any size
+  }
+
+  .honey {
+    background:
+      url(../../assets/imgs/honey.jpg);
+    -webkit-filter: grayscale(0.7); /* Safari 6.0 - 9.0 */
+    filter: grayscale(0.7);
+    background-size: cover;
+    width: 35px;
+    height: 35px;
+    margin: 5px 0 0 5px;
+    position: relative;
+    float: right;
+  }
+
+  .trump {
+    background:
+      url(../../assets/imgs/trump.jpg);
+    -webkit-filter: grayscale(0.7); /* Safari 6.0 - 9.0 */
+    filter: grayscale(0.7);
+    background-size: cover;
+    width: 35px;
+    height: 35px;
+    margin: 5px 0 0 5px;
+    position: relative;
+    float: right;
+  }
+
+
+  .mid p {
+    font-weight: 400;
+    color: white;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 2rem;
+    transform: translate(-50%, -50%);
+  }
+
 }

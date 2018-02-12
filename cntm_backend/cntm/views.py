@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from cntm.helpers.challenge import get_all_challenges, get_challenge_data, get_anwsers_for_challenge, \
     add_challenge_answer, get_gntm_models, get_m_news, update_m_news, add_m_news, delete_m_news, add_challenge, \
     update_challenge, delete_challenge, update_gntm_models, is_challenge_creator, \
-    update_challenge_answer_points, eval_challenge
+    update_challenge_answer_points, eval_challenge, get_elem_count_for_label
 from cntm.helpers.user import create_new_user, check_user_passwd, get_user_token, get_user_json, verify_user, \
     update_user, get_user_ranking, is_admin, delete_user, can_user_spend_points
 from cntm.models import GNTMModel
@@ -572,6 +572,25 @@ def eval_challenge_req(request):
                 return JsonResponse({"success": 1})
 
             return JsonResponse({"success": 0})
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+
+def get_label_answer_count_req(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            label = request.GET.get("label", "")
+
+            if not verify_user(username, token):
+                return JsonResponse({})
+
+            ret_json = get_elem_count_for_label(label)
+            return JsonResponse(ret_json)
+
         except:
             return JsonResponse({"msg":"Error: Invalid request"})
     else:

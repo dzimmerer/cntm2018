@@ -25784,3 +25784,48 @@ page-modelwall .card-background-page .card-subtitle {
   width: 100%;
   color: #fff;
 }
+
+page-modelwall ion-avatar img {
+  width: 60% !important;
+  height: 60% !important;
+  max-width: 50px !important;
+  max-height: 50px !important;
+}
+
+page-modelwall .honey {
+  background: url(../../assets/imgs/honey.jpg);
+  -webkit-filter: grayscale(0.7);
+  /* Safari 6.0 - 9.0 */
+  filter: grayscale(0.7);
+  background-size: cover;
+  width: 35px;
+  height: 35px;
+  margin: 5px 0 0 5px;
+  position: relative;
+  float: right;
+}
+
+page-modelwall .trump {
+  background: url(../../assets/imgs/trump.jpg);
+  -webkit-filter: grayscale(0.7);
+  /* Safari 6.0 - 9.0 */
+  filter: grayscale(0.7);
+  background-size: cover;
+  width: 35px;
+  height: 35px;
+  margin: 5px 0 0 5px;
+  position: relative;
+  float: right;
+}
+
+page-modelwall .mid p {
+  font-weight: 400;
+  color: white;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 2rem;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}

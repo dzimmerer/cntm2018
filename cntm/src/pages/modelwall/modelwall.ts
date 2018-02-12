@@ -35,8 +35,41 @@ export class ModelwallPage {
 
       this.models = result["models"]
 
+      this.csp.get_label_answer_count(this.username, this.token, "Honey").then((result) => {
+        if("elem_count" in result){
+          const res = result["elem_count"];
+          this.models.forEach(function(m) {
+            if(m["name"] in res){
+              m["honey"] = res[m["name"]];
+            }
+            else{
+              m["honey"] = 0;
+            }
+          });
+        }
+      }, (err) => {
+      });
+
+      this.csp.get_label_answer_count(this.username, this.token, "Trump").then((result) => {
+        if("elem_count" in result){
+          const res = result["elem_count"];
+          this.models.forEach(function(m) {
+            if(m["name"] in res){
+              m["trump"] = res[m["name"]];
+            }
+            else{
+              m["trump"] = 0;
+            }
+          });
+        }
+      }, (err) => {
+      });
+
     }, (err) => {
     });
+
+
+
   }
 
   ionViewDidLoad() {
