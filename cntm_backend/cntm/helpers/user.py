@@ -149,7 +149,7 @@ def update_user(username, key, val):
 
 
 def get_user_ranking():
-    users = User.objects.filter(admin=0).order_by("-score")
+    users = User.objects.filter(admin=0).order_by("-score", "username")
     user_toplist = []
 
     for u in users:
