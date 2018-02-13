@@ -1330,6 +1330,18 @@ var UserServiceProvider = (function () {
             });
         });
     };
+    UserServiceProvider.prototype.get_user_score_details = function (username, token, other) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&other=" + other;
+            _this.http.get(apiUrl + 'get_user_score_details/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
     UserServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
@@ -1846,6 +1858,7 @@ var UserdetailPage = (function () {
         this.navParams = navParams;
         this.usp = usp;
         this.alertCtrl = alertCtrl;
+        this.score_details = { "bet": 0, "honey": 0, "trump": 0 };
         this.other = navParams.get('other');
         console.log(this.other);
         this.username = window.localStorage.getItem('username');
@@ -1869,6 +1882,12 @@ var UserdetailPage = (function () {
                 }
             }
         }, function (err) {
+        });
+        this.usp.get_user_score_details(this.username, this.token, this.other).then(function (result) {
+            if ("scores" in result) {
+                console.log(result["scores"]);
+                _this.score_details = result["scores"];
+            }
         });
     }
     UserdetailPage.prototype.ionViewDidLoad = function () {
@@ -1915,7 +1934,7 @@ var UserdetailPage = (function () {
     };
     UserdetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-userdetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/userdetail/userdetail.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n    <ion-title>User</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <img src="{{img_url}}">\n\n    <ion-item>\n      <h2>{{other}}</h2>\n      <p>&quot;{{descr}}&quot;</p>\n      <ion-badge item-end>{{score}}</ion-badge>\n    </ion-item>\n\n    <ion-item *ngIf="admin == \'1\'">\n      <ion-icon name=\'md-person\' item-start style="color: #f95c71"></ion-icon>\n      <p>{{real_name}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="calendar" item-start style="color: #f95c71"></ion-icon>\n      <p>{{age}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="cut" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hair}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="eye" item-start style="color: #f95c71"></ion-icon>\n      <p>{{eye}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="football" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hobbies}}</p>\n    </ion-item>\n\n\n    <ion-card-content center text-center>\n      <p>\n        <br>\n        {{descr}}\n      </p>\n\n    </ion-card-content>\n\n\n  </ion-card>\n  <ion-card *ngIf="admin == \'1\'">\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="changePoints()">\n          <div>Change points</div>\n        </button>\n      </ion-col>\n      <ion-col text-right>\n        <button ion-button icon-left clear small  (click)="deleteUser()" >\n          <div>Delete</div>\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-card>\n\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/userdetail/userdetail.html"*/,
+            selector: 'page-userdetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/userdetail/userdetail.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n    <ion-title>User</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <img src="{{img_url}}">\n\n    <ion-item>\n      <h2>{{other}}</h2>\n      <p>&quot;{{descr}}&quot;</p>\n      <ion-badge item-end>{{score}}</ion-badge>\n    </ion-item>\n\n    <ion-item *ngIf="admin == \'1\'">\n      <ion-icon name=\'md-person\' item-start style="color: #f95c71"></ion-icon>\n      <p>{{real_name}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="calendar" item-start style="color: #f95c71"></ion-icon>\n      <p>{{age}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="cut" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hair}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="eye" item-start style="color: #f95c71"></ion-icon>\n      <p>{{eye}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="football" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hobbies}}</p>\n    </ion-item>\n\n\n    <ion-card-content center text-center>\n      <p>\n        <br>\n        {{descr}}\n      </p>\n    </ion-card-content>\n\n    <ion-card-content center text-center>\n      <ion-grid>\n        <ion-row>\n          <ion-col>\n            <ion-icon name=\'people\' class="xd" item-start style="color: black"></ion-icon>\n          </ion-col>\n          <ion-col>\n            <div class="honey mid"></div>\n          </ion-col>\n          <ion-col>\n            <div class="trump mid"></div>\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <div>{{score_details.bet}}</div>\n          </ion-col>\n          <ion-col>\n            <div>{{score_details.honey}}</div>\n          </ion-col>\n          <ion-col>\n            <div>{{score_details.trump}}</div>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-card-content>\n\n\n  </ion-card>\n  <ion-card *ngIf="admin == \'1\'">\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="changePoints()">\n          <div>Change points</div>\n        </button>\n      </ion-col>\n      <ion-col text-right>\n        <button ion-button icon-left clear small  (click)="deleteUser()" >\n          <div>Delete</div>\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-card>\n\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/userdetail/userdetail.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserServiceProvider */],
             __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]])

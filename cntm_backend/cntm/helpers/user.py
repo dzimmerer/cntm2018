@@ -3,7 +3,7 @@ import random
 from django.core import serializers
 
 from cntm.helpers.passwd import md5_hash, hash_password, verify_passwd
-from cntm.models import User, CAnswer, Challenge
+from cntm.models import User, CAnswer, Challenge, Log
 
 hair_list = ["Rot", "Blond", "Schwarz", "Braun"]
 eye_list = ["Grün", "Blau", "Blau-Grau", "Braun", "Blau-Grün"]
@@ -221,3 +221,29 @@ def can_user_spend_points(username, points=0):
             return False
     except:
         return False
+
+
+def get_score_origin(username):
+
+    bet_score = 0
+    honey_score = 0
+    trump_score = 0
+
+    try:
+
+        u = User.objects.get(username=username)
+
+        logs = Log.objects.filter(username=username)
+
+        for l in logs:
+            if l.ctype == 1 or l.ctype == 2:
+                bet_score += l.points
+            elif l.label.lower() == "honey":
+                honey_score += l.points
+            elif l.label.lower() == "trump":
+                trump_score += l.points
+
+    except:
+        pass
+
+    return {"scores": {"bet": bet_score, "honey": honey_score, "trump": trump_score}}

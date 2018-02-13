@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from cntm.models import Challenge, CAnswer
+from cntm.models import Challenge, CAnswer, Log
 
 class Command(BaseCommand):
     help = 'Clear all challenges'
@@ -14,3 +14,6 @@ class Command(BaseCommand):
 
         for ca in CAnswer.objects.all():
             ca.delete()
+
+        for l in Log.objects.all():
+            l.delete()

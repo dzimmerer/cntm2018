@@ -1,3 +1,34 @@
 page-userdetail {
 
+  .honey {
+    background:
+      url(../assets/imgs/honey.jpg);
+    -webkit-filter: grayscale(0.8); /* Safari 6.0 - 9.0 */
+    filter: grayscale(0.8);
+    background-size: cover;
+    width: 25px;
+    height: 25px;
+    margin: 5px 0 0 5px;
+    position: relative;
+    display: inline-block;
+  }
+
+  .trump {
+    background:
+      url(../assets/imgs/trump.jpg);
+    -webkit-filter: grayscale(0.8); /* Safari 6.0 - 9.0 */
+    filter: grayscale(0.8);
+    background-size: cover;
+    width: 25px;
+    height: 25px;
+    margin: 5px 0 0 5px;
+    position: relative;
+    display: inline-block;
+  }
+
+  .xd {
+    font-size: 25px; //Preferred size here
+    margin: 5px 0 0 5px;
+  }
+
 }

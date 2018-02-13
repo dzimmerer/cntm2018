@@ -8,7 +8,7 @@ from cntm.helpers.challenge import get_all_challenges, get_challenge_data, get_a
     update_challenge, delete_challenge, update_gntm_models, is_challenge_creator, \
     update_challenge_answer_points, eval_challenge, get_elem_count_for_label
 from cntm.helpers.user import create_new_user, check_user_passwd, get_user_token, get_user_json, verify_user, \
-    update_user, get_user_ranking, is_admin, delete_user, can_user_spend_points
+    update_user, get_user_ranking, is_admin, delete_user, can_user_spend_points, get_score_origin
 from cntm.models import GNTMModel
 
 
@@ -589,6 +589,25 @@ def get_label_answer_count_req(request):
                 return JsonResponse({})
 
             ret_json = get_elem_count_for_label(label)
+            return JsonResponse(ret_json)
+
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})
+
+
+def get_user_score_details_req(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            other = request.GET.get("other", "")
+
+            if not verify_user(username, token):
+                return JsonResponse({})
+
+            ret_json = get_score_origin(other)
             return JsonResponse(ret_json)
 
         except:

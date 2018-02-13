@@ -27,5 +27,6 @@ urlpatterns = [
     path(r'eval_challenge/', views.eval_challenge_req, name='eval_challenge'),
     path(r'get_avail_answer_points/', views.get_avail_answer_points_req, name='get_avail_answer_points'),
     path(r'get_label_answer_count/', views.get_label_answer_count_req, name='get_label_answer_count'),
+    path(r'get_user_score_details/', views.get_user_score_details_req, name='get_user_score_details'),
     path(r'', views.dnd, name='dnd'),
 ]

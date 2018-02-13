@@ -32,6 +32,8 @@ export class UserdetailPage {
   score: any;
   real_name: any;
 
+  score_details: any = {"bet" : 0, "honey": 0, "trump": 0};
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private usp: UserServiceProvider,
               public alertCtrl: AlertController) {
@@ -70,8 +72,18 @@ export class UserdetailPage {
         }
 
       }
-
     }, (err) => {
+    });
+
+    this.usp.get_user_score_details(this.username, this.token, this.other).then((result) => {
+
+      if ("scores" in result) {
+
+        console.log(result["scores"]);
+
+        this.score_details = result["scores"];
+
+      }
     });
 
 
