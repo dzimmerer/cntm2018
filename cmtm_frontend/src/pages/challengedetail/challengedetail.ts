@@ -523,6 +523,10 @@ export class ChallengedetailPage {
       alert.present();
 
     }
+    else if(this.cadmin == 1 && (this.open == 0 || this.open == 1)){
+      this.appCtrl.getRootNav().pop();
+      this.navCtrl.setRoot(ChallengesTabs);
+    }
     else{
       this.appCtrl.getRootNav().pop();
     }

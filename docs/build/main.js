@@ -432,6 +432,10 @@ var ChallengedetailPage = (function () {
             });
             alert_9.present();
         }
+        else if (this.cadmin == 1 && (this.open == 0 || this.open == 1)) {
+            this.appCtrl.getRootNav().pop();
+            this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__challenges_challenges__["b" /* ChallengesTabs */]);
+        }
         else {
             this.appCtrl.getRootNav().pop();
         }
