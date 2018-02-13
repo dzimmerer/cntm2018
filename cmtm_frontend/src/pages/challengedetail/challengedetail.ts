@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, App, Navbar, Platform } from 'ionic-angular';
 import {ChallengeServiceProvider} from "../../providers/challenge-service/challenge-service";
 import {AlertController} from "ionic-angular/components/alert/alert-controller";
 import {ChallengesTabs} from "../challenges/challenges";
@@ -18,6 +18,9 @@ import {UserdetailPage} from "../userdetail/userdetail";
   templateUrl: 'challengedetail.html',
 })
 export class ChallengedetailPage {
+
+
+  @ViewChild('navbar') navBar: Navbar;
 
   isShownArray: number[];
 
@@ -51,7 +54,7 @@ export class ChallengedetailPage {
   ca_other: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private csp: ChallengeServiceProvider,
-              public alertCtrl: AlertController, public appCtrl: App) {
+              public alertCtrl: AlertController, public appCtrl: App, private platform: Platform) {
 
     this.isShownArray = [];
 
@@ -96,6 +99,10 @@ export class ChallengedetailPage {
     });
 
     this.set_ch_answers();
+
+    this.platform.registerBackButtonAction(() => this.willLeave(), 2)
+
+
 
   }
 
@@ -487,4 +494,39 @@ export class ChallengedetailPage {
       alert.present();
     }
   }
+
+  ionViewDidEnter() {
+    this.navBar.backButtonClick = () => {
+      this.willLeave();
+    };
+
+  }
+
+  willLeave() {
+
+    if(this.cadmin == 1 && this.open == -1) {
+
+      console.log('Looks like I’m about to leave :(');
+      let alert = this.alertCtrl.create({
+        title: 'Are you sure you want to leave ?',
+        message: 'If you leave now without publishing, the challenge will be lost.',
+        buttons: [
+          {text: 'Cancel',},
+          {
+            text: 'Yes',
+            handler: () => {
+              this.appCtrl.getRootNav().pop();
+            }
+          }
+        ]
+      });
+      alert.present();
+
+    }
+    else{
+      this.appCtrl.getRootNav().pop();
+    }
+  }
+
+
 }

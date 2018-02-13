@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -17,10 +17,11 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
+  lastBack: any = 0;
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public app: App) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -31,6 +32,20 @@ export class MyApp {
       { title: 'Challenges', component: ChallengesTabs },
       { title: 'Model Wall', component: ModelwallPage },
     ];
+
+    platform.registerBackButtonAction(() => {
+      const overlay = this.app._appRoot._overlayPortal.getActive();
+      const nav = this.app.getActiveNav();
+
+      if(overlay && overlay.dismiss) {
+        overlay.dismiss();
+      } else if(nav.canGoBack()){
+        nav.pop();
+      } else if(Date.now() - this.lastBack < 500) {
+        this.platform.exitApp();
+      }
+      this.lastBack = Date.now();
+    });
 
   }
 
