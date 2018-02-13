@@ -69,22 +69,30 @@
   </ion-card>
 
 
+  <ion-card *ngIf="cadmin == '1' && open < 0">
+    <ion-item>
+      <ion-icon name="swap" item-start style="color: #c3af80"></ion-icon>
+      <ion-label><p>Direct Bet</p></ion-label>
+      <ion-toggle [(ngModel)]="embet" (ngModelChange)="changeEmBet()"></ion-toggle>
+    </ion-item>
+  </ion-card>
+
   <ion-card *ngIf="cadmin == '1' && (admin == 1 || open < 2)">
 
     <ion-row>
       <ion-col *ngIf="open <= 0">
-        <button ion-button icon-left clear small (click)="chVal('name', 'Headline')">
-          <div>Edit Name</div>
+        <button ion-button icon-left clear small (click)="chVal('name', 'Title')">
+          <div>Edit Title</div>
         </button>
       </ion-col>
       <ion-col *ngIf="open <= 0">
-        <button ion-button icon-left clear small (click)="chVal('descr', 'Text')">
-          <div>Edit Text</div>
+        <button ion-button icon-left clear small (click)="chVal('descr', 'Description')">
+          <div>Edit Description</div>
         </button>
       </ion-col>
       <ion-col *ngIf="open <= 0 && type != 2">
-        <button ion-button icon-left clear small (click)="chVal('choice', 'Choice')">
-          <div>Edit Choice</div>
+        <button ion-button icon-left clear small (click)="chVal('choice', 'Choices')">
+          <div>Edit Choices</div>
         </button>
       </ion-col>
       <ion-col *ngIf="admin == 1">
@@ -98,38 +106,6 @@
         </button>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col *ngIf="type != 2">
-        <button ion-button icon-left clear small (click)="chVal('answer', 'Right Solution')" >
-          <div>Edit Solution</div>
-        </button>
-      </ion-col>
-      <ion-col *ngIf="type == 2">
-        <button ion-button icon-left clear small (click)="setSolution()" >
-          <div>Edit Solution</div>
-        </button>
-      </ion-col>
-      <ion-col>
-        <button ion-button icon-left clear small (click)="evalChallenge()" float-right>
-          <div>End & Give Points</div>
-        </button>
-      </ion-col>
-    </ion-row>
-    <ion-row *ngIf="type != 2">
-      <ion-col>
-      <button ion-button icon-left clear small (click)="deleteChallenge()">
-        <div>Delete</div>
-      </button>
-      </ion-col>
-    </ion-row>
-  </ion-card>
-
-  <ion-card *ngIf="cadmin == '1' && open < 0">
-    <ion-item>
-      <ion-icon name="swap" item-start style="color: #c3af80"></ion-icon>
-      <ion-label><p>Direct Bet</p></ion-label>
-      <ion-toggle [(ngModel)]="embet" (ngModelChange)="changeEmBet()"></ion-toggle>
-    </ion-item>
   </ion-card>
 
   <ion-card *ngIf="cadmin == '1' && (admin == 1 || open <= 0)">
@@ -152,6 +128,33 @@
         <div>Delete Time</div>
       </button>
     </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-card *ngIf="cadmin == '1' && (admin == 1 || open < 2) && open >= 0">
+    <ion-row>
+      <ion-col *ngIf="type != 2">
+        <button ion-button icon-left clear small (click)="chVal('answer', 'Right Solution')" >
+          <div>Edit Solution</div>
+        </button>
+      </ion-col>
+      <ion-col *ngIf="type == 2">
+        <button ion-button icon-left clear small (click)="setSolution()" >
+          <div>Edit Solution</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small (click)="evalChallenge()" float-right>
+          <div>End & Give Points</div>
+        </button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="type != 2">
+      <ion-col>
+        <button ion-button icon-left clear small (click)="deleteChallenge()">
+          <div>Delete</div>
+        </button>
+      </ion-col>
     </ion-row>
   </ion-card>
 

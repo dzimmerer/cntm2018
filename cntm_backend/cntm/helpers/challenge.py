@@ -9,11 +9,20 @@ from cntm.models import Challenge, User, CAnswer, GNTMModel, News, Log
 tz = pytz.timezone("Europe/Berlin")
 
 
-def get_open_challenges(open=0, ctype=None):
+def get_open_challenges(open=0, ctype=None, order_by_points=False):
     challenges = Challenge.objects.filter(open=open)
-    if ctype is not None:
+    if ctype is not None and isinstance(ctype, int):
         challenges = challenges.filter(type=ctype)
+    if ctype is not None and isinstance(ctype, (list, tuple)):
+        q = Q(type=ctype[0])
+        for c in ctype[1:]:
+            q = q | Q(type=c)
+        challenges = challenges.filter(q)
+
     c_list = []
+
+    if order_by_points:
+        challenges = challenges.order_by("-points")
 
     for c in challenges:
         is_out = False
@@ -27,7 +36,7 @@ def get_open_challenges(open=0, ctype=None):
 
 
 def get_all_challenges():
-    community_c = get_open_challenges(open=0, ctype=1) + get_open_challenges(open=0, ctype=2)
+    community_c = get_open_challenges(open=0, ctype=(1,2), order_by_points=True)
     special_c = get_open_challenges(open=0, ctype=0)
 
     closed_c1 = get_open_challenges(open=1)
@@ -71,6 +80,8 @@ def get_challenge_data(cid):
     elif "|" in c.choice:
         choices = c.choice.split("|")
         has_choice = 1
+
+    choices = [x_el.strip() for x_el in choices]
 
     return dict(id=c.id,
                 name=c.name,
@@ -137,6 +148,9 @@ def add_challenge_answer(username, cid, answer=None, points=None):
     c = Challenge.objects.get(id=cid)
 
     cas = CAnswer.objects.filter(cid=cid, uname=username)
+
+    if answer is not None:
+        answer = answer.strip()
 
     if len(cas) > 0:
         a = cas.first()
@@ -316,6 +330,7 @@ def eval_challenge(cid):
                 if "&" in solution:
                     is_in = True
                     solution = solution.split("&")
+                    solution = [x_el.strip() for x_el in solution]
 
                 if not is_in:
                     cas_right = CAnswer.objects.filter(cid=cid, text=solution).filter(~Q(uname=creator_name))
@@ -366,6 +381,7 @@ def eval_challenge(cid):
                 if "&" in solution:
                     is_in = True
                     solution = solution.split("&")
+                    solution = [x_el.strip() for x_el in solution]
 
                 cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname=creator_name))
                 for ca in cas:

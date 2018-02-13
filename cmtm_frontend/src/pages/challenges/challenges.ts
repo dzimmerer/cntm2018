@@ -66,7 +66,7 @@ export class ChallengesPage {
 
   addChallenge() {
     let prompt = this.alertCtrl.create({
-      title: "Add new Challenge:",
+      title: "Challenge Title:",
       inputs: [
         {name: 'inpt',
           value: "" },

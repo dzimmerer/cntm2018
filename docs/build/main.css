@@ -25793,7 +25793,7 @@ page-modelwall ion-avatar img {
 }
 
 page-modelwall .honey {
-  background: url(../../assets/imgs/honey.jpg);
+  background: url(../assets/imgs/honey.jpg);
   -webkit-filter: grayscale(0.7);
   /* Safari 6.0 - 9.0 */
   filter: grayscale(0.7);
@@ -25806,7 +25806,7 @@ page-modelwall .honey {
 }
 
 page-modelwall .trump {
-  background: url(../../assets/imgs/trump.jpg);
+  background: url(../assets/imgs/trump.jpg);
   -webkit-filter: grayscale(0.7);
   /* Safari 6.0 - 9.0 */
   filter: grayscale(0.7);
