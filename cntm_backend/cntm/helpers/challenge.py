@@ -147,6 +147,9 @@ def add_challenge_answer(username, cid, answer=None, points=None):
     u = User.objects.get(username=username)
     c = Challenge.objects.get(id=cid)
 
+    if c.open != 0:
+        return None
+
     cas = CAnswer.objects.filter(cid=cid, uname=username)
 
     if answer is not None:
@@ -173,6 +176,10 @@ def add_challenge_answer(username, cid, answer=None, points=None):
 
 def update_challenge_answer_points(username, cid, points=0):
     try:
+
+        c = Challenge.objects.get(id=cid)
+        if c.open != 0:
+            return False
 
         cas = CAnswer.objects.filter(cid=cid, uname=username)
 

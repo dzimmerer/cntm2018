@@ -433,7 +433,7 @@ export class ChallengedetailPage {
   setSolution() {
     if(this.type == 2){
       let alert = this.alertCtrl.create();
-      alert.setTitle('Open');
+      alert.setTitle('You');
       alert.addInput({
         type: 'radio',
         label: 'Won',
