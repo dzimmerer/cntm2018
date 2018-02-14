@@ -1,6 +1,8 @@
 import json
 import random
 from django.core import serializers
+from django.db.models.functions import Lower
+
 
 from cntm.helpers.passwd import md5_hash, hash_password, verify_passwd
 from cntm.models import User, CAnswer, Challenge, Log
@@ -149,7 +151,7 @@ def update_user(username, key, val):
 
 
 def get_user_ranking():
-    users = User.objects.filter(admin=0).order_by("-score", "username")
+    users = User.objects.filter(admin=0).order_by("-score", Lower("username"))
     user_toplist = []
 
     for u in users:

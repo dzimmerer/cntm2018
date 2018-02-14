@@ -533,4 +533,44 @@ export class ChallengedetailPage {
   }
 
 
+  chChoices() {
+    let prompt = this.alertCtrl.create({
+      title: "Choices",
+      subTitle:"'  ' -> Textfield <br>'a|b' -> either a or b <br>'a&b' -> a and/or b",
+      inputs: [
+        {name: 'inpt',
+          value: this.choice },
+      ],
+      buttons: [
+        { text: 'Cancel', },
+        { text: 'Save',
+          handler: data => {
+
+            if(data.inpt.includes("&") && data.inpt.includes("|")){
+              let alert = this.alertCtrl.create({
+                title: "You can't combine '&' and '|' in your answer, choose either one !",
+                buttons: ['OK']
+              });
+              alert.present();
+            }else {
+              this.choice = data.inpt;
+              this.csp.update_challenge_data(this.username, this.token, this.cid, "choice", data.inpt);
+              if(data.inpt.includes("&")){
+                this.has_choice = 2;
+                this.choice_list = data.inpt.split("&")
+              }
+              else if(data.inpt.includes("|")) {
+                this.has_choice = 1;
+                this.choice_list = data.inpt.split("|")
+              }
+              else{
+                this.has_choice = 0;
+              }
+            }
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
 }
