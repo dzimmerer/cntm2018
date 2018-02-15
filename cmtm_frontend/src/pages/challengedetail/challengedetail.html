@@ -151,7 +151,7 @@
   <ion-card *ngIf="cadmin == '1' && (admin == 1 || open < 2) && open >= 0">
     <ion-row>
       <ion-col *ngIf="type != 2">
-        <button ion-button icon-left clear small (click)="chVal('answer', 'Right Solution')" >
+        <button ion-button icon-left clear small (click)="setSolution()" >
           <div>Edit Solution</div>
         </button>
       </ion-col>

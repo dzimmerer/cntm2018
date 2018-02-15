@@ -445,13 +445,10 @@ export class ChallengedetailPage {
         label: 'Lost',
         value: '1',
       });
-
-
       alert.addButton('Cancel');
       alert.addButton({
         text: 'OK',
         handler: data => {
-
           // Update
           this.answer = data;
           this.csp.update_challenge_data(this.username, this.token, this.cid, "answer", data);
@@ -460,6 +457,60 @@ export class ChallengedetailPage {
       });
       alert.present();
     }
+    else{
+
+      let alert = this.alertCtrl.create();
+      alert.setTitle('Solution');
+
+      if(this.has_choice == 1) {
+        this.choice_list.forEach(function(element) {
+          alert.addInput({
+            type: 'radio',
+            label: element,
+            value: element,
+            checked: false,
+          });
+        });
+      }
+      else if(this.has_choice == 2) {
+        this.choice_list.forEach(function(element) {
+          alert.addInput({
+            type: 'checkbox',
+            label: element,
+            value: element,
+            checked: false,
+          });
+        });
+      }
+      else{
+        alert.addInput({
+          type: 'text',
+          name: 'inpt',
+          value: '',
+        })
+      }
+
+
+      alert.addButton('Cancel');
+      alert.addButton({
+        text: 'OK',
+        handler: data => {
+          if(this.has_choice == 0) {
+            data = data["inpt"]
+          }
+          if(data) {
+            // Update
+            this.answer = data;
+            this.csp.update_challenge_data(this.username, this.token, this.cid, "answer", data);
+          }
+
+        }
+      });
+      alert.present();
+
+    }
+
+
   }
 
   doBetAgainst() {
