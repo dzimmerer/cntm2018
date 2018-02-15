@@ -624,4 +624,28 @@ export class ChallengedetailPage {
     });
     prompt.present();
   }
+
+  deleteOwnAnswer() {
+
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Delete your answer ?');
+    alert.addButton('Cancel');
+    alert.addButton({
+      text: 'OK',
+      handler: () => {
+        // Update
+        this.csp.delete_answer(this.username, this.token, this.cid).then((result) => {
+          if (result["success"] == 1) {
+            this.c_anwser = "";
+            this.ca_own = {};
+          }
+          else{
+
+          }
+        });
+      }
+    });
+    alert.present();
+
+  }
 }

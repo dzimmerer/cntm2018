@@ -247,6 +247,20 @@ export class ChallengeServiceProvider {
     });
   }
 
+  delete_answer(username, token, cid){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token + "&cid=" + cid;
+
+      this.http.get(apiUrl+'delete_answer/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
 
 
 

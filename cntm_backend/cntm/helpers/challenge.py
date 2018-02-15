@@ -198,6 +198,30 @@ def update_challenge_answer_points(username, cid, points=0):
         return False
 
 
+
+def delete_challenge_answer(username, cid):
+    try:
+
+        c = Challenge.objects.get(id=cid)
+        if c.open != 0:
+            return False
+
+        cas = CAnswer.objects.filter(cid=cid, uname=username)
+
+        if len(cas) == 0:
+            return False
+
+        ca = cas.first()
+        ca.delete()
+
+        calc_new_challenge_points(cid)
+
+        return True
+
+    except:
+        return False
+
+
 def calc_new_challenge_points(cid):
     try:
 
