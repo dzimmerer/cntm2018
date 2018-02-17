@@ -420,7 +420,7 @@ def eval_challenge(cid):
                     solution = [x_el.strip() for x_el in solution]
 
                 if not is_in:
-                    cas_right = CAnswer.objects.filter(cid=cid, text=solution).filter(~Q(uname=creator_name))
+                    cas_right = CAnswer.objects.filter(cid=cid, text=solution)
 
                     point_incr = 0
                     if len(cas_right) > 0:
@@ -445,7 +445,7 @@ def eval_challenge(cid):
                         count_dict[sol] = 0
                         point_dict[sol] = tot_points
 
-                    cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname=creator_name))
+                    cas = CAnswer.objects.filter(cid=cid)
                     for ca in cas:
                         if ca.text in count_dict:
                             count_dict[ca.text] += 1

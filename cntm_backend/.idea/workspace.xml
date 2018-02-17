@@ -48,8 +48,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cntm/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="662">
-              <caret line="684" column="0" lean-forward="false" selection-start-line="684" selection-start-column="0" selection-end-line="684" selection-end-column="0" />
+            <state relative-caret-position="692">
+              <caret line="572" column="24" lean-forward="true" selection-start-line="572" selection-start-column="24" selection-end-line="572" selection-end-column="24" />
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
               </folding>
@@ -88,7 +88,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cntm/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="390">
@@ -98,11 +98,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="challenge.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="challenge.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cntm/helpers/challenge.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="351" column="20" lean-forward="true" selection-start-line="351" selection-start-column="20" selection-end-line="351" selection-end-column="20" />
+            <state relative-caret-position="115">
+              <caret line="422" column="39" lean-forward="false" selection-start-line="422" selection-start-column="32" selection-end-line="422" selection-end-column="39" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -158,8 +158,8 @@
       <find>delete</find>
       <find>get_user_ch</find>
       <find>data</find>
-      <find>gntm</find>
       <find>models</find>
+      <find>gntm</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -179,8 +179,8 @@
         <option value="$PROJECT_DIR$/cntm/models.py" />
         <option value="$PROJECT_DIR$/cntm/urls.py" />
         <option value="$PROJECT_DIR$/cntm/views.py" />
-        <option value="$PROJECT_DIR$/cntm/helpers/challenge.py" />
         <option value="$PROJECT_DIR$/cntm/helpers/tele.py" />
+        <option value="$PROJECT_DIR$/cntm/helpers/challenge.py" />
       </list>
     </option>
   </component>
@@ -190,7 +190,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="1973" />
     <option name="width" value="952" />
     <option name="height" value="577" />
@@ -336,7 +336,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1440" y="0" width="1920" height="1050" extended-state="7" />
+    <frame x="1440" y="0" width="1920" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -722,16 +722,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cntm/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="662">
-          <caret line="684" column="0" lean-forward="false" selection-start-line="684" selection-start-column="0" selection-end-line="684" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="das://table:/faadca4c/30b85067-d5bc-428b-b353-28c37283c3ea/main.cntm_log">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -785,21 +775,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cntm/helpers/challenge.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="351" column="20" lean-forward="true" selection-start-line="351" selection-start-column="20" selection-end-line="351" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cntm/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
           <caret line="44" column="6" lean-forward="false" selection-start-line="44" selection-start-column="6" selection-end-line="44" selection-end-column="6" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cntm/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="692">
+          <caret line="572" column="24" lean-forward="true" selection-start-line="572" selection-start-column="24" selection-end-line="572" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cntm/helpers/challenge.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="422" column="39" lean-forward="false" selection-start-line="422" selection-start-column="32" selection-end-line="422" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
