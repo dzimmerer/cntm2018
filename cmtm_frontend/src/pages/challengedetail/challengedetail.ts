@@ -515,7 +515,7 @@ export class ChallengedetailPage {
       alert.addButton({
         text: 'OK',
         handler: data => {
-          if(this.has_choice == 0 || this.admin == '0') {
+          if(this.has_choice == 0 || this.admin == '1') {
             data = data["inpt"]
           }
           if(data) {
