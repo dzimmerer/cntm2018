@@ -451,7 +451,8 @@ def eval_challenge(cid):
                             count_dict[ca.text] += 1
 
                     for sol in solution:
-                        point_dict[sol] = round(point_dict[sol] / count_dict[sol])
+                        if count_dict[sol] > 0:
+                            point_dict[sol] = round(point_dict[sol] / count_dict[sol])
 
                     for ca in cas:
                         if ca.text in point_dict:
@@ -476,7 +477,7 @@ def eval_challenge(cid):
                     solution = solution.split("&")
                     solution = [x_el.strip() for x_el in solution]
 
-                cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname=creator_name))
+                cas = CAnswer.objects.filter(cid=cid)
                 for ca in cas:
                     try:
                         u = User.objects.get(username=ca.uname)
