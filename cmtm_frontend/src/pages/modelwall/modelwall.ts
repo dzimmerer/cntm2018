@@ -33,7 +33,7 @@ export class ModelwallPage {
 
     this.usp.get_gntm_models(this.username, this.token).then((result) => {
 
-      this.models = result["models"]
+      this.models = result["models"];
 
       this.csp.get_label_answer_count(this.username, this.token, "Honey").then((result) => {
         if("elem_count" in result){

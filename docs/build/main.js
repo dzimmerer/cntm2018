@@ -407,76 +407,6 @@ var UseranswersPage = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserchallengesPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular_components_alert_alert_controller__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_user_service_user_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__challengedetail_challengedetail__ = __webpack_require__(46);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-/**
- * Generated class for the UserchallengesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var UserchallengesPage = (function () {
-    function UserchallengesPage(navCtrl, navParams, usp, alertCtrl, platform, appCtrl) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.usp = usp;
-        this.alertCtrl = alertCtrl;
-        this.platform = platform;
-        this.appCtrl = appCtrl;
-        this.username = window.localStorage.getItem('username');
-        this.token = window.localStorage.getItem('token');
-        this.admin = window.localStorage.getItem('admin');
-        this.usp.get_user_challenges(this.username, this.token).then(function (result) {
-            _this.challenges = result["challenges"];
-        }, function (err) {
-        });
-    }
-    UserchallengesPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad UserchallengesPage');
-    };
-    UserchallengesPage.prototype.onChallenge = function (cid) {
-        this.appCtrl.getRootNav().push(__WEBPACK_IMPORTED_MODULE_4__challengedetail_challengedetail__["a" /* ChallengedetailPage */], {
-            cid: cid
-        });
-    };
-    UserchallengesPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-userchallenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/userchallenges/userchallenges.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-card *ngFor="let c of challenges" (click)="onChallenge(c.id)">\n    <ion-item>\n\n      <ion-icon name="people" item-end style="color: #c3af80" *ngIf="c.type == 1" item-start></ion-icon>\n\n      <ion-icon name="swap" item-end style="color: #c3af80" *ngIf="c.type == 2" item-start></ion-icon>\n\n      <h2>{{c.name}}</h2>\n      <p *ngIf="c.open == 0">Open</p>\n      <p *ngIf="c.open == 1">Please End & Give Points !</p>\n      <p *ngIf="c.open == 2">Closed</p>\n      <div item-end>\n        <ion-icon name="alert" style="color: #a61000" *ngIf="c.open == 1"></ion-icon>\n        <ion-badge float-right *ngIf="c.open != 1">{{c.points}}</ion-badge>\n      </div>\n    </ion-item>\n  </ion-card>\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/userchallenges/userchallenges.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__providers_user_service_user_service__["a" /* UserServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular_components_alert_alert_controller__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]])
-    ], UserchallengesPage);
-    return UserchallengesPage;
-}());
-
-//# sourceMappingURL=userchallenges.js.map
-
-/***/ }),
-
-/***/ 143:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserlogsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(9);
@@ -544,7 +474,7 @@ var UserlogsPage = (function () {
 
 /***/ }),
 
-/***/ 144:
+/***/ 143:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -552,8 +482,8 @@ var UserlogsPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__profile_profile__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__useranswers_useranswers__ = __webpack_require__(141);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__userchallenges_userchallenges__ = __webpack_require__(142);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__userlogs_userlogs__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__userchallenges_userchallenges__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__userlogs_userlogs__ = __webpack_require__(142);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -587,6 +517,76 @@ var UsertabsPage = (function () {
 }());
 
 //# sourceMappingURL=usertabs.js.map
+
+/***/ }),
+
+/***/ 144:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserchallengesPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular_components_alert_alert_controller__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_user_service_user_service__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__challengedetail_challengedetail__ = __webpack_require__(46);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+/**
+ * Generated class for the UserchallengesPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var UserchallengesPage = (function () {
+    function UserchallengesPage(navCtrl, navParams, usp, alertCtrl, platform, appCtrl) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.usp = usp;
+        this.alertCtrl = alertCtrl;
+        this.platform = platform;
+        this.appCtrl = appCtrl;
+        this.username = window.localStorage.getItem('username');
+        this.token = window.localStorage.getItem('token');
+        this.admin = window.localStorage.getItem('admin');
+        this.usp.get_user_challenges(this.username, this.token).then(function (result) {
+            _this.challenges = result["challenges"];
+        }, function (err) {
+        });
+    }
+    UserchallengesPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad UserchallengesPage');
+    };
+    UserchallengesPage.prototype.onChallenge = function (cid) {
+        this.appCtrl.getRootNav().push(__WEBPACK_IMPORTED_MODULE_4__challengedetail_challengedetail__["a" /* ChallengedetailPage */], {
+            cid: cid
+        });
+    };
+    UserchallengesPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-userchallenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/userchallenges/userchallenges.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-card *ngFor="let c of challenges" (click)="onChallenge(c.id)">\n    <ion-item>\n\n      <ion-icon name="people" item-end style="color: #c3af80" *ngIf="c.type == 1" item-start></ion-icon>\n\n      <ion-icon name="swap" item-end style="color: #c3af80" *ngIf="c.type == 2" item-start></ion-icon>\n\n      <h2>{{c.name}}</h2>\n      <p *ngIf="c.open == 0">Open</p>\n      <p *ngIf="c.open == 1">Please End & Give Points !</p>\n      <p *ngIf="c.open == 2">Closed</p>\n      <div item-end>\n        <ion-icon name="alert" style="color: #a61000" *ngIf="c.open == 1"></ion-icon>\n        <ion-badge float-right *ngIf="c.open != 1">{{c.points}}</ion-badge>\n      </div>\n    </ion-item>\n  </ion-card>\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/userchallenges/userchallenges.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__providers_user_service_user_service__["a" /* UserServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular_components_alert_alert_controller__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]])
+    ], UserchallengesPage);
+    return UserchallengesPage;
+}());
+
+//# sourceMappingURL=userchallenges.js.map
 
 /***/ }),
 
@@ -640,19 +640,19 @@ var map = {
 		4
 	],
 	"../pages/userchallenges/userchallenges.module": [
-		431,
+		434,
 		3
 	],
 	"../pages/userdetail/userdetail.module": [
-		432,
+		431,
 		2
 	],
 	"../pages/userlogs/userlogs.module": [
-		433,
+		432,
 		1
 	],
 	"../pages/usertabs/usertabs.module": [
-		434,
+		433,
 		0
 	]
 };
@@ -798,10 +798,10 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_home_home__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_modelwall_modelwall__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_ionic_img_viewer__ = __webpack_require__(320);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_usertabs_usertabs__ = __webpack_require__(144);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_userchallenges_userchallenges__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_usertabs_usertabs__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_userchallenges_userchallenges__ = __webpack_require__(144);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_useranswers_useranswers__ = __webpack_require__(141);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_userlogs_userlogs__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_userlogs_userlogs__ = __webpack_require__(142);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -869,10 +869,10 @@ var AppModule = (function () {
                         { loadChildren: '../pages/ranking/ranking.module#RankingPageModule', name: 'RankingPage', segment: 'ranking', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/register/register.module#RegisterPageModule', name: 'RegisterPage', segment: 'register', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/useranswers/useranswers.module#UseranswersPageModule', name: 'UseranswersPage', segment: 'useranswers', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/userchallenges/userchallenges.module#UserchallengesPageModule', name: 'UserchallengesPage', segment: 'userchallenges', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/userdetail/userdetail.module#UserdetailPageModule', name: 'UserdetailPage', segment: 'userdetail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/userlogs/userlogs.module#UserlogsPageModule', name: 'UserlogsPage', segment: 'userlogs', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/usertabs/usertabs.module#UsertabsPageModule', name: 'UsertabsPage', segment: 'usertabs', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/usertabs/usertabs.module#UsertabsPageModule', name: 'UsertabsPage', segment: 'usertabs', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/userchallenges/userchallenges.module#UserchallengesPageModule', name: 'UserchallengesPage', segment: 'userchallenges', priority: 'low', defaultHistory: [] }
                     ]
                 }),
             ],
@@ -1131,7 +1131,7 @@ var UserServiceProvider = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_ranking_ranking__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_challenges_challenges__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_modelwall_modelwall__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_usertabs_usertabs__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_usertabs_usertabs__ = __webpack_require__(143);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1654,7 +1654,7 @@ var ChallengedetailPage = (function () {
             alert_8.addButton({
                 text: 'OK',
                 handler: function (data) {
-                    if (_this.has_choice == 0) {
+                    if (_this.has_choice == 0 || _this.admin == '0') {
                         data = data["inpt"];
                     }
                     if (data) {
