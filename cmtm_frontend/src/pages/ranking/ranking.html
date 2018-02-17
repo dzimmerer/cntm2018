@@ -8,13 +8,11 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
-  <ion-list >
-    <ion-item *ngFor="let user of ranking" (click)="detailView(user.username)" >
-        <!--<ion-thumbnail item-start>-->
-          <!--<img src="{{user.img_url}}">-->
-        <!--</ion-thumbnail>-->
+  <ion-card *ngFor="let user of ranking; let i = index" (click)="detailView(user.username)" >
+    <ion-item>
+        <p item-start style="width: 10%">#{{i+1}}</p>
         <ion-avatar item-start>
           <img src="{{user.img_url}}">
         </ion-avatar>
@@ -22,6 +20,6 @@
         <!--<p>&quot;{{user.descr}}&quot;</p>-->
         <ion-badge item-end>{{user.score}}</ion-badge>
     </ion-item>
-  </ion-list>
+  </ion-card>
 
 </ion-content>

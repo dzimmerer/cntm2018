@@ -16,6 +16,10 @@
 
 <ion-content>
 
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-card *ngFor="let c of challenges" (click)="onChallenge(c.id)">
     <ion-item>
 

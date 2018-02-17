@@ -41,9 +41,7 @@ export class ChallengesPage {
 
 
     this.csp.get_challenge_list(this.username, this.token).then((result) => {
-
       this.challenges = result[this.c_stng];
-
     }, (err) => {
     });
 
@@ -92,6 +90,14 @@ export class ChallengesPage {
     prompt.present();
   }
 
+  doRefresh(refresher) {
+    this.csp.get_challenge_list(this.username, this.token).then((result) => {
+      this.challenges = result[this.c_stng];
+      refresher.complete();
+    }, (err) => {
+      refresher.complete();
+    });
+  }
 }
 
 
