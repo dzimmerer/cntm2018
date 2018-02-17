@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Anwsers</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content>
+
+  <ion-card *ngFor="let ca of answers; let i = index">
+
+    <ion-item (click)="onChallenge(ca.cid)">
+      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="ca.ctype == 0" item-start ></ion-icon>
+      <ion-icon name="people" item-end style="color: #c3af80" *ngIf="ca.ctype == 1" item-start></ion-icon>
+      <ion-icon name="swap" item-end style="color: #c3af80" *ngIf="ca.ctype == 2" item-start></ion-icon>
+
+      <h2>{{ca.cname}}</h2>
+      <p>Answer</p>
+      <ion-badge item-end *ngIf="ca.ctype==1">{{ca.points}}</ion-badge>
+    </ion-item>
+    <ion-card-content>
+      <p *ngIf="ca.ctype != 2">{{ca.text}}</p>
+      <p *ngIf="ca.ctype == 2">I dare you!</p>
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

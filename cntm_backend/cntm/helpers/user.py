@@ -194,7 +194,11 @@ def get_spent_user_points(username):
 
         cas = CAnswer.objects.filter(uname=username)
         for c in cas:
-            u_sum += c.points
+            try:
+                if c.active == 0:
+                    u_sum += c.points
+            except:
+                pass
 
         cs = Challenge.objects.filter(creator=username, type=2, open=0)
         for c in cs:

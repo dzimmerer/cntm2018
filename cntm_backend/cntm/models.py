@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 class User(models.Model):
@@ -18,7 +19,6 @@ class User(models.Model):
     admin = models.IntegerField(default=0)
 
 
-
 class Challenge(models.Model):
     name = models.CharField(max_length=100)
     descr = models.TextField()
@@ -32,12 +32,15 @@ class Challenge(models.Model):
     etime = models.CharField(max_length=200, default="")
     label = models.CharField(max_length=200, default="")
 
+
 class CAnswer(models.Model):
     uname = models.CharField(max_length=30)
     cid = models.IntegerField()
     text = models.CharField(max_length=200)
     img_url = models.CharField(max_length=200)
     points = models.IntegerField(default=0)
+    active = models.IntegerField(default=0)
+
 
 class GNTMModel(models.Model):
     name = models.CharField(max_length=100)
@@ -45,13 +48,14 @@ class GNTMModel(models.Model):
     age = models.CharField(max_length=100)
     img_url = models.CharField(max_length=200)
     out = models.IntegerField(default=0)
-    link =  models.CharField(max_length=200)
+    link = models.CharField(max_length=200)
 
 
 class News(models.Model):
     name = models.CharField(max_length=100)
     descr = models.TextField()
     date = models.CharField(max_length=200)
+
 
 class Log(models.Model):
     username = models.CharField(max_length=30)

@@ -4,47 +4,77 @@ import pytz
 
 from django.db.models import Q
 
+import cntm.helpers.tele as tele
 from cntm.models import Challenge, User, CAnswer, GNTMModel, News, Log
 
 tz = pytz.timezone("Europe/Berlin")
+urgent_delta = datetime.timedelta(hours=1)
 
 
-def get_open_challenges(open=0, ctype=None, order_by_points=False):
-    challenges = Challenge.objects.filter(open=open)
+def get_selected_challenges(open=0, ctype=None, uname=None, order_by_str=""):
+    challenges = Challenge.objects.all()
+
+    if isinstance(open, int):
+        challenges = challenges.filter(open=open)
+    elif isinstance(open, (list, tuple)):
+        q = Q(open=open[0])
+        for o in open[1:]:
+            q = q | Q(open=o)
+        challenges = challenges.filter(q)
+
     if ctype is not None and isinstance(ctype, int):
         challenges = challenges.filter(type=ctype)
-    if ctype is not None and isinstance(ctype, (list, tuple)):
+    elif ctype is not None and isinstance(ctype, (list, tuple)):
         q = Q(type=ctype[0])
         for c in ctype[1:]:
             q = q | Q(type=c)
         challenges = challenges.filter(q)
 
+    if uname is not None:
+        challenges = challenges.filter(creator=uname)
+
     c_list = []
 
-    if order_by_points:
-        challenges = challenges.order_by("-points")
+    if order_by_str:
+        challenges = challenges.order_by(order_by_str)
 
     for c in challenges:
+
+        urgent_str = ""
+
+        if c.etime != "":
+            right_now = datetime.datetime.now(tz=tz).replace(tzinfo=tz)
+            etime = datetime.datetime.strptime(c.etime, "%H:%M %Y-%m-%d").replace(tzinfo=tz)
+
+            if c.open <= 0 and etime - right_now < urgent_delta:
+                urgent_str = c.etime.strip().split(" ")[0]
+
         is_out = False
         if open == 0:
             is_out = close_challenge_if_to_old(c.id)
         if not is_out:
             c_list.append(dict(id=c.id, name=c.name, descr=c.descr, img_url=c.img_url, open=c.open, creator=c.creator,
-                               type=c.type))
+                               type=c.type, etime=c.etime, points=c.points, urgendstr=urgent_str))
+    c_list.sort(key=lambda x: x["urgendstr"] + "z")
 
     return c_list
 
 
 def get_all_challenges():
-    community_c = get_open_challenges(open=0, ctype=(1,2), order_by_points=True)
-    special_c = get_open_challenges(open=0, ctype=0)
+    community_c = get_selected_challenges(open=0, ctype=(1, 2), order_by_str="-points")
+    special_c = get_selected_challenges(open=0, ctype=0)
 
-    closed_c1 = get_open_challenges(open=1)
-    closed_c2 = get_open_challenges(open=2)
+    closed_c = get_selected_challenges(open=(1, 2), order_by_str="-id")
 
-    closed_c = closed_c1 + closed_c2
+    closed_c = closed_c
 
     return {"community": community_c, "special": special_c, "closed": closed_c}
+
+
+def get_user_challenges(username):
+    user_c = get_selected_challenges(open=(0, 1, 2), uname=username, order_by_str="-id")
+
+    return {"challenges": user_c}
 
 
 def close_challenge_if_to_old(cid):
@@ -110,8 +140,20 @@ def is_challenge_creator(cid, username):
         return False
 
 
+
+def should_send_notification(c, key, val):
+    if c.open == -1 and key == "open" and val == '0':
+        ctype = c.type
+        creator = c.creator
+        name = c.name
+        descr = c. descr
+
+        tele.send_new_challenge_notification(name, descr, creator, ctype)
+
+
 def update_challenge(cid, key, val):
     c = Challenge.objects.get(id=cid)
+    should_send_notification(c, key, val)
     setattr(c, key, val)
     c.save()
 
@@ -198,7 +240,6 @@ def update_challenge_answer_points(username, cid, points=0):
         return False
 
 
-
 def delete_challenge_answer(username, cid):
     try:
 
@@ -272,30 +313,45 @@ def get_anwsers_for_user(username):
 
     cas = CAnswer.objects.filter(uname=username)
     for a in cas:
+        cname = ""
+        ctype = 0
+        try:
+            c = Challenge.objects.get(id=a.cid)
+            cname = c.name
+            ctype = c.type
+        except:
+            pass
         a_dct = dict(cid=a.cid,
+                     cname=cname,
                      username=a.uname,
                      text=a.text,
-                     img_url=a.img_url)
+                     img_url=a.img_url,
+                     points=a.points,
+                     ctype=ctype)
 
         ret_list.append(a_dct)
 
     return {"answers": ret_list}
 
 
-def get_gntm_models():
+
+def get_gntm_models(names=False):
     ret_list = []
-
-    mods = GNTMModel.objects.all().order_by("out", "name")
-
-    for m in mods:
-        ret_list.append(dict(id=m.id,
-                             name=m.name,
-                             descr=m.descr,
-                             img_url=m.img_url,
-                             age=m.age,
-                             out=m.out,
-                             link=m.link
-                             ))
+    if not names:
+        mods = GNTMModel.objects.all().order_by("out", "name")
+        for m in mods:
+            ret_list.append(dict(id=m.id,
+                                 name=m.name,
+                                 descr=m.descr,
+                                 img_url=m.img_url,
+                                 age=m.age,
+                                 out=m.out,
+                                 link=m.link
+                                 ))
+    else:
+        mods = GNTMModel.objects.filter(out=0).order_by("name")
+        for m in mods:
+            ret_list.append(m.name)
 
     return {"models": ret_list}
 
@@ -375,8 +431,11 @@ def eval_challenge(cid):
                             u = User.objects.get(username=ca.uname)
                             u.score += point_incr
                             u.save()
-                            add_log(username=u.username, cid=cid, aid=ca.id, points=point_incr, ctype=c.type, ccreator=c.creator,
+                            add_log(username=u.username, cid=cid, aid=ca.id, points=point_incr, ctype=c.type,
+                                    ccreator=c.creator,
                                     label=c.label, answer=ca.text, solution=solution)
+                            ca.active = 1
+                            ca.save()
                         except:
                             pass
                 else:
@@ -400,8 +459,11 @@ def eval_challenge(cid):
                                 u = User.objects.get(username=ca.uname)
                                 u.score += point_dict[ca.text]
                                 u.save()
-                                add_log(username=u.username, cid=cid, aid=ca.id, points=point_dict[ca.text], ctype=c.type, ccreator=c.creator,
+                                add_log(username=u.username, cid=cid, aid=ca.id, points=point_dict[ca.text],
+                                        ctype=c.type, ccreator=c.creator,
                                         label=c.label, answer=ca.text, solution=solution)
+                                ca.active = 1
+                                ca.save()
                             except:
                                 pass
 
@@ -426,8 +488,11 @@ def eval_challenge(cid):
                         if test_bool:
                             u.score += tot_points
                             u.save()
-                            add_log(username=u.username, cid=cid, aid=ca.id, points=tot_points, ctype=c.type, ccreator=c.creator,
+                            add_log(username=u.username, cid=cid, aid=ca.id, points=tot_points, ctype=c.type,
+                                    ccreator=c.creator,
                                     label=c.label, answer=ca.text, solution=solution)
+                            ca.active = 1
+                            ca.save()
                     except:
                         pass
 
@@ -443,13 +508,16 @@ def eval_challenge(cid):
             if tot_points > 10 and right_points != tot_points:
                 try:
                     cre_points = int(tot_points * 0.1)
-                    tot_points -= cre_points
+                    # tot_points -= cre_points
                     creator = User.objects.get(username=c.creator)
                     creator.score += cre_points
                     creator.save()
 
-                    add_log(username=creator.username, cid=cid, aid=0, points=cre_points, ctype=c.type, ccreator=c.creator,
+                    add_log(username=creator.username, cid=cid, aid=0, points=cre_points, ctype=c.type,
+                            ccreator=c.creator,
                             label=c.label, answer="creator", solution=solution)
+                    ca.active = 1
+                    ca.save()
 
                 except:
                     pass
@@ -468,8 +536,11 @@ def eval_challenge(cid):
                         u.score += p_diff
                         u.save()
 
-                        add_log(username=u.username, cid=cid, aid=ca.id, points=p_diff, ctype=c.type, ccreator=c.creator,
+                        add_log(username=u.username, cid=cid, aid=ca.id, points=p_diff, ctype=c.type,
+                                ccreator=c.creator,
                                 label=c.label, answer=ca.text, solution=solution)
+                        ca.active = 1
+                        ca.save()
 
                     except:
                         pass
@@ -500,6 +571,8 @@ def eval_challenge(cid):
                             add_log(username=u.username, cid=cid, aid=ca.id, points=p_diff, ctype=c.type,
                                     ccreator=c.creator,
                                     label=c.label, answer='0', solution='1')
+                            ca.active = 1
+                            ca.save()
                         except:
                             pass
                 elif c.answer == '1':
@@ -520,7 +593,9 @@ def eval_challenge(cid):
                             u.score += p_diff
                             u.save()
                             add_log(username=u.username, cid=cid, aid=ca.id, points=p_diff, ctype=c.type,
-                                    ccreator=c.creator, label=c.label, answer='1', solution='0')
+                                    ccreator=c.creator, label=c.label, answer='1', solution='1')
+                            ca.active = 1
+                            ca.save()
                         except:
                             pass
 
@@ -545,6 +620,44 @@ def add_log(username, cid, aid, points, ctype, ccreator="", label="", answer="",
         l.save()
     except:
         pass
+
+
+def get_user_log(username):
+    u_log = []
+
+    try:
+        for l in Log.objects.filter(username=username):
+
+            cname = ""
+            cdesc = ""
+            try:
+                c = Challenge.objects.get(id=l.cid)
+                cname = c.name
+                cdesc = c.descr
+            except:
+                pass
+
+            type_ = l.ctype
+            if l.ccreator == l.username:
+                type_ = -1
+
+            u_log.append(dict(username=l.username,
+                              cid=l.cid,
+                              aid=l.aid,
+                              points=l.points,
+                              ctype=l.ctype,
+                              ccreator=l.ccreator,
+                              canswer=l.canswer,
+                              csolution=l.csolution,
+                              time=l.time,
+                              cname=cname,
+                              cdesc=cdesc,
+                              type=type_
+            ))
+    except:
+        pass
+
+    return {"logs" : u_log}
 
 
 def get_elem_count_for_label(c_label):

@@ -16,21 +16,30 @@
 
 <ion-content>
 
-  <br>
-  <ion-list>
-    <ion-item *ngFor="let c of challenges" (click)="onChallenge(c.id)">
+  <ion-card *ngFor="let c of challenges" (click)="onChallenge(c.id)">
+    <ion-item>
+
+      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c_stng != 'closed' && c.type == 0" item-start></ion-icon>
+      <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c_stng == 'closed' && c.type == 0" item-start></ion-icon>
+
+
+      <ion-icon name="people" item-end style="color: #c3af80" *ngIf="c.type == 1" item-start></ion-icon>
+
+      <ion-icon name="swap" item-end style="color: #c3af80" *ngIf="c.type == 2" item-start></ion-icon>
+
       <h2>{{c.name}}</h2>
       <p *ngIf="c_stng == 'special' || (c_stng == 'closed' && c.type == 0)">Special</p>
       <p *ngIf="c_stng == 'community' || (c_stng == 'closed' && c.type >= 1)">by {{c.creator}}</p>
-      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c_stng != 'closed' && c.type == 0"></ion-icon>
-      <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c_stng == 'closed' && c.type == 0"></ion-icon>
+      <div item-end>
+        <p *ngIf="c.urgendstr != '' && c.open<2" float-right><b style="color: darkred">{{c.urgendstr}}</b></p>
+        <br *ngIf="c.urgendstr != '' && c.open<2">
+        <ion-icon name="alert" style="color: #a61000" *ngIf="c_stng == 'closed' && c.open == 1 && username == c.creator"></ion-icon>
+        <ion-badge float-right *ngIf="!(c_stng == 'closed' && c.open == 1 && username == c.creator)">{{c.points}}</ion-badge>
 
-      <ion-icon name="alert" item-end style="color: #a61000" *ngIf="c_stng == 'closed' && c.open == 1 && username == c.creator"></ion-icon>
-      <ion-icon name="people" item-end style="color: #c3af80" *ngIf="c.type == 1"></ion-icon>
-
-      <ion-icon name="swap" item-end style="color: #c3af80" *ngIf="c.type == 2"></ion-icon>
+        <!--<p *ngIf="c.urgentstr != '' && c.open==2" float-right>Ended: {{c.etime}}</p>-->
+      </div>
     </ion-item>
-  </ion-list>
+  </ion-card>
 
 </ion-content>
 

@@ -262,6 +262,21 @@ export class ChallengeServiceProvider {
   }
 
 
+  get_gntm_model_names(username, token){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token+ "&names=True";
+
+      this.http.get(apiUrl+'get_models/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+
 
 
 }

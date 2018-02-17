@@ -23,7 +23,7 @@
     <ion-card-content>
       <div [innerHTML]="descr"></div>
     </ion-card-content>
-    <ion-card-content *ngIf="cadmin == '1'">
+    <ion-card-content *ngIf="type < 2">
       <i>Possible Answers:</i>
       <ul style="list-style-type:square" *ngIf="has_choice == 2">
         <li *ngFor="let ch of choice_list | slice:0:4; let i = index">
@@ -69,7 +69,7 @@
           <div *ngIf="open == 0">open</div>
           <div *ngIf="open >= 1">closed.</div>
         </button>
-        <button ion-button icon-left clear small *ngIf="cadmin == '1' && admin == '0' && open >= 0 && open < 2" (click)="toggleOpen()">
+        <button ion-button icon-left clear small *ngIf="cadmin == '1' && admin == '0' && open >= 0 && open < 2 && !(etime.time != '' && etime.date != '' ) " (click)="toggleOpen()">
           <div>Open/Close</div>
         </button>
         <button ion-button icon-left clear  *ngIf="cadmin == '1' && admin == '0' && open < 0" (click)="makePublic()">
@@ -97,12 +97,12 @@
   <ion-card *ngIf="cadmin == '1' && (admin == 1 || open < 2)">
 
     <ion-row>
-      <ion-col *ngIf="open <= 0">
+      <ion-col *ngIf="open < 0 || (open == 0 && type != 2) ">
         <button ion-button icon-left clear small (click)="chVal('name', 'Title')">
           <div>Edit Title</div>
         </button>
       </ion-col>
-      <ion-col *ngIf="open <= 0">
+      <ion-col *ngIf="open < 0 || (open == 0 && type != 2)">
         <button ion-button icon-left clear small (click)="chVal('descr', 'Description')">
           <div>Edit Description</div>
         </button>

@@ -22,6 +22,10 @@ import {ChallengedetailPage} from "../pages/challengedetail/challengedetail";
 import {HomePage} from "../pages/home/home";
 import {ModelwallPage} from "../pages/modelwall/modelwall";
 import { IonicImageViewerModule } from 'ionic-img-viewer';
+import {UsertabsPage} from "../pages/usertabs/usertabs";
+import {UserchallengesPage} from "../pages/userchallenges/userchallenges";
+import {UseranswersPage} from "../pages/useranswers/useranswers";
+import {UserlogsPage} from "../pages/userlogs/userlogs";
 
 
 @NgModule({
@@ -37,6 +41,10 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
     ChallengedetailPage,
     ModelwallPage,
     ChallengesTabs,
+    UsertabsPage,
+    UserchallengesPage,
+    UseranswersPage,
+    UserlogsPage,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +65,10 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
     ChallengedetailPage,
     ModelwallPage,
     ChallengesTabs,
+    UsertabsPage,
+    UserchallengesPage,
+    UseranswersPage,
+    UserlogsPage,
   ],
   providers: [
     StatusBar,

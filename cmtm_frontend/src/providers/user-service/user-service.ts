@@ -129,6 +129,7 @@ export class UserServiceProvider {
     });
   }
 
+
   get_api_url(){
     return apiUrl;
   }
@@ -167,6 +168,48 @@ export class UserServiceProvider {
       let get_params = "?username="+username+"&token="+token + "&other=" + other;
 
       this.http.get(apiUrl+'get_user_score_details/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  get_user_challenges(username, token){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token;
+
+      this.http.get(apiUrl+'get_user_challenges/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  get_user_answers(username, token){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token;
+
+      this.http.get(apiUrl+'get_user_answers/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  get_user_log(username, token){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token;
+
+      this.http.get(apiUrl+'get_user_log/' + get_params)
         .subscribe(res => {
           resolve(res);
         }, (err) => {

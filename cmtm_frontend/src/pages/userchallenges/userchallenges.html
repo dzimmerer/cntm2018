@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Challenges</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content>
+
+  <ion-card *ngFor="let c of challenges" (click)="onChallenge(c.id)">
+    <ion-item>
+
+      <ion-icon name="people" item-end style="color: #c3af80" *ngIf="c.type == 1" item-start></ion-icon>
+
+      <ion-icon name="swap" item-end style="color: #c3af80" *ngIf="c.type == 2" item-start></ion-icon>
+
+      <h2>{{c.name}}</h2>
+      <p *ngIf="c.open == 0">Open</p>
+      <p *ngIf="c.open == 1">Please End & Give Points !</p>
+      <p *ngIf="c.open == 2">Closed</p>
+      <div item-end>
+        <ion-icon name="alert" style="color: #a61000" *ngIf="c.open == 1"></ion-icon>
+        <ion-badge float-right *ngIf="c.open != 1">{{c.points}}</ion-badge>
+      </div>
+    </ion-item>
+  </ion-card>
+
+</ion-content>

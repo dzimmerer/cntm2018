@@ -383,7 +383,27 @@ export class ChallengedetailPage {
 
   makePublic() {
 
-    if(this.open == -1) {
+
+
+    if(this.cadmin == 1 && this.open == -1 && this.type == 2 && this.points == 0) {
+
+      let alert = this.alertCtrl.create({
+        title: 'Are you sure you want to Bet 0 Points ?',
+        buttons: [
+          {text: 'Cancel',},
+          {
+            text: 'Yes',
+            handler: () => {
+              this.open = 0;
+              this.csp.update_challenge_data(this.username, this.token, this.cid, "open", 0);
+            }
+          }
+        ]
+      });
+      alert.present();
+
+    }
+    else if(this.cadmin == 1 && this.open == -1) {
       this.open = 0;
       this.csp.update_challenge_data(this.username, this.token, this.cid, "open", 0);
     }
@@ -462,7 +482,7 @@ export class ChallengedetailPage {
       let alert = this.alertCtrl.create();
       alert.setTitle('Solution');
 
-      if(this.has_choice == 1) {
+      if(this.has_choice == 1 && this.admin == '0') {
         this.choice_list.forEach(function(element) {
           alert.addInput({
             type: 'radio',
@@ -472,7 +492,7 @@ export class ChallengedetailPage {
           });
         });
       }
-      else if(this.has_choice == 2) {
+      else if(this.has_choice == 2 && this.admin == '0') {
         this.choice_list.forEach(function(element) {
           alert.addInput({
             type: 'checkbox',
@@ -576,7 +596,6 @@ export class ChallengedetailPage {
     }
     else if(this.cadmin == 1 && (this.open == 0 || this.open == 1)){
       this.appCtrl.getRootNav().pop();
-      this.navCtrl.setRoot(ChallengesTabs);
     }
     else{
       this.appCtrl.getRootNav().pop();
@@ -593,6 +612,18 @@ export class ChallengedetailPage {
           value: this.choice },
       ],
       buttons: [
+        { text: 'All',
+          handler: data => {
+            this.csp.get_gntm_model_names(this.username, this.token).then((result) => {
+              const models = result["models"].join("|");
+              this.csp.update_challenge_data(this.username, this.token, this.cid, "choice", models);
+              this.choice = models;
+              this.has_choice = 1;
+              this.choice_list = models.split("|")
+            }, (err) => {
+            });
+          }
+        },
         { text: 'Cancel', },
         { text: 'Save',
           handler: data => {

@@ -1,14 +1,14 @@
 webpackJsonp([3],{
 
-/***/ 423:
+/***/ 431:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ModelwallPageModule", function() { return ModelwallPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserchallengesPageModule", function() { return UserchallengesPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modelwall__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__userchallenges__ = __webpack_require__(142);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,23 +18,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var ModelwallPageModule = (function () {
-    function ModelwallPageModule() {
+var UserchallengesPageModule = (function () {
+    function UserchallengesPageModule() {
     }
-    ModelwallPageModule = __decorate([
+    UserchallengesPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__modelwall__["a" /* ModelwallPage */],
+                __WEBPACK_IMPORTED_MODULE_2__userchallenges__["a" /* UserchallengesPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__modelwall__["a" /* ModelwallPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__userchallenges__["a" /* UserchallengesPage */]),
             ],
         })
-    ], ModelwallPageModule);
-    return ModelwallPageModule;
+    ], UserchallengesPageModule);
+    return UserchallengesPageModule;
 }());
 
-//# sourceMappingURL=modelwall.module.js.map
+//# sourceMappingURL=userchallenges.module.js.map
 
 /***/ })
 

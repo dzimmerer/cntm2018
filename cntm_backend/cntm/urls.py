@@ -29,5 +29,8 @@ urlpatterns = [
     path(r'get_label_answer_count/', views.get_label_answer_count_req, name='get_label_answer_count'),
     path(r'get_user_score_details/', views.get_user_score_details_req, name='get_user_score_details'),
     path(r'delete_answer/', views.delete_answer_req, name='delete_answer'),
+    path(r'get_user_challenges/', views.get_user_challenges_req, name='get_user_challenges'),
+    path(r'get_user_answers/', views.get_user_answer_req, name='get_user_answers'),
+    path(r'get_user_log/', views.get_user_log_req, name='get_user_log'),
     path(r'', views.dnd, name='dnd'),
 ]
