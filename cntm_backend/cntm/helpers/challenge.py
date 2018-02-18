@@ -335,6 +335,8 @@ def get_anwsers_for_user(username):
 
         ret_list.append(a_dct)
 
+    ret_list.sort(key=lambda x: x["copen"])
+
     return {"answers": ret_list}
 
 
@@ -659,6 +661,7 @@ def get_user_log(username):
                               cdesc=cdesc,
                               type=type_
             ))
+
     except:
         pass
 
