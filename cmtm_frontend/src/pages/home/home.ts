@@ -23,7 +23,7 @@ export class HomePage {
     this.token = window.localStorage.getItem('token');
     this.admin = window.localStorage.getItem('admin');
 
-    console.log("Admin: "+ this.admin);
+    // console.log("Admin: "+ this.admin);
 
     this.csp.get_news_data(this.username, this.token).then((result) => {
       this.news = result["news"]
@@ -34,12 +34,12 @@ export class HomePage {
 
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
+    // console.log('ionViewDidLoad HomePage');
 
   }
 
   addNews() {
-    console.log('Add News');
+    // console.log('Add News');
     let prompt = this.alertCtrl.create({
       title: "Add new News",
       inputs: [
@@ -53,7 +53,7 @@ export class HomePage {
             this.csp.add_news_data(this.username, this.token, data.inpt).then((result) => {
               this.navCtrl.setRoot(this.navCtrl.getActive().component);
             });
-            console.log('Add clicked');
+            // console.log('Add clicked');
           }
         }
       ]
@@ -79,7 +79,7 @@ export class HomePage {
   }
 
   chVal(id, name: string, title:string, i:number) {
-    console.log(this.news[i]);
+    // console.log(this.news[i]);
     let prompt = this.alertCtrl.create({
       title: title,
       inputs: [
@@ -92,7 +92,7 @@ export class HomePage {
           handler: data => {
             this.news[i][name] = data.inpt;
             this.csp.update_news_data(this.username, this.token, id, name, data.inpt);
-            console.log('Saved clicked');
+            // console.log('Saved clicked');
           }
         }
       ]

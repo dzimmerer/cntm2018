@@ -49,7 +49,7 @@ export class ChallengesPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChallengesPage');
+    // console.log('ionViewDidLoad ChallengesPage');
   }
 
   onChallenge(cid: string) {
@@ -82,7 +82,7 @@ export class ChallengesPage {
                 }
               });
             }
-            console.log('Add clicked');
+            // console.log('Add clicked');
           }
         }
       ]

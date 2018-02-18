@@ -315,10 +315,12 @@ def get_anwsers_for_user(username):
     for a in cas:
         cname = ""
         ctype = 0
+        copen = 0
         try:
             c = Challenge.objects.get(id=a.cid)
             cname = c.name
             ctype = c.type
+            copen = c.open
         except:
             pass
         a_dct = dict(cid=a.cid,
@@ -327,7 +329,8 @@ def get_anwsers_for_user(username):
                      text=a.text,
                      img_url=a.img_url,
                      points=a.points,
-                     ctype=ctype)
+                     ctype=ctype,
+                     copen=copen)
 
         ret_list.append(a_dct)
 

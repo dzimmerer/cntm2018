@@ -44,7 +44,7 @@ export class UserchallengesPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad UserchallengesPage');
+    // console.log('ionViewDidLoad UserchallengesPage');
   }
 
   onChallenge(cid: string) {

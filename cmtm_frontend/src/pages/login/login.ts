@@ -45,7 +45,7 @@ export class LoginPage {
 
     this.menu.swipeEnable(false);
 
-    console.log('ionViewDidLoad LoginPage');
+    // console.log('ionViewDidLoad LoginPage');
   }
 
   onLogin(value: any): void {
@@ -57,10 +57,10 @@ export class LoginPage {
         this.loading.dismiss();
         this.data = result;
 
-        console.log(result);
+        // console.log(result);
 
         if("success" in result && result["success"] == 1){
-          console.log("Welcome!!!");
+          // console.log("Welcome!!!");
           window.localStorage.setItem('token', result["token"]);
           window.localStorage.setItem('username', result["username"]);
           window.localStorage.setItem('admin', result["admin"] + "");
@@ -68,7 +68,7 @@ export class LoginPage {
         }
         else{
           this.presentToast("Could not Login!");
-          console.log("WTf????");
+          // console.log("WTf????");
         }
 
         // localStorage.setItem('token', this.data.access_token);
@@ -104,7 +104,7 @@ export class LoginPage {
     });
 
     toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
+      // console.log('Dismissed toast');
     });
 
     toast.present();

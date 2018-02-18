@@ -73,7 +73,7 @@ export class ModelwallPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ModelwallPage');
+    // console.log('ionViewDidLoad ModelwallPage');
   }
 
   openLink(param: string) {
@@ -88,7 +88,7 @@ export class ModelwallPage {
     }
     this.csp.update_topmodel_data(this.username, this.token, this.models[i]["id"], "out", newVal);
     this.models[i]["out"] = newVal;
-    console.log(i, id)
+    // console.log(i, id)
 
   }
 }

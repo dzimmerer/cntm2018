@@ -40,7 +40,7 @@ export class UserdetailPage {
 
     this.other = navParams.get('other');
 
-    console.log(this.other);
+    // console.log(this.other);
 
 
     this.username = window.localStorage.getItem('username');
@@ -52,7 +52,7 @@ export class UserdetailPage {
 
       if("username" in result) {
 
-        console.log(result["username"]);
+        // console.log(result["username"]);
 
         this.img_url = result["img_url"];
 
@@ -79,7 +79,7 @@ export class UserdetailPage {
 
       if ("scores" in result) {
 
-        console.log(result["scores"]);
+        // console.log(result["scores"]);
 
         this.score_details = result["scores"];
 
@@ -90,7 +90,7 @@ export class UserdetailPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad UserdetailPage');
+    // console.log('ionViewDidLoad UserdetailPage');
   }
 
   changePoints() {
@@ -107,7 +107,7 @@ export class UserdetailPage {
           handler: data => {
             this.score += parseInt(data.inpt);
             this.usp.update_other_user_data(this.username, this.token, this.other, "score", this.score);
-            console.log('Saved clicked');
+            // console.log('Saved clicked');
           }
         }
       ]

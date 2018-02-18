@@ -35,14 +35,14 @@ export class UserlogsPage {
 
     this.usp.get_user_log(this.username, this.token).then((result) => {
       this.logs = result["logs"];
-      console.log(this.logs)
+      // console.log(this.logs)
     }, (err) => {
     });
 
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad UserlogsPage');
+    // console.log('ionViewDidLoad UserlogsPage');
   }
 
   onChallenge(cid: string) {

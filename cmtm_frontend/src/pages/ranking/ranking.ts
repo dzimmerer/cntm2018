@@ -37,11 +37,11 @@ export class RankingPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RankingPage');
+    // console.log('ionViewDidLoad RankingPage');
   }
 
   detailView(username: string) {
-    console.log(username)
+    // console.log(username)
     this.navCtrl.push(UserdetailPage, {
       other: username
     });

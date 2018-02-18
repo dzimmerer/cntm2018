@@ -36,14 +36,14 @@ export class UseranswersPage {
 
     this.usp.get_user_answers(this.username, this.token).then((result) => {
       this.answers = result["answers"];
-      console.log(this.answers)
+      // console.log(this.answers)
     }, (err) => {
     });
 
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad UseranswersPage');
+    // console.log('ionViewDidLoad UseranswersPage');
   }
 
   onChallenge(cid: string) {

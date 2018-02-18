@@ -47,7 +47,7 @@ export class RegisterPage {
         this.loading.dismiss();
 
         if("success" in result && result["success"] == 1){
-          console.log("Welcome!!!");
+          // console.log("Welcome!!!");
           window.localStorage.setItem('token', result["token"]);
           window.localStorage.setItem('username', result["username"]);
           window.localStorage.setItem('admin', 0 + "");
@@ -55,7 +55,7 @@ export class RegisterPage {
         }
         else{
           this.presentToast("Could not Register!");
-          console.log("WTf????");
+          // console.log("WTf????");
         }
 
       }, (err) => {
@@ -84,7 +84,7 @@ export class RegisterPage {
     });
 
     toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
+      // console.log('Dismissed toast');
     });
 
     toast.present();
@@ -94,7 +94,7 @@ export class RegisterPage {
 
     this.menu.swipeEnable(false);
 
-    console.log('ionViewDidLoad RegisterPage');
+    // console.log('ionViewDidLoad RegisterPage');
   }
 
 }

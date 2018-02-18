@@ -33,7 +33,7 @@ export class ProfilePage {
 
       if("username" in result) {
 
-        console.log(result["username"]);
+        // console.log(result["username"]);
 
         this.img_url = result["img_url"];
 
@@ -70,7 +70,7 @@ export class ProfilePage {
           handler: data => {
             this[name] = data.inpt;
             this.usp.update_user_data(this.username, this.token, name, data.inpt);
-            console.log('Saved clicked');
+            // console.log('Saved clicked');
 
           }
         }

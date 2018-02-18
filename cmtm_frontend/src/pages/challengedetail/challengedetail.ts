@@ -87,7 +87,7 @@ export class ChallengedetailPage {
           this.cadmin = '1';
         }
         if(result["etime"] != ""){
-          console.log(result["etime"]);
+          // console.log(result["etime"]);
           const split_time = result["etime"].split(" ");
           this.etime.time = split_time[0];
           this.etime.date = split_time[1];
@@ -107,7 +107,7 @@ export class ChallengedetailPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChallengedetailPage');
+    // console.log('ionViewDidLoad ChallengedetailPage');
   }
 
   set_ch_answers() {
@@ -189,7 +189,7 @@ export class ChallengedetailPage {
     });
     alert.present();
 
-    console.log("Answer....")
+    // console.log("Answer....")
   }
 
 
@@ -243,7 +243,7 @@ export class ChallengedetailPage {
           handler: data => {
             this[name] = data.inpt;
             this.csp.update_challenge_data(this.username, this.token, this.cid, name, data.inpt);
-            console.log('Saved clicked');
+            // console.log('Saved clicked');
           }
         }
       ]
@@ -330,7 +330,7 @@ export class ChallengedetailPage {
                 if(result["success"] == 1) {
                   this.open = 2;
                   this.csp.update_challenge_data(this.username, this.token, this.cid, "open", 2);
-                  console.log("Distributed Points.....");
+                  // console.log("Distributed Points.....");
                 }
               });
             }
@@ -447,7 +447,7 @@ export class ChallengedetailPage {
       this.type = 1;
       this.csp.update_challenge_data(this.username, this.token, this.cid, "type", 1);
     }
-    console.log(this.type);
+    // console.log(this.type);
   }
 
   setSolution() {
@@ -577,7 +577,7 @@ export class ChallengedetailPage {
 
     if(this.cadmin == 1 && this.open == -1) {
 
-      console.log('Looks like I’m about to leave :(');
+      // console.log('Looks like I’m about to leave :(');
       let alert = this.alertCtrl.create({
         title: 'Are you sure you want to leave ?',
         message: 'If you leave now without publishing, the challenge will be lost.',

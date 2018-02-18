@@ -22,17 +22,11 @@ def user_login_req(request):
             username = request.POST.get("username", "")
             passwd = request.POST.get("password", "")
 
-            print(username, passwd)
-
             valid = check_user_passwd(username, passwd)
-
-            print(valid)
 
             if valid:
                 token = get_user_token(username)
                 is_ad = int(is_admin(username))
-
-                print({"username": username, "token": token, "success": 1, "admin": is_ad})
 
                 return JsonResponse({"username": username, "token": token, "success": 1, "admin": is_ad})
             else:
@@ -78,8 +72,6 @@ def get_user_data_req(request):
 
             ret_json = get_user_json(username)
 
-            print(ret_json)
-
             return JsonResponse(ret_json)
 
         except:
@@ -124,8 +116,6 @@ def user_ranking_req(request):
 
             rank_json = get_user_ranking()
 
-            print("Rank:" , rank_json)
-
             return JsonResponse(rank_json)
 
         except:
@@ -140,8 +130,6 @@ def user_details_req(request):
             token = request.GET.get("token", "")
             other = request.GET.get("other", "")
 
-            print(username, token, other)
-
             if not verify_user(username, token):
                 return JsonResponse({"msg": "Error: Invalid request"})
 
@@ -149,7 +137,6 @@ def user_details_req(request):
                 user_json = get_user_json(other, empty=("passwd", "token"))
             else:
                 user_json = get_user_json(other, empty=("passwd", 'real_name', "token"))
-
 
             print("User:" , user_json)
 
@@ -212,8 +199,6 @@ def challenge_answer_req(request):
 
             ach_json = get_anwsers_for_challenge(cid, username)
 
-            print("Answers:" , ach_json)
-
             return JsonResponse(ach_json)
 
         except:
@@ -272,7 +257,6 @@ def get_news_req(request):
                 return JsonResponse({"msg": "Error: Invalid request"})
 
             news_json = get_m_news()
-            print("News")
             return JsonResponse(news_json)
 
         except:
@@ -318,8 +302,6 @@ def add_news_req(request):
                 return JsonResponse({"msg": "Error: Invalid request"})
 
             add_m_news(name=name)
-            print("News added")
-
             return JsonResponse({})
         except:
             return JsonResponse({"msg":"Error: Invalid request"})
@@ -340,7 +322,6 @@ def delete_news_req(request):
                 return JsonResponse({"msg": "Error: Invalid request"})
 
             delete_m_news(nid=cid)
-            print("News deleted")
 
             return JsonResponse({})
         except:
@@ -362,8 +343,6 @@ def delete_user_req(request):
                 return JsonResponse({"msg": "Error: Invalid request"})
 
             delete_user(username=other)
-            print("User deleted: ", other)
-
             return JsonResponse({})
         except:
             return JsonResponse({"msg":"Error: Invalid request"})
@@ -414,8 +393,6 @@ def add_challenge_req(request):
 
             cid = add_challenge(name=name, creator=creator, ctype=ctype)
 
-            print("Challenge added: ", cid)
-
             return JsonResponse({"success": "1", "cid" : cid})
         except:
             return JsonResponse({"msg":"Error: Invalid request"})
@@ -463,7 +440,6 @@ def delete_challenge_req(request):
                 return JsonResponse({"msg": "Error: Invalid request"})
 
             delete_challenge(cid=cid)
-            print("Challenge deleted: ", cid)
 
             return JsonResponse({})
         except:
@@ -567,8 +543,6 @@ def eval_challenge_req(request):
                 return JsonResponse({"success": 0})
             if not is_admin(username) and not is_challenge_creator(cid, username):
                 return JsonResponse({"success": 0})
-
-            print("Challenge evaluated: ", cid)
 
             if eval_challenge(cid):
                 return JsonResponse({"success": 1})
