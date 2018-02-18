@@ -55,7 +55,7 @@ var LoginPage = (function () {
     }
     LoginPage.prototype.ionViewDidLoad = function () {
         this.menu.swipeEnable(false);
-        console.log('ionViewDidLoad LoginPage');
+        // console.log('ionViewDidLoad LoginPage');
     };
     LoginPage.prototype.onLogin = function (value) {
         var _this = this;
@@ -64,9 +64,9 @@ var LoginPage = (function () {
             this.usp.login(value.username, value.password).then(function (result) {
                 _this.loading.dismiss();
                 _this.data = result;
-                console.log(result);
+                // console.log(result);
                 if ("success" in result && result["success"] == 1) {
-                    console.log("Welcome!!!");
+                    // console.log("Welcome!!!");
                     window.localStorage.setItem('token', result["token"]);
                     window.localStorage.setItem('username', result["username"]);
                     window.localStorage.setItem('admin', result["admin"] + "");
@@ -74,7 +74,7 @@ var LoginPage = (function () {
                 }
                 else {
                     _this.presentToast("Could not Login!");
-                    console.log("WTf????");
+                    // console.log("WTf????");
                 }
                 // localStorage.setItem('token', this.data.access_token);
             }, function (err) {
@@ -100,7 +100,7 @@ var LoginPage = (function () {
             dismissOnPageChange: true
         });
         toast.onDidDismiss(function () {
-            console.log('Dismissed toast');
+            // console.log('Dismissed toast');
         });
         toast.present();
     };
@@ -178,7 +178,7 @@ var RegisterPage = (function () {
             this.usp.register(value.username, value.password, value.email).then(function (result) {
                 _this.loading.dismiss();
                 if ("success" in result && result["success"] == 1) {
-                    console.log("Welcome!!!");
+                    // console.log("Welcome!!!");
                     window.localStorage.setItem('token', result["token"]);
                     window.localStorage.setItem('username', result["username"]);
                     window.localStorage.setItem('admin', 0 + "");
@@ -186,7 +186,7 @@ var RegisterPage = (function () {
                 }
                 else {
                     _this.presentToast("Could not Register!");
-                    console.log("WTf????");
+                    // console.log("WTf????");
                 }
             }, function (err) {
                 _this.loading.dismiss();
@@ -208,13 +208,13 @@ var RegisterPage = (function () {
             dismissOnPageChange: true
         });
         toast.onDidDismiss(function () {
-            console.log('Dismissed toast');
+            // console.log('Dismissed toast');
         });
         toast.present();
     };
     RegisterPage.prototype.ionViewDidLoad = function () {
         this.menu.swipeEnable(false);
-        console.log('ionViewDidLoad RegisterPage');
+        // console.log('ionViewDidLoad RegisterPage');
     };
     RegisterPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
@@ -303,7 +303,7 @@ var ModelwallPage = (function () {
         });
     }
     ModelwallPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad ModelwallPage');
+        // console.log('ionViewDidLoad ModelwallPage');
     };
     ModelwallPage.prototype.openLink = function (param) {
         window.open(param, '_system', 'location=yes');
@@ -316,7 +316,7 @@ var ModelwallPage = (function () {
         }
         this.csp.update_topmodel_data(this.username, this.token, this.models[i]["id"], "out", newVal);
         this.models[i]["out"] = newVal;
-        console.log(i, id);
+        // console.log(i, id)
     };
     ModelwallPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
@@ -377,12 +377,12 @@ var UseranswersPage = (function () {
         this.admin = window.localStorage.getItem('admin');
         this.usp.get_user_answers(this.username, this.token).then(function (result) {
             _this.answers = result["answers"];
-            console.log(_this.answers);
+            // console.log(this.answers)
         }, function (err) {
         });
     }
     UseranswersPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad UseranswersPage');
+        // console.log('ionViewDidLoad UseranswersPage');
     };
     UseranswersPage.prototype.onChallenge = function (cid) {
         this.appCtrl.getRootNav().push(__WEBPACK_IMPORTED_MODULE_4__challengedetail_challengedetail__["a" /* ChallengedetailPage */], {
@@ -391,7 +391,7 @@ var UseranswersPage = (function () {
     };
     UseranswersPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-useranswers',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/useranswers/useranswers.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Anwsers</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-card *ngFor="let ca of answers; let i = index">\n\n    <ion-item (click)="onChallenge(ca.cid)">\n      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="ca.ctype == 0" item-start ></ion-icon>\n      <ion-icon name="people" item-end style="color: #c3af80" *ngIf="ca.ctype == 1" item-start></ion-icon>\n      <ion-icon name="swap" item-end style="color: #c3af80" *ngIf="ca.ctype == 2" item-start></ion-icon>\n\n      <h2>{{ca.cname}}</h2>\n      <p>Answer</p>\n      <ion-badge item-end *ngIf="ca.ctype>=1  ">{{ca.points}}</ion-badge>\n    </ion-item>\n    <ion-card-content>\n      <p *ngIf="ca.ctype != 2">{{ca.text}}</p>\n      <p *ngIf="ca.ctype == 2">I dare you!</p>\n    </ion-card-content>\n\n  </ion-card>\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/useranswers/useranswers.html"*/,
+            selector: 'page-useranswers',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/useranswers/useranswers.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Anwsers</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-card *ngFor="let ca of answers; let i = index">\n\n    <ion-item (click)="onChallenge(ca.cid)">\n      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="ca.ctype == 0" item-start ></ion-icon>\n      <ion-icon name="people" item-end style="color: #c3af80" *ngIf="ca.ctype == 1" item-start></ion-icon>\n      <ion-icon name="swap" item-end style="color: #c3af80" *ngIf="ca.ctype == 2" item-start></ion-icon>\n\n      <h2>{{ca.cname}}</h2>\n      <p *ngIf="ca.active == 0 && ca.copen == 0">Open</p>\n      <p *ngIf="ca.active == 0 && ca.copen == 1">Closed</p>\n      <p *ngIf="ca.active == 0 && ca.copen == 2">Closed & Ended.</p>\n      <p *ngIf="ca.active == 1">Closed & Ended</p>\n      <ion-badge item-end *ngIf="ca.ctype>=1  ">{{ca.points}}</ion-badge>\n    </ion-item>\n    <ion-card-content>\n      <p *ngIf="ca.ctype != 2">{{ca.text}}</p>\n      <p *ngIf="ca.ctype == 2">I dare you!</p>\n    </ion-card-content>\n\n  </ion-card>\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/useranswers/useranswers.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__providers_user_service_user_service__["a" /* UserServiceProvider */],
             __WEBPACK_IMPORTED_MODULE_2_ionic_angular_components_alert_alert_controller__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]])
@@ -452,7 +452,7 @@ var UserchallengesPage = (function () {
         });
     }
     UserchallengesPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad UserchallengesPage');
+        // console.log('ionViewDidLoad UserchallengesPage');
     };
     UserchallengesPage.prototype.onChallenge = function (cid) {
         this.appCtrl.getRootNav().push(__WEBPACK_IMPORTED_MODULE_4__challengedetail_challengedetail__["a" /* ChallengedetailPage */], {
@@ -518,12 +518,12 @@ var UserlogsPage = (function () {
         this.admin = window.localStorage.getItem('admin');
         this.usp.get_user_log(this.username, this.token).then(function (result) {
             _this.logs = result["logs"];
-            console.log(_this.logs);
+            // console.log(this.logs)
         }, function (err) {
         });
     }
     UserlogsPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad UserlogsPage');
+        // console.log('ionViewDidLoad UserlogsPage');
     };
     UserlogsPage.prototype.onChallenge = function (cid) {
         this.appCtrl.getRootNav().push(__WEBPACK_IMPORTED_MODULE_4__challengedetail_challengedetail__["a" /* ChallengedetailPage */], {
@@ -612,11 +612,11 @@ webpackEmptyAsyncContext.id = 155;
 
 var map = {
 	"../pages/challengedetail/challengedetail.module": [
-		424,
+		425,
 		10
 	],
 	"../pages/challenges/challenges.module": [
-		425,
+		424,
 		9
 	],
 	"../pages/login/login.module": [
@@ -706,7 +706,7 @@ var ProfilePage = (function () {
         this.token = window.localStorage.getItem('token');
         this.usp.get_user_data(this.username, this.token).then(function (result) {
             if ("username" in result) {
-                console.log(result["username"]);
+                // console.log(result["username"]);
                 _this.img_url = result["img_url"];
                 if (!(_this.img_url.startsWith("http") || _this.img_url.startsWith("www"))) {
                     _this.img_url = _this.usp.get_api_url() + _this.img_url;
@@ -736,7 +736,7 @@ var ProfilePage = (function () {
                     handler: function (data) {
                         _this[name] = data.inpt;
                         _this.usp.update_user_data(_this.username, _this.token, name, data.inpt);
-                        console.log('Saved clicked');
+                        // console.log('Saved clicked');
                     }
                 }
             ]
@@ -862,8 +862,8 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_21_ionic_img_viewer__["a" /* IonicImageViewerModule */],
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
                     links: [
-                        { loadChildren: '../pages/challengedetail/challengedetail.module#ChallengedetailPageModule', name: 'ChallengedetailPage', segment: 'challengedetail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/challenges/challenges.module#ChallengesPageModule', name: 'ChallengesPage', segment: 'challenges', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/challengedetail/challengedetail.module#ChallengedetailPageModule', name: 'ChallengedetailPage', segment: 'challengedetail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/modelwall/modelwall.module#ModelwallPageModule', name: 'ModelwallPage', segment: 'modelwall', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ranking/ranking.module#RankingPageModule', name: 'RankingPage', segment: 'ranking', priority: 'low', defaultHistory: [] },
@@ -1300,7 +1300,7 @@ var ChallengedetailPage = (function () {
                     _this.cadmin = '1';
                 }
                 if (result["etime"] != "") {
-                    console.log(result["etime"]);
+                    // console.log(result["etime"]);
                     var split_time = result["etime"].split(" ");
                     _this.etime.time = split_time[0];
                     _this.etime.date = split_time[1];
@@ -1312,7 +1312,7 @@ var ChallengedetailPage = (function () {
         this.platform.registerBackButtonAction(function () { return _this.willLeave(); }, 2);
     }
     ChallengedetailPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad ChallengedetailPage');
+        // console.log('ionViewDidLoad ChallengedetailPage');
     };
     ChallengedetailPage.prototype.set_ch_answers = function () {
         var _this = this;
@@ -1375,7 +1375,7 @@ var ChallengedetailPage = (function () {
             }
         });
         alert.present();
-        console.log("Answer....");
+        // console.log("Answer....")
     };
     ChallengedetailPage.prototype.spentPoints = function (param) {
         var _this = this;
@@ -1419,7 +1419,7 @@ var ChallengedetailPage = (function () {
                     handler: function (data) {
                         _this[name] = data.inpt;
                         _this.csp.update_challenge_data(_this.username, _this.token, _this.cid, name, data.inpt);
-                        console.log('Saved clicked');
+                        // console.log('Saved clicked');
                     }
                 }
             ]
@@ -1501,7 +1501,7 @@ var ChallengedetailPage = (function () {
                                 if (result["success"] == 1) {
                                     _this.open = 2;
                                     _this.csp.update_challenge_data(_this.username, _this.token, _this.cid, "open", 2);
-                                    console.log("Distributed Points.....");
+                                    // console.log("Distributed Points.....");
                                 }
                             });
                         }
@@ -1592,7 +1592,7 @@ var ChallengedetailPage = (function () {
             this.type = 1;
             this.csp.update_challenge_data(this.username, this.token, this.cid, "type", 1);
         }
-        console.log(this.type);
+        // console.log(this.type);
     };
     ChallengedetailPage.prototype.setSolution = function () {
         var _this = this;
@@ -1708,7 +1708,7 @@ var ChallengedetailPage = (function () {
     ChallengedetailPage.prototype.willLeave = function () {
         var _this = this;
         if (this.cadmin == 1 && this.open == -1) {
-            console.log('Looks like I’m about to leave :(');
+            // console.log('Looks like I’m about to leave :(');
             var alert_11 = this.alertCtrl.create({
                 title: 'Are you sure you want to leave ?',
                 message: 'If you leave now without publishing, the challenge will be lost.',
@@ -2110,18 +2110,18 @@ var HomePage = (function () {
         this.username = window.localStorage.getItem('username');
         this.token = window.localStorage.getItem('token');
         this.admin = window.localStorage.getItem('admin');
-        console.log("Admin: " + this.admin);
+        // console.log("Admin: "+ this.admin);
         this.csp.get_news_data(this.username, this.token).then(function (result) {
             _this.news = result["news"];
         }, function (err) {
         });
     }
     HomePage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad HomePage');
+        // console.log('ionViewDidLoad HomePage');
     };
     HomePage.prototype.addNews = function () {
         var _this = this;
-        console.log('Add News');
+        // console.log('Add News');
         var prompt = this.alertCtrl.create({
             title: "Add new News",
             inputs: [
@@ -2135,7 +2135,7 @@ var HomePage = (function () {
                         _this.csp.add_news_data(_this.username, _this.token, data.inpt).then(function (result) {
                             _this.navCtrl.setRoot(_this.navCtrl.getActive().component);
                         });
-                        console.log('Add clicked');
+                        // console.log('Add clicked');
                     }
                 }
             ]
@@ -2161,7 +2161,7 @@ var HomePage = (function () {
     };
     HomePage.prototype.chVal = function (id, name, title, i) {
         var _this = this;
-        console.log(this.news[i]);
+        // console.log(this.news[i]);
         var prompt = this.alertCtrl.create({
             title: title,
             inputs: [
@@ -2174,7 +2174,7 @@ var HomePage = (function () {
                     handler: function (data) {
                         _this.news[i][name] = data.inpt;
                         _this.csp.update_news_data(_this.username, _this.token, id, name, data.inpt);
-                        console.log('Saved clicked');
+                        // console.log('Saved clicked');
                     }
                 }
             ]
@@ -2248,7 +2248,7 @@ var ChallengesPage = (function () {
         });
     }
     ChallengesPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad ChallengesPage');
+        // console.log('ionViewDidLoad ChallengesPage');
     };
     ChallengesPage.prototype.onChallenge = function (cid) {
         this.appCtrl.getRootNav().push(__WEBPACK_IMPORTED_MODULE_3__challengedetail_challengedetail__["a" /* ChallengedetailPage */], {
@@ -2279,7 +2279,7 @@ var ChallengesPage = (function () {
                                 }
                             });
                         }
-                        console.log('Add clicked');
+                        // console.log('Add clicked');
                     }
                 }
             ]
@@ -2363,13 +2363,13 @@ var UserdetailPage = (function () {
         this.alertCtrl = alertCtrl;
         this.score_details = { "bet": 0, "honey": 0, "trump": 0 };
         this.other = navParams.get('other');
-        console.log(this.other);
+        // console.log(this.other);
         this.username = window.localStorage.getItem('username');
         this.token = window.localStorage.getItem('token');
         this.admin = window.localStorage.getItem('admin');
         this.usp.get_other_user_detail(this.username, this.token, this.other).then(function (result) {
             if ("username" in result) {
-                console.log(result["username"]);
+                // console.log(result["username"]);
                 _this.img_url = result["img_url"];
                 if (!(_this.img_url.startsWith("http") || _this.img_url.startsWith("www"))) {
                     _this.img_url = _this.usp.get_api_url() + _this.img_url;
@@ -2388,13 +2388,13 @@ var UserdetailPage = (function () {
         });
         this.usp.get_user_score_details(this.username, this.token, this.other).then(function (result) {
             if ("scores" in result) {
-                console.log(result["scores"]);
+                // console.log(result["scores"]);
                 _this.score_details = result["scores"];
             }
         });
     }
     UserdetailPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad UserdetailPage');
+        // console.log('ionViewDidLoad UserdetailPage');
     };
     UserdetailPage.prototype.changePoints = function () {
         var _this = this;
@@ -2411,7 +2411,7 @@ var UserdetailPage = (function () {
                     handler: function (data) {
                         _this.score += parseInt(data.inpt);
                         _this.usp.update_other_user_data(_this.username, _this.token, _this.other, "score", _this.score);
-                        console.log('Saved clicked');
+                        // console.log('Saved clicked');
                     }
                 }
             ]
@@ -2491,10 +2491,10 @@ var RankingPage = (function () {
         });
     }
     RankingPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad RankingPage');
+        // console.log('ionViewDidLoad RankingPage');
     };
     RankingPage.prototype.detailView = function (username) {
-        console.log(username);
+        // console.log(username)
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__userdetail_userdetail__["a" /* UserdetailPage */], {
             other: username
         });

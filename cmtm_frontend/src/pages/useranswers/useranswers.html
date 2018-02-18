@@ -19,7 +19,10 @@
       <ion-icon name="swap" item-end style="color: #c3af80" *ngIf="ca.ctype == 2" item-start></ion-icon>
 
       <h2>{{ca.cname}}</h2>
-      <p>Answer</p>
+      <p *ngIf="ca.active == 0 && ca.copen == 0">Open</p>
+      <p *ngIf="ca.active == 0 && ca.copen == 1">Closed</p>
+      <p *ngIf="ca.active == 0 && ca.copen == 2">Closed & Ended.</p>
+      <p *ngIf="ca.active == 1">Closed & Ended</p>
       <ion-badge item-end *ngIf="ca.ctype>=1  ">{{ca.points}}</ion-badge>
     </ion-item>
     <ion-card-content>

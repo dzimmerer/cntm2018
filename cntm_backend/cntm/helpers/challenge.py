@@ -330,7 +330,8 @@ def get_anwsers_for_user(username):
                      img_url=a.img_url,
                      points=a.points,
                      ctype=ctype,
-                     copen=copen)
+                     copen=copen,
+                     active=a.active)
 
         ret_list.append(a_dct)
 
