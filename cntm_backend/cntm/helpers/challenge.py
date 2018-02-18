@@ -311,7 +311,7 @@ def get_anwsers_for_challenge(cid, username=""):
 def get_anwsers_for_user(username):
     ret_list = []
 
-    cas = CAnswer.objects.filter(uname=username)
+    cas = CAnswer.objects.filter(uname=username).order_by("-id")
     for a in cas:
         cname = ""
         ctype = 0

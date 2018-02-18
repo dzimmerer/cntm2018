@@ -101,8 +101,8 @@
       <file leaf-file-name="challenge.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cntm/helpers/challenge.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
-              <caret line="333" column="36" lean-forward="false" selection-start-line="333" selection-start-column="36" selection-end-line="333" selection-end-column="36" />
+            <state relative-caret-position="420">
+              <caret line="313" column="62" lean-forward="false" selection-start-line="313" selection-start-column="62" selection-end-line="313" selection-end-column="62" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -795,8 +795,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cntm/helpers/challenge.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="333" column="36" lean-forward="false" selection-start-line="333" selection-start-column="36" selection-end-line="333" selection-end-column="36" />
+        <state relative-caret-position="420">
+          <caret line="313" column="62" lean-forward="false" selection-start-line="313" selection-start-column="62" selection-end-line="313" selection-end-column="62" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
