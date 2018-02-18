@@ -631,7 +631,7 @@ def get_user_log(username):
     u_log = []
 
     try:
-        for l in Log.objects.filter(username=username):
+        for l in Log.objects.filter(username=username).order_by("-id"):
 
             cname = ""
             cdesc = ""
