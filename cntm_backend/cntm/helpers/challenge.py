@@ -8,7 +8,7 @@ import cntm.helpers.tele as tele
 from cntm.models import Challenge, User, CAnswer, GNTMModel, News, Log
 
 tz = pytz.timezone("Europe/Berlin")
-urgent_delta = datetime.timedelta(hours=1)
+urgent_delta = datetime.timedelta(hours=6)
 
 
 def get_selected_challenges(open=0, ctype=None, uname=None, order_by_str=""):
@@ -62,7 +62,7 @@ def get_selected_challenges(open=0, ctype=None, uname=None, order_by_str=""):
 
 def get_all_challenges():
     community_c = get_selected_challenges(open=0, ctype=(1, 2), order_by_str="-points")
-    special_c = get_selected_challenges(open=0, ctype=0)
+    special_c = get_selected_challenges(ctype=0, order_by_str="open")
 
     closed_c = get_selected_challenges(open=(1, 2), order_by_str="-id")
 

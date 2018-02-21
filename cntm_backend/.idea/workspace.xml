@@ -69,11 +69,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tele.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="tele.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cntm/helpers/tele.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+            <state relative-caret-position="285">
+              <caret line="19" column="33" lean-forward="false" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -91,18 +91,18 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cntm/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="44" column="6" lean-forward="false" selection-start-line="44" selection-start-column="6" selection-end-line="44" selection-end-column="6" />
+            <state relative-caret-position="540">
+              <caret line="36" column="32" lean-forward="true" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="challenge.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="challenge.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cntm/helpers/challenge.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="337" column="32" lean-forward="false" selection-start-line="337" selection-start-column="32" selection-end-line="337" selection-end-column="32" />
+            <state relative-caret-position="150">
+              <caret line="10" column="41" lean-forward="false" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -158,8 +158,8 @@
       <find>delete</find>
       <find>get_user_ch</find>
       <find>data</find>
-      <find>models</find>
       <find>gntm</find>
+      <find>models</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -178,9 +178,9 @@
         <option value="$PROJECT_DIR$/cntm/helpers/user.py" />
         <option value="$PROJECT_DIR$/cntm/models.py" />
         <option value="$PROJECT_DIR$/cntm/urls.py" />
-        <option value="$PROJECT_DIR$/cntm/helpers/tele.py" />
         <option value="$PROJECT_DIR$/cntm/views.py" />
         <option value="$PROJECT_DIR$/cntm/helpers/challenge.py" />
+        <option value="$PROJECT_DIR$/cntm/helpers/tele.py" />
       </list>
     </option>
   </component>
@@ -234,6 +234,13 @@
               <item name="cntm_backend" type="462c0819:PsiDirectoryNode" />
               <item name="cntm" type="462c0819:PsiDirectoryNode" />
               <item name="management" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cntm_backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cntm_backend" type="462c0819:PsiDirectoryNode" />
+              <item name="cntm" type="462c0819:PsiDirectoryNode" />
+              <item name="management" type="462c0819:PsiDirectoryNode" />
+              <item name="commands" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cntm_backend" type="b2602c69:ProjectViewProjectNode" />
@@ -736,14 +743,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cntm/helpers/tele.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cntm/helpers/user.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2446">
@@ -775,14 +774,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cntm/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="44" column="6" lean-forward="false" selection-start-line="44" selection-start-column="6" selection-end-line="44" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cntm/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1063">
@@ -793,13 +784,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cntm/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="36" column="32" lean-forward="true" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cntm/helpers/challenge.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="337" column="32" lean-forward="false" selection-start-line="337" selection-start-column="32" selection-end-line="337" selection-end-column="32" />
+        <state relative-caret-position="150">
+          <caret line="10" column="41" lean-forward="false" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cntm/helpers/tele.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="33" lean-forward="false" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>

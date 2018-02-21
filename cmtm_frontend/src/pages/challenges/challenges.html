@@ -23,8 +23,8 @@
   <ion-card *ngFor="let c of challenges" (click)="onChallenge(c.id)">
     <ion-item>
 
-      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c_stng != 'closed' && c.type == 0" item-start></ion-icon>
-      <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c_stng == 'closed' && c.type == 0" item-start></ion-icon>
+      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c.open == 0 && c.type == 0" item-start></ion-icon>
+      <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c.open != 0 && c.type == 0" item-start></ion-icon>
 
 
       <ion-icon name="people" item-end style="color: #c3af80" *ngIf="c.type == 1" item-start></ion-icon>

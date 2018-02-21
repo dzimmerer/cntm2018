@@ -612,11 +612,11 @@ webpackEmptyAsyncContext.id = 155;
 
 var map = {
 	"../pages/challengedetail/challengedetail.module": [
-		425,
+		424,
 		10
 	],
 	"../pages/challenges/challenges.module": [
-		424,
+		425,
 		9
 	],
 	"../pages/login/login.module": [
@@ -862,8 +862,8 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_21_ionic_img_viewer__["a" /* IonicImageViewerModule */],
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
                     links: [
-                        { loadChildren: '../pages/challenges/challenges.module#ChallengesPageModule', name: 'ChallengesPage', segment: 'challenges', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/challengedetail/challengedetail.module#ChallengedetailPageModule', name: 'ChallengedetailPage', segment: 'challengedetail', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/challenges/challenges.module#ChallengesPageModule', name: 'ChallengesPage', segment: 'challenges', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/modelwall/modelwall.module#ModelwallPageModule', name: 'ModelwallPage', segment: 'modelwall', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ranking/ranking.module#RankingPageModule', name: 'RankingPage', segment: 'ranking', priority: 'low', defaultHistory: [] },
@@ -2297,7 +2297,7 @@ var ChallengesPage = (function () {
     };
     ChallengesPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-challenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challenges/challenges.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="addChallenge()">\n        <ion-icon name="add-circle"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-refresher (ionRefresh)="doRefresh($event)">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n\n  <ion-card *ngFor="let c of challenges" (click)="onChallenge(c.id)">\n    <ion-item>\n\n      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c_stng != \'closed\' && c.type == 0" item-start></ion-icon>\n      <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c_stng == \'closed\' && c.type == 0" item-start></ion-icon>\n\n\n      <ion-icon name="people" item-end style="color: #c3af80" *ngIf="c.type == 1" item-start></ion-icon>\n\n      <ion-icon name="swap" item-end style="color: #c3af80" *ngIf="c.type == 2" item-start></ion-icon>\n\n      <h2>{{c.name}}</h2>\n      <p *ngIf="c_stng == \'special\' || (c_stng == \'closed\' && c.type == 0)">Special</p>\n      <p *ngIf="c_stng == \'community\' || (c_stng == \'closed\' && c.type >= 1)">by {{c.creator}}</p>\n      <div item-end>\n        <p *ngIf="c.urgendstr != \'\' && c.open<2" float-right><b style="color: darkred">{{c.urgendstr}}</b></p>\n        <br *ngIf="c.urgendstr != \'\' && c.open<2">\n        <ion-icon name="alert" style="color: #a61000" *ngIf="c_stng == \'closed\' && c.open == 1 && username == c.creator"></ion-icon>\n        <ion-badge float-right *ngIf="!(c_stng == \'closed\' && c.open == 1 && username == c.creator)">{{c.points}}</ion-badge>\n\n        <!--<p *ngIf="c.urgentstr != \'\' && c.open==2" float-right>Ended: {{c.etime}}</p>-->\n      </div>\n    </ion-item>\n  </ion-card>\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challenges/challenges.html"*/,
+            selector: 'page-challenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challenges/challenges.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="addChallenge()">\n        <ion-icon name="add-circle"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-refresher (ionRefresh)="doRefresh($event)">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n\n  <ion-card *ngFor="let c of challenges" (click)="onChallenge(c.id)">\n    <ion-item>\n\n      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c.open == 0 && c.type == 0" item-start></ion-icon>\n      <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c.open != 0 && c.type == 0" item-start></ion-icon>\n\n\n      <ion-icon name="people" item-end style="color: #c3af80" *ngIf="c.type == 1" item-start></ion-icon>\n\n      <ion-icon name="swap" item-end style="color: #c3af80" *ngIf="c.type == 2" item-start></ion-icon>\n\n      <h2>{{c.name}}</h2>\n      <p *ngIf="c_stng == \'special\' || (c_stng == \'closed\' && c.type == 0)">Special</p>\n      <p *ngIf="c_stng == \'community\' || (c_stng == \'closed\' && c.type >= 1)">by {{c.creator}}</p>\n      <div item-end>\n        <p *ngIf="c.urgendstr != \'\' && c.open<2" float-right><b style="color: darkred">{{c.urgendstr}}</b></p>\n        <br *ngIf="c.urgendstr != \'\' && c.open<2">\n        <ion-icon name="alert" style="color: #a61000" *ngIf="c_stng == \'closed\' && c.open == 1 && username == c.creator"></ion-icon>\n        <ion-badge float-right *ngIf="!(c_stng == \'closed\' && c.open == 1 && username == c.creator)">{{c.points}}</ion-badge>\n\n        <!--<p *ngIf="c.urgentstr != \'\' && c.open==2" float-right>Ended: {{c.etime}}</p>-->\n      </div>\n    </ion-item>\n  </ion-card>\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challenges/challenges.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */],
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]])
@@ -2314,7 +2314,7 @@ var ChallengesTabs = (function () {
     }
     ChallengesTabs = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-challengesstart',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challenges/challengesTabs.html"*/'<ion-tabs class="tabs-basic">\n  <ion-tab tabTitle="Bets" [root]="rootPage" [rootParams]="community"></ion-tab>\n  <ion-tab tabTitle="Specials" [root]="rootPage" [rootParams]="special"></ion-tab>\n  <ion-tab tabTitle="Closed" [root]="rootPage" [rootParams]="closed"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challenges/challengesTabs.html"*/,
+            selector: 'page-challengesstart',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challenges/challengesTabs.html"*/'<ion-tabs class="tabs-basic">\n  <ion-tab tabTitle="Bets" [root]="rootPage" [rootParams]="community"></ion-tab>\n  <ion-tab tabTitle="Honey/Trump" [root]="rootPage" [rootParams]="special"></ion-tab>\n  <ion-tab tabTitle="Closed" [root]="rootPage" [rootParams]="closed"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challenges/challengesTabs.html"*/,
         })
     ], ChallengesTabs);
     return ChallengesTabs;
