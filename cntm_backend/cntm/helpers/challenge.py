@@ -62,7 +62,7 @@ def get_selected_challenges(open=0, ctype=None, uname=None, order_by_str=""):
 
 def get_all_challenges():
     community_c = get_selected_challenges(open=0, ctype=(1, 2), order_by_str="-points")
-    special_c = get_selected_challenges(openn=(0,1,2), ctype=0, order_by_str="open")
+    special_c = get_selected_challenges(open=(0,1,2), ctype=0, order_by_str="open")
 
     closed_c = get_selected_challenges(open=(1, 2), order_by_str="-id")
 
