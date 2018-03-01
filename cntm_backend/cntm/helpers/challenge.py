@@ -303,7 +303,10 @@ def get_anwsers_for_challenge(cid, username=""):
         else:
             ret_list.append(a_dct)
 
-    ret_dict["other"] = ret_list
+    if (c.type == 1 and c.open < 2) or (c.type == 0 and c.open < 1):
+        ret_dict["other"] = {}
+    else:
+        ret_dict["other"] = ret_list
 
     return ret_dict
 
