@@ -96,7 +96,7 @@
     </ion-row>
   </ion-card>
 
-  <div>
+  <div *ngIf="admin == '1'">
     <ion-card *ngFor="let l of logs">
       <ion-item>
 

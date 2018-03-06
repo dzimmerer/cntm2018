@@ -80,6 +80,23 @@ export class ProfilePage {
   }
 
 
-
-
+  chPassword() {
+    let prompt = this.alertCtrl.create({
+      title: "Change password:",
+      inputs: [
+        {name: 'inpt',
+          type: "password"},
+      ],
+      buttons: [
+        { text: 'Cancel', },
+        { text: 'Save',
+          handler: data => {
+            this.usp.update_user_password(this.username, this.token, data.inpt);
+            // console.log('Saved clicked');
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
 }

@@ -9,7 +9,7 @@ from cntm.helpers.challenge import get_all_challenges, get_challenge_data, get_a
     update_challenge_answer_points, eval_challenge, get_elem_count_for_label, delete_challenge_answer, \
     get_user_challenges, get_anwsers_for_user, get_user_log
 from cntm.helpers.user import create_new_user, check_user_passwd, get_user_token, get_user_json, verify_user, \
-    update_user, get_user_ranking, is_admin, delete_user, can_user_spend_points, get_score_origin
+    update_user, get_user_ranking, is_admin, delete_user, can_user_spend_points, get_score_origin, change_user_passwd
 from cntm.models import GNTMModel
 
 
@@ -671,3 +671,21 @@ def get_user_log_req(request):
         return JsonResponse({})
 
 
+def update_user_password_req(request):
+    if request.method == "GET":
+        try:
+            username = request.GET.get("username", "")
+            token = request.GET.get("token", "")
+            password = request.GET.get("password" , "")
+
+            if not verify_user(username, token):
+                return JsonResponse({})
+
+            ret_val = change_user_passwd(username, password)
+
+            return JsonResponse({"success": ret_val})
+
+        except:
+            return JsonResponse({"msg":"Error: Invalid request"})
+    else:
+        return JsonResponse({})

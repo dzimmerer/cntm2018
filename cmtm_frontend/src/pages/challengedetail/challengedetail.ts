@@ -571,15 +571,15 @@ export class ChallengedetailPage {
 
       let user_points = 0;
       if ("points" in this.ca_own) {
-        user_points = this.ca_own.points;
+        user_points = this.ca_own["points"];
       }
 
       let challenge_points = 0;
-      if(this.ca_own && this.ca_own.is_best){
-        challenge_points = this.ca_own.points;
+      if("is_best" in this.ca_own && this.ca_own["is_best"]){
+        challenge_points = this.ca_own["points"];
       }
-      else if(this.ca_other.length > 0 && this.ca_other[0].is_best){
-        challenge_points = this.ca_other[0].points;
+      else if(this.ca_other.length > 0 && this.ca_other[0]["is_best"]){
+        challenge_points = this.ca_other[0]["points"];
       }
 
       console.log(user_points);
@@ -602,7 +602,7 @@ export class ChallengedetailPage {
               this.csp.give_challenge_answer(this.username, this.token, this.cid, '1').then((result) => {
                 this.csp.give_challenge_answer_points(this.username, this.token, this.cid, counter_points);
                 this.ca_own["points"] = user_points + counter_points;
-                this.ca_own["is_best"] = True;
+                this.ca_own["is_best"] = true;
                 this.ca_other = [];
                 //this.set_ch_answers();
               }, (err) => {
@@ -630,7 +630,7 @@ export class ChallengedetailPage {
 
       let user_points = 0;
       if ("points" in this.ca_own) {
-        user_points = this.ca_own.points;
+        user_points = this.ca_own["points"];
       }
 
       console.log(user_points);
@@ -640,7 +640,7 @@ export class ChallengedetailPage {
         title: "Points:",
         inputs: [
           {name: 'inpt',
-            value: user_points },
+            value: user_points + "" },
         ],
         buttons: [
           { text: 'Cancel', },

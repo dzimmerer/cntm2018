@@ -32,5 +32,6 @@ urlpatterns = [
     path(r'get_user_challenges/', views.get_user_challenges_req, name='get_user_challenges'),
     path(r'get_user_answers/', views.get_user_answer_req, name='get_user_answers'),
     path(r'get_user_log/', views.get_user_log_req, name='get_user_log'),
+    path(r'update_user_password/', views.update_user_password_req, name='update_user_password'),
     path(r'', views.dnd, name='dnd'),
 ]

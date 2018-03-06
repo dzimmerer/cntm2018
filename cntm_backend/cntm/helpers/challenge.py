@@ -60,7 +60,8 @@ def get_selected_challenges(open=0, ctype=None, uname=None, order_by_str=""):
             c_list.append(dict(id=c.id, name=c.name, descr=c.descr, img_url=c.img_url, open=c.open, creator=c.creator,
                                type=c.type, etime=c.etime, points=points, urgendstr=urgent_str))
 
-    c_list.sort(key=lambda x: -x["points"])
+    if open == 0:
+        c_list.sort(key=lambda x: -x["points"])
     c_list.sort(key=lambda x: x["urgendstr"] + "z")
 
     return c_list
@@ -153,8 +154,8 @@ def should_send_notification(key, old_val, val, c):
         name = c.name
         descr = c. descr
 
-        print("send notification")
-        # tele.send_new_challenge_notification(name, descr, ctype)
+        # print("send notification")
+        tele.send_new_challenge_notification(name, descr, ctype)
 
 
 def update_challenge(cid, key, val):

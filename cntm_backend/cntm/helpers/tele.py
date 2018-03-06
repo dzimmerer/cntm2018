@@ -9,7 +9,7 @@ bot = telegram.Bot(token=TELE_TOKEN)
 def send_msg(text):
     bot.send_message(chat_id=CHAT_ID, text=text)
 
-def send_new_challenge_notification(name, desc, creator, type_):
+def send_new_challenge_notification(name, desc, type_):
 
     line1 = ""
     if type_ == 0:

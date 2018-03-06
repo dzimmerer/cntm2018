@@ -743,9 +743,29 @@ var ProfilePage = (function () {
         });
         prompt.present();
     };
+    ProfilePage.prototype.chPassword = function () {
+        var _this = this;
+        var prompt = this.alertCtrl.create({
+            title: "Change password:",
+            inputs: [
+                { name: 'inpt',
+                    type: "password" },
+            ],
+            buttons: [
+                { text: 'Cancel', },
+                { text: 'Save',
+                    handler: function (data) {
+                        _this.usp.update_user_password(_this.username, _this.token, data.inpt);
+                        // console.log('Saved clicked');
+                    }
+                }
+            ]
+        });
+        prompt.present();
+    };
     ProfilePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-profile',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/profile/profile.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Profile</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-card>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <img src="{{img_url}}">\n      </ion-avatar>\n      <h2>{{username}}</h2>\n      <p>&quot;{{descr}}&quot;</p>\n      <ion-badge item-end>{{score}}</ion-badge>\n    </ion-item>\n\n\n    <ion-item>\n      <ion-icon name=\'md-person\' item-start style="color: #f95c71"></ion-icon>\n      <p>{{real_name}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'real_name\', \'Real Name\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="calendar" item-start style="color: #f95c71"></ion-icon>\n      <p>{{age}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'age\', \'Age\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="cut" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hair}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'hair\', \'Hair Style\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="eye" item-start style="color: #f95c71"></ion-icon>\n      <p>{{eye}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'eye\', \'Eye color\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="football" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hobbies}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'hobbies\', \'Hobbies\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n\n    <ion-card-content center text-center>\n      <p>\n        <br>\n      {{descr}}\n      </p>\n\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="chVal(\'img_url\', \'Enter a new Image URL\')">\n          <div>Edit Pic</div>\n        </button>\n      </ion-col>\n      <ion-col text-right>\n        <button ion-button icon-left clear small  (click)="chVal(\'descr\', \'Description\')" >\n          <div>Edit Text</div>\n        </button>\n      </ion-col>\n\n    </ion-row>\n\n  </ion-card>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/profile/profile.html"*/
+            selector: 'page-profile',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/profile/profile.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Profile</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-card>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <img src="{{img_url}}">\n      </ion-avatar>\n      <h2>{{username}}</h2>\n      <p>&quot;{{descr}}&quot;</p>\n      <ion-badge item-end>{{score}}</ion-badge>\n    </ion-item>\n\n\n    <ion-item>\n      <ion-icon name=\'md-person\' item-start style="color: #f95c71"></ion-icon>\n      <p>{{real_name}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'real_name\', \'Real Name\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="calendar" item-start style="color: #f95c71"></ion-icon>\n      <p>{{age}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'age\', \'Age\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="cut" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hair}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'hair\', \'Hair Style\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="eye" item-start style="color: #f95c71"></ion-icon>\n      <p>{{eye}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'eye\', \'Eye color\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="football" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hobbies}}</p>\n      <button ion-button clear small item-end (click)="chVal(\'hobbies\', \'Hobbies\')" >\n        <ion-icon name=\'md-create\'></ion-icon>\n      </button>\n    </ion-item>\n\n\n    <ion-card-content center text-center>\n      <p>\n        <br>\n      {{descr}}\n      </p>\n\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="chVal(\'img_url\', \'Enter a new Image URL\')">\n          <div>Edit Pic</div>\n        </button>\n      </ion-col>\n      <ion-col text-right>\n        <button ion-button icon-left clear small  (click)="chPassword()" >\n          <div>Edit Password</div>\n        </button>\n      </ion-col>\n      <ion-col text-right>\n        <button ion-button icon-left clear small  (click)="chVal(\'descr\', \'Description\')" >\n          <div>Edit Text</div>\n        </button>\n      </ion-col>\n\n    </ion-row>\n\n  </ion-card>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/profile/profile.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserServiceProvider */],
             __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]])
@@ -1106,6 +1126,30 @@ var UserServiceProvider = (function () {
             });
         });
     };
+    UserServiceProvider.prototype.get_other_user_log = function (username, token, other) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&other=" + other;
+            _this.http.get(apiUrl + 'get_user_log/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    UserServiceProvider.prototype.update_user_password = function (username, token, password) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var get_params = "?username=" + username + "&token=" + token + "&password=" + password;
+            _this.http.get(apiUrl + 'update_user_password/' + get_params)
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
     UserServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
@@ -1270,12 +1314,14 @@ var ChallengedetailPage = (function () {
         this.alertCtrl = alertCtrl;
         this.appCtrl = appCtrl;
         this.platform = platform;
+        this.choice_list = [];
         this.etime = {
             "time": "",
             "date": ""
         };
         this.c_anwser = "";
         this.ca_own = {};
+        this.ca_other = [];
         this.isShownArray = [];
         this.cid = navParams.get('cid');
         this.username = window.localStorage.getItem('username');
@@ -1317,7 +1363,7 @@ var ChallengedetailPage = (function () {
     ChallengedetailPage.prototype.set_ch_answers = function () {
         var _this = this;
         this.csp.get_challenge_answers(this.username, this.token, this.cid).then(function (result) {
-            if ("other" in result) {
+            if ("other" in result && (_this.type != 1 || _this.open >= 2)) {
                 _this.ca_other = result["other"];
             }
             if ("own" in result) {
@@ -1699,6 +1745,99 @@ var ChallengedetailPage = (function () {
             alert_9.present();
         }
     };
+    ChallengedetailPage.prototype.doBetCounter = function () {
+        var _this = this;
+        if (this.type == 2) {
+            var user_points_1 = 0;
+            if ("points" in this.ca_own) {
+                user_points_1 = this.ca_own["points"];
+            }
+            var challenge_points = 0;
+            if ("is_best" in this.ca_own && this.ca_own["is_best"]) {
+                challenge_points = this.ca_own["points"];
+            }
+            else if (this.ca_other.length > 0 && this.ca_other[0]["is_best"]) {
+                challenge_points = this.ca_other[0]["points"];
+            }
+            console.log(user_points_1);
+            console.log(challenge_points);
+            var counter_points_1 = challenge_points + 1 - user_points_1;
+            console.log(counter_points_1);
+            var alert_11 = this.alertCtrl.create();
+            alert_11.setTitle('Make your Bet');
+            alert_11.setSubTitle('Are you sure you want to bet ' + (user_points_1 + counter_points_1) + ' Points ?');
+            alert_11.addButton('Cancel');
+            alert_11.addButton({
+                text: 'OK',
+                handler: function () {
+                    // Update
+                    _this.csp.has_challenge_answer_points(_this.username, _this.token, _this.cid, counter_points_1).then(function (result) {
+                        if (result["success"] == 1) {
+                            _this.csp.give_challenge_answer(_this.username, _this.token, _this.cid, '1').then(function (result) {
+                                _this.csp.give_challenge_answer_points(_this.username, _this.token, _this.cid, counter_points_1);
+                                _this.ca_own["points"] = user_points_1 + counter_points_1;
+                                _this.ca_own["is_best"] = true;
+                                _this.ca_other = [];
+                                //this.set_ch_answers();
+                            }, function (err) {
+                            });
+                        }
+                        else {
+                            var alert_12 = _this.alertCtrl.create({
+                                title: 'Not enough points',
+                                buttons: ['OK']
+                            });
+                            alert_12.present();
+                        }
+                    });
+                }
+            });
+            alert_11.present();
+        }
+    };
+    ChallengedetailPage.prototype.doBetPoints = function () {
+        var _this = this;
+        if (this.type == 2) {
+            var user_points_2 = 0;
+            if ("points" in this.ca_own) {
+                user_points_2 = this.ca_own["points"];
+            }
+            console.log(user_points_2);
+            var prompt_1 = this.alertCtrl.create({
+                title: "Points:",
+                inputs: [
+                    { name: 'inpt',
+                        value: user_points_2 + "" },
+                ],
+                buttons: [
+                    { text: 'Cancel', },
+                    { text: 'Bet',
+                        handler: function (data) {
+                            // Update
+                            var counter_points = data.inpt - user_points_2;
+                            _this.csp.has_challenge_answer_points(_this.username, _this.token, _this.cid, counter_points).then(function (result) {
+                                if (result["success"] == 1) {
+                                    _this.csp.give_challenge_answer(_this.username, _this.token, _this.cid, '1').then(function (result) {
+                                        _this.csp.give_challenge_answer_points(_this.username, _this.token, _this.cid, counter_points);
+                                        _this.set_ch_answers();
+                                    }, function (err) {
+                                    });
+                                }
+                                else {
+                                    var alert_13 = _this.alertCtrl.create({
+                                        title: 'Could not bet points',
+                                        buttons: ['OK']
+                                    });
+                                    alert_13.present();
+                                }
+                            });
+                        }
+                    }
+                ]
+            });
+            prompt_1.present();
+        }
+    };
     ChallengedetailPage.prototype.ionViewDidEnter = function () {
         var _this = this;
         this.navBar.backButtonClick = function () {
@@ -1709,7 +1848,7 @@ var ChallengedetailPage = (function () {
         var _this = this;
         if (this.cadmin == 1 && this.open == -1) {
             // console.log('Looks like I’m about to leave :(');
-            var alert_11 = this.alertCtrl.create({
+            var alert_14 = this.alertCtrl.create({
                 title: 'Are you sure you want to leave ?',
                 message: 'If you leave now without publishing, the challenge will be lost.',
                 buttons: [
@@ -1722,7 +1861,7 @@ var ChallengedetailPage = (function () {
                     }
                 ]
             });
-            alert_11.present();
+            alert_14.present();
         }
         else if (this.cadmin == 1 && (this.open == 0 || this.open == 1)) {
             this.appCtrl.getRootNav().pop();
@@ -1757,11 +1896,11 @@ var ChallengedetailPage = (function () {
                 { text: 'Save',
                     handler: function (data) {
                         if (data.inpt.includes("&") && data.inpt.includes("|")) {
-                            var alert_12 = _this.alertCtrl.create({
+                            var alert_15 = _this.alertCtrl.create({
                                 title: "You can't combine '&' and '|' in your answer, choose either one !",
                                 buttons: ['OK']
                             });
-                            alert_12.present();
+                            alert_15.present();
                         }
                         else {
                             _this.choice = data.inpt;
@@ -1811,7 +1950,7 @@ var ChallengedetailPage = (function () {
     ], ChallengedetailPage.prototype, "navBar", void 0);
     ChallengedetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-challengedetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challengedetail/challengedetail.html"*/'<ion-header>\n\n  <ion-navbar #navbar color="primary">\n    <ion-title>Challenge</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <ion-item>\n      <h2>{{name}}</h2>\n      <p *ngIf="type >= 1">by {{creator}}</p>\n      <ion-badge item-end>\n        {{points}}\n      </ion-badge>\n      <ion-icon name="checkmark" style="color: #c3af80" item-end *ngIf="open == 2"></ion-icon>\n    </ion-item>\n\n    <ion-card-content>\n      <div [innerHTML]="descr"></div>\n    </ion-card-content>\n    <ion-card-content *ngIf="type < 2">\n      <i>Possible Answers:</i>\n      <ul style="list-style-type:square" *ngIf="has_choice == 2">\n        <li *ngFor="let ch of choice_list | slice:0:4; let i = index">\n          <p *ngIf="i < 3">{{ch}}</p>\n          <p *ngIf="i == 3">...</p>\n        </li>\n      </ul>\n      <ul style="list-style-type:circle" *ngIf="has_choice == 1">\n        <li *ngFor="let ch of choice_list | slice:0:4; let i = index">\n          <p *ngIf="i < 3">{{ch}}</p>\n          <p *ngIf="i == 3">...</p>\n        </li>\n      </ul>\n      <p *ngIf="has_choice == 0">Everything ;-D</p>\n\n    </ion-card-content>\n    <ion-card-content *ngIf="open<=0 && etime.time != \'\' && etime.date != \'\' ">\n      <i>Open until: {{etime.date}} {{etime.time}}</i>\n    </ion-card-content>\n    <ion-card-content *ngIf="cadmin == \'1\' || open==2">\n      <p *ngIf="type != 2 && answer != \'\'"><b>Solution:</b> {{answer}}</p>\n      <p *ngIf="type == 2 && answer == \'0\'"><b>Solution:</b> Won Bet</p>\n      <p *ngIf="type == 2 && answer == \'1\'"><b>Solution:</b> Lost Bet</p>\n    </ion-card-content>\n\n\n\n    <ion-row>\n      <ion-col *ngIf="open == 0 && type != 2">\n        <button ion-button icon-left clear small (click)="doAnswer()" *ngIf="cadmin == \'0\'">\n          <ion-icon name="text"></ion-icon>\n          <div>Answer</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="open == 0 && type == 2">\n        <button ion-button icon-left clear small (click)="doBetAgainst()" *ngIf="cadmin == \'0\'">\n          <ion-icon name="text"></ion-icon>\n          <div>Bet against</div>\n        </button>\n      </ion-col>\n      <ion-col text-end>\n        <button ion-button icon-left clear small>\n          <div *ngIf="open == 0">open</div>\n          <div *ngIf="open >= 1">closed.</div>\n        </button>\n        <button ion-button icon-left clear small *ngIf="cadmin == \'1\' && admin == \'0\' && open >= 0 && open < 2 && !(etime.time != \'\' && etime.date != \'\' ) " (click)="toggleOpen()">\n          <div>Open/Close</div>\n        </button>\n        <button ion-button icon-left clear  *ngIf="cadmin == \'1\' && admin == \'0\' && open < 0" (click)="makePublic()">\n          <ion-icon name="arrow-round-forward"></ion-icon>\n          <div>Make Public </div>\n          <ion-icon name="arrow-round-back"></ion-icon>\n        </button>\n        <button ion-button icon-left clear small *ngIf="admin == \'1\'" (click)="chVal(\'open\', \'Open\')">\n          <div>Open/Close</div>\n        </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n\n\n  <ion-card *ngIf="cadmin == \'1\' && open < 0">\n    <ion-item>\n      <ion-icon name="swap" item-start style="color: #c3af80"></ion-icon>\n      <ion-label><p>Direct Bet</p></ion-label>\n      <ion-toggle [(ngModel)]="embet" (ngModelChange)="changeEmBet()"></ion-toggle>\n    </ion-item>\n  </ion-card>\n\n  <ion-card *ngIf="cadmin == \'1\' && (admin == 1 || open < 2)">\n\n    <ion-row>\n      <ion-col *ngIf="open < 0 || (open == 0 && type != 2) ">\n        <button ion-button icon-left clear small (click)="chVal(\'name\', \'Title\')">\n          <div>Edit Title</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="open < 0 || (open == 0 && type != 2)">\n        <button ion-button icon-left clear small (click)="chVal(\'descr\', \'Description\')">\n          <div>Edit Description</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="open <= 0 && type != 2">\n        <button ion-button icon-left clear small (click)="chChoices()">\n          <div>Edit Choices</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="admin == 1">\n        <button ion-button icon-left clear small (click)="chVal(\'label\', \'Label\')">\n          <div>Edit Label</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="type==0  || (type == 2 && open < 0)">\n        <button ion-button icon-left clear small (click)="chPoints()">\n          <div>Set Points</div>\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-card>\n\n  <ion-card *ngIf="cadmin == \'1\' && (admin == 1 || open <= 0)">\n    <ion-item>\n      <ion-label>End Time</ion-label>\n      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" placeholder="hh:mm" [(ngModel)]="etime.time" (ngModelChange)="setEndTime()"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-label>End Date</ion-label>\n      <ion-datetime displayFormat="DD.MMMM YYYY" pickerFormat="DD MMM YYYY" placeholder="dd.mm.yyyy" [(ngModel)]="etime.date" (ngModelChange)="setEndTime()"></ion-datetime>\n    </ion-item>\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="setEndTime(1)">\n          <div>Set Time</div>\n        </button>\n      </ion-col>\n      <ion-col>\n      <button ion-button icon-left clear small (click)="deleteEndTime()" float-right>\n        <div>Delete Time</div>\n      </button>\n    </ion-col>\n    </ion-row>\n  </ion-card>\n\n  <ion-card *ngIf="cadmin == \'1\' && (admin == 1 || open < 2) && open >= 0">\n    <ion-row>\n      <ion-col *ngIf="type != 2">\n        <button ion-button icon-left clear small (click)="setSolution()" >\n          <div>Edit Solution</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="type == 2">\n        <button ion-button icon-left clear small (click)="setSolution()" >\n          <div>Edit Solution</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="evalChallenge()" float-right>\n          <div>End & Give Points</div>\n        </button>\n      </ion-col>\n    </ion-row>\n    <ion-row *ngIf="type != 2">\n      <ion-col>\n        <button ion-button icon-left clear small (click)="deleteChallenge()">\n          <div>Delete</div>\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-card>\n\n  <ion-card *ngIf="c_anwser != \'\'">\n\n    <ion-item>\n      <ion-avatar item-start (click)="toggleVisible(-1)">\n        <img src="{{ca_own.img_url}}">\n      </ion-avatar>\n      <h2>{{ca_own.username}}</h2>\n      <p *ngIf="type != 2">{{ca_own.text}}</p>\n      <p *ngIf="type == 2">I dare you!</p>\n      <button ion-button clear small (click)="spentPoints(-1)" item-end *ngIf="open == 0 && type==1">-</button>\n      <ion-badge item-end *ngIf="type==1">{{ca_own.points}}</ion-badge>\n      <button ion-button clear small (click)="spentPoints(1)" item-end *ngIf="open == 0 && type==1">+</button>\n      <button ion-button clear small (click)="deleteOwnAnswer()" item-end *ngIf="open == 0 && type==2">\n        <ion-icon name="close"></ion-icon>\n      </button>\n\n    </ion-item>\n\n    <ion-card-content *ngIf="isVisible(-1)">\n      <p *ngIf="type != 2">{{ca_own.text}}</p>\n      <p *ngIf="type == 2">I dare you!</p>\n    </ion-card-content>\n    <ion-row>\n      <ion-col *ngIf="type != 2">\n        <button ion-button icon-left clear small (click)="doAnswer()" item-end *ngIf="open == 0">\n          <ion-icon name="text"></ion-icon>\n          <div>Edit</div>\n        </button>\n        <button ion-button icon-left clear small (click)="deleteOwnAnswer()" *ngIf="open == 0" float-right>\n          <ion-icon name="close"></ion-icon>\n          <div>Delete</div>\n      </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n\n  <ion-card *ngFor="let ca of ca_other; let i = index">\n\n    <ion-item (click)="toggleVisible(i)">\n      <ion-avatar item-start (click)="frwdToUser(ca.username)">\n        <img src="{{ca.img_url}}">\n      </ion-avatar>\n      <h2>{{ca.username}}</h2>\n      <p *ngIf="type != 2">{{ca.text}}</p>\n      <p *ngIf="type == 2">I dare you!</p>\n      <ion-badge item-end *ngIf="type==1">{{ca.points}}</ion-badge>\n    </ion-item>\n    <ion-card-content *ngIf="isVisible(i)">\n      <p *ngIf="type != 2">{{ca.text}}</p>\n      <p *ngIf="type == 2">I dare you!</p>\n    </ion-card-content>\n\n  </ion-card>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challengedetail/challengedetail.html"*/,
+            selector: 'page-challengedetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challengedetail/challengedetail.html"*/'<ion-header>\n\n  <ion-navbar #navbar color="primary">\n    <ion-title>Challenge</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <ion-item>\n      <h2>{{name}}</h2>\n      <p *ngIf="type >= 1">by {{creator}}</p>\n      <ion-badge item-end>\n        {{points}}\n      </ion-badge>\n      <ion-icon name="checkmark" style="color: #c3af80" item-end *ngIf="open == 2"></ion-icon>\n    </ion-item>\n\n    <ion-card-content>\n      <div [innerHTML]="descr"></div>\n    </ion-card-content>\n    <ion-card-content *ngIf="type < 2">\n      <i>Possible Answers:</i>\n      <ul style="list-style-type:square" *ngIf="has_choice == 2">\n        <li *ngFor="let ch of choice_list | slice:0:4; let i = index">\n          <p *ngIf="i < 3">{{ch}}</p>\n          <p *ngIf="i == 3">...</p>\n        </li>\n      </ul>\n      <ul style="list-style-type:circle" *ngIf="has_choice == 1">\n        <li *ngFor="let ch of choice_list | slice:0:4; let i = index">\n          <p *ngIf="i < 3">{{ch}}</p>\n          <p *ngIf="i == 3">...</p>\n        </li>\n      </ul>\n      <p *ngIf="has_choice == 0">Everything ;-D</p>\n\n    </ion-card-content>\n    <ion-card-content *ngIf="open<=0 && etime.time != \'\' && etime.date != \'\' ">\n      <i>Open until: {{etime.date}} {{etime.time}}</i>\n    </ion-card-content>\n    <ion-card-content *ngIf="cadmin == \'1\' || open==2">\n      <p *ngIf="type != 2 && answer != \'\'"><b>Solution:</b> {{answer}}</p>\n      <p *ngIf="type == 2 && answer == \'0\'"><b>Solution:</b> Won Bet</p>\n      <p *ngIf="type == 2 && answer == \'1\'"><b>Solution:</b> Lost Bet</p>\n    </ion-card-content>\n\n\n\n    <ion-row>\n      <ion-col *ngIf="open == 0 && type != 2">\n        <button ion-button icon-left clear small (click)="doAnswer()" *ngIf="cadmin == \'0\'">\n          <ion-icon name="text"></ion-icon>\n          <div>Answer</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="open == 0 && type == 2 && ca_other?.length == 0">\n        <button ion-button icon-left clear small (click)="doBetAgainst()" *ngIf="cadmin == \'0\'">\n          <ion-icon name="swap"></ion-icon>\n          <div>Bet against</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="open == 0 && type == 2 && ca_other?.length > 0">\n        <button ion-button icon-left clear small (click)="doBetCounter()" *ngIf="cadmin == \'0\'">\n          <ion-icon name="swap"></ion-icon>\n          <div>Counter</div>\n        </button>\n      </ion-col>\n      <ion-col text-end>\n        <button ion-button icon-left clear small>\n          <div *ngIf="open == 0">open</div>\n          <div *ngIf="open >= 1">closed.</div>\n        </button>\n        <button ion-button icon-left clear small *ngIf="cadmin == \'1\' && admin == \'0\' && open >= 0 && open < 2 && !(etime.time != \'\' && etime.date != \'\' ) " (click)="toggleOpen()">\n          <div>Open/Close</div>\n        </button>\n        <button ion-button icon-left clear  *ngIf="cadmin == \'1\' && admin == \'0\' && open < 0" (click)="makePublic()">\n          <ion-icon name="arrow-round-forward"></ion-icon>\n          <div>Make Public </div>\n          <ion-icon name="arrow-round-back"></ion-icon>\n        </button>\n        <button ion-button icon-left clear small *ngIf="admin == \'1\'" (click)="chVal(\'open\', \'Open\')">\n          <div>Open/Close</div>\n        </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n\n\n  <ion-card *ngIf="cadmin == \'1\' && open < 0">\n    <ion-item>\n      <ion-icon name="swap" item-start style="color: #c3af80"></ion-icon>\n      <ion-label><p>Direct Bet</p></ion-label>\n      <ion-toggle [(ngModel)]="embet" (ngModelChange)="changeEmBet()"></ion-toggle>\n    </ion-item>\n  </ion-card>\n\n  <ion-card *ngIf="cadmin == \'1\' && (admin == 1 || open < 2)">\n\n    <ion-row>\n      <ion-col *ngIf="open < 0 || (open == 0 && type != 2) ">\n        <button ion-button icon-left clear small (click)="chVal(\'name\', \'Title\')">\n          <div>Edit Title</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="open < 0 || (open == 0 && type != 2)">\n        <button ion-button icon-left clear small (click)="chVal(\'descr\', \'Description\')">\n          <div>Edit Description</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="open <= 0 && type != 2">\n        <button ion-button icon-left clear small (click)="chChoices()">\n          <div>Edit Choices</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="admin == 1">\n        <button ion-button icon-left clear small (click)="chVal(\'label\', \'Label\')">\n          <div>Edit Label</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="type==0  || (type == 2 && open < 0)">\n        <button ion-button icon-left clear small (click)="chPoints()">\n          <div>Set Points</div>\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-card>\n\n  <ion-card *ngIf="cadmin == \'1\' && (admin == 1 || open <= 0)">\n    <ion-item>\n      <ion-label>End Time</ion-label>\n      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" placeholder="hh:mm" [(ngModel)]="etime.time" (ngModelChange)="setEndTime()"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-label>End Date</ion-label>\n      <ion-datetime displayFormat="DD.MMMM YYYY" pickerFormat="DD MMM YYYY" placeholder="dd.mm.yyyy" [(ngModel)]="etime.date" (ngModelChange)="setEndTime()"></ion-datetime>\n    </ion-item>\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="setEndTime(1)">\n          <div>Set Time</div>\n        </button>\n      </ion-col>\n      <ion-col>\n      <button ion-button icon-left clear small (click)="deleteEndTime()" float-right>\n        <div>Delete Time</div>\n      </button>\n    </ion-col>\n    </ion-row>\n  </ion-card>\n\n  <ion-card *ngIf="cadmin == \'1\' && (admin == 1 || open < 2) && open >= 0">\n    <ion-row>\n      <ion-col *ngIf="type != 2">\n        <button ion-button icon-left clear small (click)="setSolution()" >\n          <div>Edit Solution</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="type == 2">\n        <button ion-button icon-left clear small (click)="setSolution()" >\n          <div>Edit Solution</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="evalChallenge()" float-right>\n          <div>End & Give Points</div>\n        </button>\n      </ion-col>\n    </ion-row>\n    <ion-row *ngIf="type != 2">\n      <ion-col>\n        <button ion-button icon-left clear small (click)="deleteChallenge()">\n          <div>Delete</div>\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-card>\n\n  <ion-card *ngIf="c_anwser != \'\'">\n\n    <ion-item>\n      <ion-avatar item-start (click)="toggleVisible(-1)">\n        <img src="{{ca_own.img_url}}">\n      </ion-avatar>\n      <h2>{{ca_own.username}}</h2>\n      <p *ngIf="type != 2">{{ca_own.text}}</p>\n      <p *ngIf="type == 2">I dare you!</p>\n      <button ion-button clear small (click)="spentPoints(-1)" item-end *ngIf="open == 0 && type==1">-</button>\n      <ion-badge item-end *ngIf="type>=1 ">{{ca_own.points}}</ion-badge>\n      <button ion-button clear small (click)="spentPoints(1)" item-end *ngIf="open == 0 && type==1">+</button>\n      <button ion-button clear small (click)="deleteOwnAnswer()" item-end *ngIf="open == 0 && type==2 && !ca_own.is_best">\n        <ion-icon name="close"></ion-icon>\n      </button>\n\n    </ion-item>\n\n    <ion-card-content *ngIf="isVisible(-1)">\n      <p *ngIf="type != 2">{{ca_own.text}}</p>\n      <p *ngIf="type == 2 && ca_own.is_best">I dare you!</p>\n      <p *ngIf="type == 2 && !ca_own.is_best">Invalid</p>\n    </ion-card-content>\n    <ion-row>\n      <ion-col *ngIf="type != 2">\n        <button ion-button icon-left clear small (click)="doAnswer()" item-end *ngIf="open == 0">\n          <ion-icon name="text"></ion-icon>\n          <div>Edit</div>\n        </button>\n        <button ion-button icon-left clear small (click)="deleteOwnAnswer()" *ngIf="open == 0" float-right>\n          <ion-icon name="close"></ion-icon>\n          <div>Delete</div>\n        </button>\n      </ion-col>\n      <ion-col *ngIf="type == 2">\n        <button ion-button icon-left clear small (click)="doBetPoints()" item-end *ngIf="open == 0">\n          <ion-icon name="text"></ion-icon>\n          <div>Bet Points</div>\n        </button>\n        <button ion-button icon-left clear small (click)="doBetCounter()" *ngIf="open == 0 && ! ca_own.is_best" float-right>\n          <ion-icon name="swap"></ion-icon>\n          <div>Counter</div>\n        </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n\n  <div *ngIf="open == 2 || type != 1">\n    <ion-card *ngFor="let ca of ca_other; let i = index">\n\n      <ion-item (click)="toggleVisible(i)">\n        <ion-avatar item-start (click)="frwdToUser(ca.username)">\n          <img src="{{ca.img_url}}">\n        </ion-avatar>\n        <h2>{{ca.username}}</h2>\n        <p *ngIf="type != 2">{{ca.text}}</p>\n        <p *ngIf="type == 2">I dare you!</p>\n        <ion-badge item-end *ngIf="type>=1">{{ca.points}}</ion-badge>\n      </ion-item>\n      <ion-card-content *ngIf="isVisible(i)">\n        <p *ngIf="type != 2">{{ca.text}}</p>\n        <p *ngIf="type == 2">I dare you!</p>\n      </ion-card-content>\n\n    </ion-card>\n  </div>\n\n\n</ion-content>\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challengedetail/challengedetail.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */],
             __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* Platform */]])
@@ -2297,7 +2436,7 @@ var ChallengesPage = (function () {
     };
     ChallengesPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-challenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challenges/challenges.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="addChallenge()">\n        <ion-icon name="add-circle"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-refresher (ionRefresh)="doRefresh($event)">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n\n  <ion-card *ngFor="let c of challenges" (click)="onChallenge(c.id)">\n    <ion-item>\n\n      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c.open == 0 && c.type == 0" item-start></ion-icon>\n      <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c.open != 0 && c.type == 0" item-start></ion-icon>\n\n\n      <ion-icon name="people" item-end style="color: #c3af80" *ngIf="c.type == 1" item-start></ion-icon>\n\n      <ion-icon name="swap" item-end style="color: #c3af80" *ngIf="c.type == 2" item-start></ion-icon>\n\n      <h2>{{c.name}}</h2>\n      <p *ngIf="c_stng == \'special\' || (c_stng == \'closed\' && c.type == 0)">Special</p>\n      <p *ngIf="c_stng == \'community\' || (c_stng == \'closed\' && c.type >= 1)">by {{c.creator}}</p>\n      <div item-end>\n        <p *ngIf="c.urgendstr != \'\' && c.open<2" float-right><b style="color: darkred">{{c.urgendstr}}</b></p>\n        <br *ngIf="c.urgendstr != \'\' && c.open<2">\n        <ion-icon name="alert" style="color: #a61000" *ngIf="c_stng == \'closed\' && c.open == 1 && username == c.creator"></ion-icon>\n        <ion-badge float-right *ngIf="!(c_stng == \'closed\' && c.open == 1 && username == c.creator)">{{c.points}}</ion-badge>\n\n        <!--<p *ngIf="c.urgentstr != \'\' && c.open==2" float-right>Ended: {{c.etime}}</p>-->\n      </div>\n    </ion-item>\n  </ion-card>\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challenges/challenges.html"*/,
+            selector: 'page-challenges',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challenges/challenges.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Challenges</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="addChallenge()">\n        <ion-icon name="add-circle"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-refresher (ionRefresh)="doRefresh($event)">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n\n  <ion-card *ngFor="let c of challenges" (click)="onChallenge(c.id)">\n    <ion-item>\n\n      <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="c.open == 0 && c.type == 0" item-start></ion-icon>\n      <ion-icon name="close-circle" item-end style="color: #c3af80" *ngIf="c.open != 0 && c.type == 0" item-start></ion-icon>\n\n\n      <ion-icon name="people" item-end style="color: #c3af80" *ngIf="c.type == 1" item-start></ion-icon>\n\n      <ion-icon name="swap" item-end style="color: #c3af80" *ngIf="c.type == 2" item-start></ion-icon>\n\n      <h2>{{c.name}}</h2>\n      <p *ngIf="c_stng == \'special\' || (c_stng == \'closed\' && c.type == 0)">Special</p>\n      <p *ngIf="c_stng == \'community\' && c.type == 1">Hosted Bet</p>\n      <p *ngIf="c_stng == \'community\' && c.type == 2">Direct Bet</p>\n      <p *ngIf="c_stng == \'closed\' && c.type >= 1">by {{c.creator}}</p>\n      <div item-end>\n        <p *ngIf="c.urgendstr != \'\' && c.open<2" float-right><b style="color: darkred">{{c.urgendstr}}</b></p>\n        <br *ngIf="c.urgendstr != \'\' && c.open<2">\n        <ion-icon name="alert" style="color: #a61000" *ngIf="c_stng == \'closed\' && c.open == 1 && username == c.creator"></ion-icon>\n        <ion-badge float-right *ngIf="!(c_stng == \'closed\' && c.open == 1 && username == c.creator)">{{c.points}}</ion-badge>\n\n        <!--<p *ngIf="c.urgentstr != \'\' && c.open==2" float-right>Ended: {{c.etime}}</p>-->\n      </div>\n    </ion-item>\n  </ion-card>\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/challenges/challenges.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_challenge_service_challenge_service__["a" /* ChallengeServiceProvider */],
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]])
@@ -2380,8 +2519,14 @@ var UserdetailPage = (function () {
                 _this.eye = result["eye"];
                 _this.hobbies = result["hobbies"];
                 _this.score = parseInt(result["score"]);
+                _this.logs = [];
                 if (_this.admin == '1') {
                     _this.real_name = result["real_name"];
+                    _this.usp.get_other_user_log(_this.username, _this.token, _this.other).then(function (result) {
+                        _this.logs = result["logs"];
+                        // console.log(this.logs)
+                    }, function (err) {
+                    });
                 }
             }
         }, function (err) {
@@ -2437,7 +2582,7 @@ var UserdetailPage = (function () {
     };
     UserdetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-userdetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/userdetail/userdetail.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n    <ion-title>User</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <img src="{{img_url}}">\n\n    <ion-item>\n      <h2>{{other}}</h2>\n      <p>&quot;{{descr}}&quot;</p>\n      <ion-badge item-end>{{score}}</ion-badge>\n    </ion-item>\n\n    <ion-item *ngIf="admin == \'1\'">\n      <ion-icon name=\'md-person\' item-start style="color: #f95c71"></ion-icon>\n      <p>{{real_name}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="calendar" item-start style="color: #f95c71"></ion-icon>\n      <p>{{age}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="cut" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hair}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="eye" item-start style="color: #f95c71"></ion-icon>\n      <p>{{eye}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="football" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hobbies}}</p>\n    </ion-item>\n\n\n    <ion-card-content center text-center>\n      <p>\n        <br>\n        {{descr}}\n      </p>\n    </ion-card-content>\n\n    <ion-card-content center text-center>\n      <ion-grid>\n        <ion-row>\n          <ion-col>\n            <ion-icon name=\'people\' class="xd" item-start style="color: black"></ion-icon>\n          </ion-col>\n          <ion-col>\n            <div class="honey mid"></div>\n          </ion-col>\n          <ion-col>\n            <div class="trump mid"></div>\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <div>{{score_details.bet}}</div>\n          </ion-col>\n          <ion-col>\n            <div>{{score_details.honey}}</div>\n          </ion-col>\n          <ion-col>\n            <div>{{score_details.trump}}</div>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-card-content>\n\n\n  </ion-card>\n  <ion-card *ngIf="admin == \'1\'">\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="changePoints()">\n          <div>Change points</div>\n        </button>\n      </ion-col>\n      <ion-col text-right>\n        <button ion-button icon-left clear small  (click)="deleteUser()" >\n          <div>Delete</div>\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-card>\n\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/userdetail/userdetail.html"*/,
+            selector: 'page-userdetail',template:/*ion-inline-start:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/userdetail/userdetail.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n    <ion-title>User</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card>\n\n    <img src="{{img_url}}">\n\n    <ion-item>\n      <h2>{{other}}</h2>\n      <p>&quot;{{descr}}&quot;</p>\n      <ion-badge item-end>{{score}}</ion-badge>\n    </ion-item>\n\n    <ion-item *ngIf="admin == \'1\'">\n      <ion-icon name=\'md-person\' item-start style="color: #f95c71"></ion-icon>\n      <p>{{real_name}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="calendar" item-start style="color: #f95c71"></ion-icon>\n      <p>{{age}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="cut" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hair}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="eye" item-start style="color: #f95c71"></ion-icon>\n      <p>{{eye}}</p>\n    </ion-item>\n\n    <ion-item>\n      <ion-icon name="football" item-start style="color: #f95c71"></ion-icon>\n      <p>{{hobbies}}</p>\n    </ion-item>\n\n\n    <ion-card-content center text-center>\n      <p>\n        <br>\n        {{descr}}\n      </p>\n    </ion-card-content>\n\n    <ion-card-content center text-center>\n      <ion-grid>\n        <ion-row>\n          <ion-col>\n            <ion-icon name=\'people\' class="xd" item-start style="color: black"></ion-icon>\n          </ion-col>\n          <ion-col>\n            <div class="honey mid"></div>\n          </ion-col>\n          <ion-col>\n            <div class="trump mid"></div>\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <div>{{score_details.bet}}</div>\n          </ion-col>\n          <ion-col>\n            <div>{{score_details.honey}}</div>\n          </ion-col>\n          <ion-col>\n            <div>{{score_details.trump}}</div>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-card-content>\n\n\n  </ion-card>\n  <ion-card *ngIf="admin == \'1\'">\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-left clear small (click)="changePoints()">\n          <div>Change points</div>\n        </button>\n      </ion-col>\n      <ion-col text-right>\n        <button ion-button icon-left clear small  (click)="deleteUser()" >\n          <div>Delete</div>\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-card>\n\n  <div *ngIf="admin == \'1\'">\n    <ion-card *ngFor="let l of logs">\n      <ion-item>\n\n        <ion-icon name="person" item-end style="color: #c3af80" *ngIf="l.type == -1" item-start (click)="onChallenge(l.cid)"></ion-icon>\n        <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="l.type == 0" item-start (click)="onChallenge(l.cid)"></ion-icon>\n        <ion-icon name="people" item-end style="color: #c3af80" *ngIf="l.type == 1" item-start (click)="onChallenge(l.cid)"></ion-icon>\n        <ion-icon name="swap" item-end style="color: #c3af80" *ngIf="l.type == 2" item-start (click)="onChallenge(l.cid)"></ion-icon>\n\n        <p>{{l.time}}</p>\n        <h2>{{l.cname}}</h2>\n        <p *ngIf="l.ctype != 0">by {{l.ccreator}}</p>\n        <p *ngIf="l.ctype == 0">Special</p>\n        <ion-badge item-end *ngIf="l.points > 0"> +{{l.points}}</ion-badge>\n        <ion-badge item-end *ngIf="l.points <= 0">{{l.points}}</ion-badge>\n      </ion-item>\n      <ion-card-content *ngIf="l.type == -1">\n        <p>{{l.cdesc}}</p>\n        <br>\n        <p *ngIf="l.ctype == 2 && l.csolution == 1">You lost the bet.</p>\n        <p *ngIf="l.ctype == 2 && l.csolution == 0">You won the bet</p>\n        <p *ngIf="l.ctype == 1">You hosted the bet</p>\n      </ion-card-content>\n      <ion-card-content *ngIf="l.type == 0">\n        <p>{{l.cdesc}}</p>\n        <br>\n        <p>Correct Solution: {{l.csolution}}</p>\n        <p>Your Answer: {{l.canswer}}</p>\n      </ion-card-content>\n      <ion-card-content *ngIf="l.type == 1">\n        <p>{{l.cdesc}}</p>\n        <br>\n        <p>Correct Solution: {{l.csolution}}</p>\n        <p>Your Answer: {{l.canswer}}</p>\n      </ion-card-content>\n      <ion-card-content *ngIf="l.type == 2">\n        <p>{{l.cdesc}}</p>\n        <br>\n        <p *ngIf="l.csolution == 0">You lost the bet.</p>\n        <p *ngIf="l.csolution == 1">You won the bet</p>\n      </ion-card-content>\n    </ion-card>\n  </div>\n\n\n</ion-content>\n\n'/*ion-inline-end:"/files/Documents/ws/ws/cntm2018/cmtm_frontend/src/pages/userdetail/userdetail.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserServiceProvider */],
             __WEBPACK_IMPORTED_MODULE_3_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]])

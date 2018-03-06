@@ -253,3 +253,18 @@ def get_score_origin(username):
         pass
 
     return {"scores": {"bet": bet_score, "honey": honey_score, "trump": trump_score}}
+
+
+def change_user_passwd(username, passwd):
+    pass_hash = hash_password(passwd)
+
+    try:
+        u = User.objects.get(username=username)
+        u.passwd = pass_hash
+        u.save()
+
+        return 1
+
+    except:
+        print("Could not change password for user ", username)
+        return 0
