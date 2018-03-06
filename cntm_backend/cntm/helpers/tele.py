@@ -15,9 +15,9 @@ def send_new_challenge_notification(name, desc, creator, type_):
     if type_ == 0:
         line1 = "New Special Challenge!!!"
     elif type_ == 1:
-        line1 = "New 'Hosted Bet' by " + creator + " :"
+        line1 = "New 'Hosted Bet' :"
     elif type_ == 2:
-        line1 = "New 'Direct Bet' by " + creator + " :"
+        line1 = "New 'Direct Bet' :"
 
     line2 = name.title()
     line3 = desc.title()

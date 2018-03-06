@@ -32,6 +32,9 @@ export class UserdetailPage {
   score: any;
   real_name: any;
 
+  logs: any;
+
+
   score_details: any = {"bet" : 0, "honey": 0, "trump": 0};
 
 
@@ -66,9 +69,18 @@ export class UserdetailPage {
         this.eye = result["eye"];
         this.hobbies = result["hobbies"];
         this.score = parseInt(result["score"]);
+        this.logs = [];
+
 
         if(this.admin == '1'){
           this.real_name = result["real_name"];
+
+          this.usp.get_other_user_log(this.username, this.token, this.other).then((result) => {
+            this.logs = result["logs"];
+            // console.log(this.logs)
+          }, (err) => {
+          });
+
         }
 
       }

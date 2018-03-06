@@ -49,12 +49,18 @@ def get_selected_challenges(open=0, ctype=None, uname=None, order_by_str=""):
             if c.open <= 0 and etime - right_now < urgent_delta:
                 urgent_str = c.etime.strip().split(" ")[0]
 
+        points = c.points
+        if c.type == 2:
+            points += get_max_challenge_answer_points(c.id)
+
         is_out = False
         if open == 0:
             is_out = close_challenge_if_to_old(c.id)
         if not is_out:
             c_list.append(dict(id=c.id, name=c.name, descr=c.descr, img_url=c.img_url, open=c.open, creator=c.creator,
-                               type=c.type, etime=c.etime, points=c.points, urgendstr=urgent_str))
+                               type=c.type, etime=c.etime, points=points, urgendstr=urgent_str))
+
+    c_list.sort(key=lambda x: -x["points"])
     c_list.sort(key=lambda x: x["urgendstr"] + "z")
 
     return c_list
@@ -141,21 +147,23 @@ def is_challenge_creator(cid, username):
 
 
 
-def should_send_notification(c, key, val):
-    if c.open == -1 and key == "open" and val == '0':
+def should_send_notification(key, old_val, val, c):
+    if old_val == -1 and key == "open" and val == '0':
         ctype = c.type
-        creator = c.creator
         name = c.name
         descr = c. descr
 
-        tele.send_new_challenge_notification(name, descr, creator, ctype)
+        print("send notification")
+        # tele.send_new_challenge_notification(name, descr, ctype)
 
 
 def update_challenge(cid, key, val):
     c = Challenge.objects.get(id=cid)
-    should_send_notification(c, key, val)
+    old_val = getattr(c, key)
     setattr(c, key, val)
     c.save()
+    should_send_notification(key, old_val, val, c)
+
 
 
 def add_challenge(name, desc="", img_url="", choice="", open=-1, creator="", ctype=1):
@@ -223,12 +231,20 @@ def update_challenge_answer_points(username, cid, points=0):
         if c.open != 0:
             return False
 
+
+
         cas = CAnswer.objects.filter(cid=cid, uname=username)
 
         if len(cas) == 0:
             ca = add_challenge_answer(username, cid, answer="", points=0)
         else:
             ca = cas.first()
+
+        if c.type == 2:
+            max_ca_points = get_max_challenge_answer_points(cid)
+            if (ca.points + points) <= max_ca_points:
+                return False
+
         ca.points = ca.points + points
         ca.save()
 
@@ -283,6 +299,29 @@ def calc_new_challenge_points(cid):
         return False
 
 
+def get_max_challenge_answer(cid):
+    cas = CAnswer.objects.filter(cid=cid).order_by("-points")
+
+    if len(cas) > 0:
+        return cas.first()
+    else:
+        return None
+
+
+def get_max_challenge_answer_id(cid):
+    ca_max = get_max_challenge_answer(cid)
+    if ca_max is None:
+        return -1
+    else:
+        return ca_max.id
+
+def get_max_challenge_answer_points(cid):
+    ca_max = get_max_challenge_answer(cid)
+    if ca_max is None:
+        return 0
+    else:
+        return ca_max.points
+
 def get_anwsers_for_challenge(cid, username=""):
     ret_dict = {}
     ret_list = []
@@ -290,13 +329,19 @@ def get_anwsers_for_challenge(cid, username=""):
     c = Challenge.objects.get(id=cid)
     cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname=c.creator))
 
+    ca_max_id = get_max_challenge_answer_id(cid)
+
+    if c.type == 2:
+        cas = cas.order_by("-points")
+
     for a in cas:
 
         a_dct = dict(cid=a.cid,
                      username=a.uname,
                      text=a.text,
                      img_url=a.img_url,
-                     points=a.points)
+                     points=a.points,
+                     is_best=a.id == ca_max_id)
 
         if a.uname == username:
             ret_dict["own"] = a_dct
@@ -304,9 +349,23 @@ def get_anwsers_for_challenge(cid, username=""):
             ret_list.append(a_dct)
 
     if (c.type == 1 and c.open < 2) or (c.type == 0 and c.open < 1):
-        ret_dict["other"] = {}
-    else:
-        ret_dict["other"] = ret_list
+        ret_list = []
+    elif (c.type == 2 and c.open < 2):
+        ca_max = get_max_challenge_answer(cid)
+        ret_list = []
+        if ca_max is not None:
+            a_dct = dict(cid=ca_max.cid,
+                         username=ca_max.uname,
+                         text=ca_max.text,
+                         img_url=ca_max.img_url,
+                         points=ca_max.points,
+                         is_best=True)
+            if ca_max.uname == username:
+                ret_dict["own"] = a_dct
+            else:
+                ret_list.append(a_dct)
+
+    ret_dict["other"] = ret_list
 
     return ret_dict
 
@@ -515,9 +574,9 @@ def eval_challenge(cid):
             for ca in cas_right:
                 right_points += ca.points
 
-            if tot_points > 10 and right_points != tot_points:
+            if right_points != tot_points:
                 try:
-                    cre_points = int(tot_points * 0.1)
+                    cre_points = min(int(tot_points * 0.1), right_points)
                     # tot_points -= cre_points
                     creator = User.objects.get(username=c.creator)
                     creator.score += cre_points
@@ -526,8 +585,7 @@ def eval_challenge(cid):
                     add_log(username=creator.username, cid=cid, aid=0, points=cre_points, ctype=c.type,
                             ccreator=c.creator,
                             label=c.label, answer="creator", solution=solution)
-                    ca.active = 1
-                    ca.save()
+
 
                 except:
                     pass
@@ -558,13 +616,16 @@ def eval_challenge(cid):
         if c.type == 2:
 
             cas = CAnswer.objects.filter(cid=cid).filter(~Q(uname=creator_name))
+            cas_max_id = get_max_challenge_answer_id(cid)
+            cas_max_point = get_max_challenge_answer_points(cid)
 
             if len(cas) > 0:
 
                 if c.answer == '0':
+
                     try:
                         u = User.objects.get(username=c.creator)
-                        p_diff = tot_points * len(cas)
+                        p_diff = cas_max_point
                         u.score += p_diff
                         u.save()
                         add_log(username=u.username, cid=cid, aid=0, points=p_diff, ctype=c.type, ccreator=c.creator,
@@ -575,18 +636,18 @@ def eval_challenge(cid):
                     for ca in cas:
                         try:
                             u = User.objects.get(username=ca.uname)
-                            p_diff = -tot_points
-                            u.score += p_diff
-                            u.save()
-                            add_log(username=u.username, cid=cid, aid=ca.id, points=p_diff, ctype=c.type,
-                                    ccreator=c.creator,
-                                    label=c.label, answer='0', solution='1')
+                            if ca.id == cas_max_id:
+                                p_diff = -cas_max_point
+                                u.score += p_diff
+                                u.save()
+                                add_log(username=u.username, cid=cid, aid=ca.id, points=p_diff, ctype=c.type,
+                                        ccreator=c.creator,
+                                        label=c.label, answer='0', solution='1')
                             ca.active = 1
                             ca.save()
                         except:
                             pass
                 elif c.answer == '1':
-                    point_incr = max(1, round(tot_points / len(cas)))
                     try:
                         u = User.objects.get(username=c.creator)
                         p_diff = -tot_points
@@ -599,11 +660,12 @@ def eval_challenge(cid):
                     for ca in cas:
                         try:
                             u = User.objects.get(username=ca.uname)
-                            p_diff = point_incr
-                            u.score += p_diff
-                            u.save()
-                            add_log(username=u.username, cid=cid, aid=ca.id, points=p_diff, ctype=c.type,
-                                    ccreator=c.creator, label=c.label, answer='1', solution='1')
+                            if ca.id == cas_max_id:
+                                p_diff = tot_points
+                                u.score += p_diff
+                                u.save()
+                                add_log(username=u.username, cid=cid, aid=ca.id, points=p_diff, ctype=c.type,
+                                        ccreator=c.creator, label=c.label, answer='1', solution='1')
                             ca.active = 1
                             ca.save()
                         except:

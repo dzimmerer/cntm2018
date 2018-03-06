@@ -652,11 +652,17 @@ def get_user_log_req(request):
         try:
             username = request.GET.get("username", "")
             token = request.GET.get("token", "")
+            other = request.GET.get("other" , "")
 
             if not verify_user(username, token):
                 return JsonResponse({})
 
-            ret_json = get_user_log(username)
+            if other != "":
+                if not is_admin(username):
+                    return JsonResponse({"success": 0})
+                ret_json = get_user_log(other)
+            else:
+                ret_json = get_user_log(username)
             return JsonResponse(ret_json)
 
         except:

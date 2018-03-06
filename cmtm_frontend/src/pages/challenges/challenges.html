@@ -33,7 +33,9 @@
 
       <h2>{{c.name}}</h2>
       <p *ngIf="c_stng == 'special' || (c_stng == 'closed' && c.type == 0)">Special</p>
-      <p *ngIf="c_stng == 'community' || (c_stng == 'closed' && c.type >= 1)">by {{c.creator}}</p>
+      <p *ngIf="c_stng == 'community' && c.type == 1">Hosted Bet</p>
+      <p *ngIf="c_stng == 'community' && c.type == 2">Direct Bet</p>
+      <p *ngIf="c_stng == 'closed' && c.type >= 1">by {{c.creator}}</p>
       <div item-end>
         <p *ngIf="c.urgendstr != '' && c.open<2" float-right><b style="color: darkred">{{c.urgendstr}}</b></p>
         <br *ngIf="c.urgendstr != '' && c.open<2">

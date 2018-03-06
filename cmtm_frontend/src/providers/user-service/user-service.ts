@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 
 
 
-let apiUrl = 'http://ec2-34-253-80-80.eu-west-1.compute.amazonaws.com:8000/';
-// let apiUrl = 'http://localhost:8000/';
+// let apiUrl = 'http://ec2-34-253-80-80.eu-west-1.compute.amazonaws.com:8000/';
+let apiUrl = 'http://localhost:8000/';
 
 
 
@@ -217,4 +217,20 @@ export class UserServiceProvider {
         });
     });
   }
+
+
+  get_other_user_log(username, token, other){
+    return new Promise((resolve, reject) => {
+
+      let get_params = "?username="+username+"&token="+token + "&other="+other;
+
+      this.http.get(apiUrl+'get_user_log/' + get_params)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
 }

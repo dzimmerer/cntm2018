@@ -58,10 +58,16 @@
           <div>Answer</div>
         </button>
       </ion-col>
-      <ion-col *ngIf="open == 0 && type == 2">
+      <ion-col *ngIf="open == 0 && type == 2 && ca_other?.length == 0">
         <button ion-button icon-left clear small (click)="doBetAgainst()" *ngIf="cadmin == '0'">
-          <ion-icon name="text"></ion-icon>
+          <ion-icon name="swap"></ion-icon>
           <div>Bet against</div>
+        </button>
+      </ion-col>
+      <ion-col *ngIf="open == 0 && type == 2 && ca_other?.length > 0">
+        <button ion-button icon-left clear small (click)="doBetCounter()" *ngIf="cadmin == '0'">
+          <ion-icon name="swap"></ion-icon>
+          <div>Counter</div>
         </button>
       </ion-col>
       <ion-col text-end>
@@ -185,9 +191,9 @@
       <p *ngIf="type != 2">{{ca_own.text}}</p>
       <p *ngIf="type == 2">I dare you!</p>
       <button ion-button clear small (click)="spentPoints(-1)" item-end *ngIf="open == 0 && type==1">-</button>
-      <ion-badge item-end *ngIf="type==1">{{ca_own.points}}</ion-badge>
+      <ion-badge item-end *ngIf="type>=1 ">{{ca_own.points}}</ion-badge>
       <button ion-button clear small (click)="spentPoints(1)" item-end *ngIf="open == 0 && type==1">+</button>
-      <button ion-button clear small (click)="deleteOwnAnswer()" item-end *ngIf="open == 0 && type==2">
+      <button ion-button clear small (click)="deleteOwnAnswer()" item-end *ngIf="open == 0 && type==2 && !ca_own.is_best">
         <ion-icon name="close"></ion-icon>
       </button>
 
@@ -195,7 +201,8 @@
 
     <ion-card-content *ngIf="isVisible(-1)">
       <p *ngIf="type != 2">{{ca_own.text}}</p>
-      <p *ngIf="type == 2">I dare you!</p>
+      <p *ngIf="type == 2 && ca_own.is_best">I dare you!</p>
+      <p *ngIf="type == 2 && !ca_own.is_best">Invalid</p>
     </ion-card-content>
     <ion-row>
       <ion-col *ngIf="type != 2">
@@ -206,29 +213,41 @@
         <button ion-button icon-left clear small (click)="deleteOwnAnswer()" *ngIf="open == 0" float-right>
           <ion-icon name="close"></ion-icon>
           <div>Delete</div>
-      </button>
+        </button>
+      </ion-col>
+      <ion-col *ngIf="type == 2">
+        <button ion-button icon-left clear small (click)="doBetPoints()" item-end *ngIf="open == 0">
+          <ion-icon name="text"></ion-icon>
+          <div>Bet Points</div>
+        </button>
+        <button ion-button icon-left clear small (click)="doBetCounter()" *ngIf="open == 0 && ! ca_own.is_best" float-right>
+          <ion-icon name="swap"></ion-icon>
+          <div>Counter</div>
+        </button>
       </ion-col>
     </ion-row>
 
   </ion-card>
 
-  <ion-card *ngFor="let ca of ca_other; let i = index">
+  <div *ngIf="open == 2 || type != 1">
+    <ion-card *ngFor="let ca of ca_other; let i = index">
 
-    <ion-item (click)="toggleVisible(i)">
-      <ion-avatar item-start (click)="frwdToUser(ca.username)">
-        <img src="{{ca.img_url}}">
-      </ion-avatar>
-      <h2>{{ca.username}}</h2>
-      <p *ngIf="type != 2">{{ca.text}}</p>
-      <p *ngIf="type == 2">I dare you!</p>
-      <ion-badge item-end *ngIf="type==1">{{ca.points}}</ion-badge>
-    </ion-item>
-    <ion-card-content *ngIf="isVisible(i)">
-      <p *ngIf="type != 2">{{ca.text}}</p>
-      <p *ngIf="type == 2">I dare you!</p>
-    </ion-card-content>
+      <ion-item (click)="toggleVisible(i)">
+        <ion-avatar item-start (click)="frwdToUser(ca.username)">
+          <img src="{{ca.img_url}}">
+        </ion-avatar>
+        <h2>{{ca.username}}</h2>
+        <p *ngIf="type != 2">{{ca.text}}</p>
+        <p *ngIf="type == 2">I dare you!</p>
+        <ion-badge item-end *ngIf="type>=1">{{ca.points}}</ion-badge>
+      </ion-item>
+      <ion-card-content *ngIf="isVisible(i)">
+        <p *ngIf="type != 2">{{ca.text}}</p>
+        <p *ngIf="type == 2">I dare you!</p>
+      </ion-card-content>
 
-  </ion-card>
+    </ion-card>
+  </div>
 
 
 </ion-content>

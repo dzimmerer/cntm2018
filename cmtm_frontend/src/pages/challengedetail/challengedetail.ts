@@ -32,7 +32,7 @@ export class ChallengedetailPage {
   name: any;
   descr: any;
   choice: any;
-  choice_list: any;
+  choice_list: any = [];
   has_choice: any;
   open:any;
   img_url: any;
@@ -51,7 +51,7 @@ export class ChallengedetailPage {
 
   c_anwser = "";
   ca_own = {};
-  ca_other: any;
+  ca_other: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private csp: ChallengeServiceProvider,
               public alertCtrl: AlertController, public appCtrl: App, private platform: Platform) {
@@ -114,7 +114,7 @@ export class ChallengedetailPage {
 
     this.csp.get_challenge_answers(this.username, this.token, this.cid).then((result) => {
 
-      if("other" in result) {
+      if("other" in result && (this.type != 1 || this.open >=2)) {
         this.ca_other = result["other"];
       }
       if("own" in result) {
@@ -566,6 +566,115 @@ export class ChallengedetailPage {
     }
   }
 
+  doBetCounter() {
+    if(this.type == 2) {
+
+      let user_points = 0;
+      if ("points" in this.ca_own) {
+        user_points = this.ca_own.points;
+      }
+
+      let challenge_points = 0;
+      if(this.ca_own && this.ca_own.is_best){
+        challenge_points = this.ca_own.points;
+      }
+      else if(this.ca_other.length > 0 && this.ca_other[0].is_best){
+        challenge_points = this.ca_other[0].points;
+      }
+
+      console.log(user_points);
+      console.log(challenge_points);
+
+      let counter_points = challenge_points + 1 - user_points;
+
+      console.log(counter_points);
+
+      let alert = this.alertCtrl.create();
+      alert.setTitle('Make your Bet');
+      alert.setSubTitle('Are you sure you want to bet '+ (user_points + counter_points) + ' Points ?');
+      alert.addButton('Cancel');
+      alert.addButton({
+        text: 'OK',
+        handler: () => {
+          // Update
+          this.csp.has_challenge_answer_points(this.username, this.token, this.cid,  counter_points).then((result) => {
+            if (result["success"] == 1) {
+              this.csp.give_challenge_answer(this.username, this.token, this.cid, '1').then((result) => {
+                this.csp.give_challenge_answer_points(this.username, this.token, this.cid, counter_points);
+                this.ca_own["points"] = user_points + counter_points;
+                this.ca_own["is_best"] = True;
+                this.ca_other = [];
+                //this.set_ch_answers();
+              }, (err) => {
+              });
+            }
+            else{
+              let alert = this.alertCtrl.create({
+                title: 'Not enough points',
+                buttons: ['OK']
+              });
+              alert.present();
+            }
+          });
+
+        }
+      });
+      alert.present();
+    }
+
+  }
+
+  doBetPoints() {
+
+    if(this.type == 2) {
+
+      let user_points = 0;
+      if ("points" in this.ca_own) {
+        user_points = this.ca_own.points;
+      }
+
+      console.log(user_points);
+
+
+      let prompt = this.alertCtrl.create({
+        title: "Points:",
+        inputs: [
+          {name: 'inpt',
+            value: user_points },
+        ],
+        buttons: [
+          { text: 'Cancel', },
+          { text: 'Bet',
+            handler: data => {
+              // Update
+
+              let counter_points = data.inpt - user_points;
+
+              this.csp.has_challenge_answer_points(this.username, this.token, this.cid, counter_points).then((result) => {
+                if (result["success"] == 1) {
+                  this.csp.give_challenge_answer(this.username, this.token, this.cid, '1').then((result) => {
+                    this.csp.give_challenge_answer_points(this.username, this.token, this.cid, counter_points);
+                    this.set_ch_answers();
+                  }, (err) => {
+                  });
+                }
+                else {
+                  let alert = this.alertCtrl.create({
+                    title: 'Could not bet points',
+                    buttons: ['OK']
+                  });
+                  alert.present();
+                }
+              });
+            }
+          }
+        ]
+      });
+      prompt.present();
+    }
+
+  }
+
   ionViewDidEnter() {
     this.navBar.backButtonClick = () => {
       this.willLeave();
@@ -679,4 +788,6 @@ export class ChallengedetailPage {
     alert.present();
 
   }
+
+
 }

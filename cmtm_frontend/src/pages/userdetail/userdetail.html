@@ -96,6 +96,50 @@
     </ion-row>
   </ion-card>
 
+  <div>
+    <ion-card *ngFor="let l of logs">
+      <ion-item>
+
+        <ion-icon name="person" item-end style="color: #c3af80" *ngIf="l.type == -1" item-start (click)="onChallenge(l.cid)"></ion-icon>
+        <ion-icon name="help-circle" item-end style="color: #c3af80" *ngIf="l.type == 0" item-start (click)="onChallenge(l.cid)"></ion-icon>
+        <ion-icon name="people" item-end style="color: #c3af80" *ngIf="l.type == 1" item-start (click)="onChallenge(l.cid)"></ion-icon>
+        <ion-icon name="swap" item-end style="color: #c3af80" *ngIf="l.type == 2" item-start (click)="onChallenge(l.cid)"></ion-icon>
+
+        <p>{{l.time}}</p>
+        <h2>{{l.cname}}</h2>
+        <p *ngIf="l.ctype != 0">by {{l.ccreator}}</p>
+        <p *ngIf="l.ctype == 0">Special</p>
+        <ion-badge item-end *ngIf="l.points > 0"> +{{l.points}}</ion-badge>
+        <ion-badge item-end *ngIf="l.points <= 0">{{l.points}}</ion-badge>
+      </ion-item>
+      <ion-card-content *ngIf="l.type == -1">
+        <p>{{l.cdesc}}</p>
+        <br>
+        <p *ngIf="l.ctype == 2 && l.csolution == 1">You lost the bet.</p>
+        <p *ngIf="l.ctype == 2 && l.csolution == 0">You won the bet</p>
+        <p *ngIf="l.ctype == 1">You hosted the bet</p>
+      </ion-card-content>
+      <ion-card-content *ngIf="l.type == 0">
+        <p>{{l.cdesc}}</p>
+        <br>
+        <p>Correct Solution: {{l.csolution}}</p>
+        <p>Your Answer: {{l.canswer}}</p>
+      </ion-card-content>
+      <ion-card-content *ngIf="l.type == 1">
+        <p>{{l.cdesc}}</p>
+        <br>
+        <p>Correct Solution: {{l.csolution}}</p>
+        <p>Your Answer: {{l.canswer}}</p>
+      </ion-card-content>
+      <ion-card-content *ngIf="l.type == 2">
+        <p>{{l.cdesc}}</p>
+        <br>
+        <p *ngIf="l.csolution == 0">You lost the bet.</p>
+        <p *ngIf="l.csolution == 1">You won the bet</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
 
 </ion-content>
 
