@@ -577,7 +577,7 @@ def eval_challenge(cid):
 
             if right_points != tot_points:
                 try:
-                    cre_points = min(int(tot_points * 0.1), right_points)
+                    cre_points = min(int(tot_points * 0.1), (tot_points-right_points))
                     # tot_points -= cre_points
                     creator = User.objects.get(username=c.creator)
                     creator.score += cre_points
