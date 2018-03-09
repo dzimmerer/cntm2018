@@ -506,7 +506,7 @@ export class ChallengedetailPage {
         alert.addInput({
           type: 'text',
           name: 'inpt',
-          value: '',
+          value: this.answer,
         })
       }
 

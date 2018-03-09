@@ -20,7 +20,7 @@ def send_new_challenge_notification(name, desc, type_):
         line1 = "New 'Direct Bet' :"
 
     line2 = name.title()
-    line3 = desc.title()
+    line3 = desc
 
     text = line1 + "\n\n" + line2 + "\n" + line3
 

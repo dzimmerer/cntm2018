@@ -13,7 +13,9 @@
 
     <ion-item>
       <h2>{{name}}</h2>
-      <p *ngIf="type >= 1">by {{creator}}</p>
+      <p *ngIf="open >= 1">by {{creator}}</p>
+      <p *ngIf="open == 0 && type==1">Hosted Bet</p>
+      <p *ngIf="open == 0 && type==2">Direct Bet</p>
       <ion-badge item-end>
         {{points}}
       </ion-badge>
